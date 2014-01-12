@@ -4,9 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{73DF7D23-E81B-49F7-A999-4CFDBFA18813}"
 	ProjectSection(SolutionItems) = preProject
 		include\DebugInfo.h = include\DebugInfo.h
+		include\ILogQuery.h = include\ILogQuery.h
+		include\LogItem.h = include\LogItem.h
+		include\SingletonSupport.h = include\SingletonSupport.h
+		include\tstring.h = include\tstring.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinUI", "src\WinUI\WinUI.vcxproj", "{32DD4974-5AB9-4160-894F-542A44A7B819}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5A357ECC-EED1-40EB-A059-BE55C3F55848} = {5A357ECC-EED1-40EB-A059-BE55C3F55848}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Model", "src\Model\Model.vcxproj", "{5A357ECC-EED1-40EB-A059-BE55C3F55848}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +27,10 @@ Global
 		{32DD4974-5AB9-4160-894F-542A44A7B819}.Debug|Win32.Build.0 = Debug|Win32
 		{32DD4974-5AB9-4160-894F-542A44A7B819}.Release|Win32.ActiveCfg = Release|Win32
 		{32DD4974-5AB9-4160-894F-542A44A7B819}.Release|Win32.Build.0 = Release|Win32
+		{5A357ECC-EED1-40EB-A059-BE55C3F55848}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5A357ECC-EED1-40EB-A059-BE55C3F55848}.Debug|Win32.Build.0 = Debug|Win32
+		{5A357ECC-EED1-40EB-A059-BE55C3F55848}.Release|Win32.ActiveCfg = Release|Win32
+		{5A357ECC-EED1-40EB-A059-BE55C3F55848}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

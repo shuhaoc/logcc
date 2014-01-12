@@ -11,6 +11,8 @@
 
 #include "WinUIDoc.h"
 #include "WinUIView.h"
+#include "ILogQuery.h"
+#include "LogItem.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -90,14 +92,14 @@ void CWinUIView::OnDraw(CDC* pDC)
 
 	//DEBUG_INFO(beginLine << ", " << endLine);
 
-	vector<string>& vecLines = GetDocument()->m_vecLines;
-	for (size_t i = beginLine; i < min(endLine, vecLines.size()); i++)
-	{
-		ostringstream oss;
-		oss << i + 1 << " " << vecLines[i];
-		string line = oss.str();
+	vector<LogItem*> vecLines = GetDocument()->logQuery->getRange(beginLine, endLine + 1);
+	for (unsigned i = 0; i < vecLines.size(); i++) {
+		LogItem* item = vecLines[i];
 
-		::TextOutA(memDC, 0, (i - beginLine) * LINE_HEIGHT, line.c_str(), line.size());
+		wostringstream oss;
+		oss << i + 1 << " " << item->text;
+		wstring line = oss.str();
+		::TextOut(memDC, 0, i * LINE_HEIGHT, line.c_str(), line.size());
 	}
 
 	::BitBlt(pDC->GetSafeHdc(), scrollPosition.x, scrollPosition.y, clientRect.Width(), clientRect.Height(),
@@ -128,7 +130,7 @@ void CWinUIView::UpdateScroll()
 	GetClientRect(clientRect);
 	CSize totalSize;
 	totalSize.cx = clientRect.Width();
-	totalSize.cy = GetDocument()->m_vecLines.size() * LINE_HEIGHT;
+	totalSize.cy = GetDocument()->logQuery->getLineCount() * LINE_HEIGHT;
 	//CSize pageSize(clientRect.Width(), LINE_HEIGHT * 30);
 	//CSize lineSize(clientRect.Width(), LINE_HEIGHT);
 	//SetScrollSizes(MM_TEXT, totalSize, pageSize, lineSize);

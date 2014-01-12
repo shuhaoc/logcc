@@ -5,6 +5,7 @@
 
 #pragma once
 
+class ILogQuery;
 
 class CWinUIDoc : public CDocument
 {
@@ -14,11 +15,12 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
-	vector<string> m_vecLines;
+	ILogQuery* logQuery;
+	//vector<string> m_vecLines;
 
-	enum {
-		UpdateView_FileOPen = 1			// 不能从0开始，因为OnInitialUpdate会调用OnUpdate
-	};
+	//enum {
+	//	UpdateView_FileOPen = 1			// 不能从0开始，因为OnInitialUpdate会调用OnUpdate
+	//};
 
 // 操作
 public:

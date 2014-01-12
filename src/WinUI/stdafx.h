@@ -47,10 +47,12 @@
 
 using namespace std;
 
-#include <boost/thread.hpp>
+#include <DebugInfo.h>
+#include <tstring.h>
 
-#include "debug_stream.h"
+using shlib::common::tstring;
 
+#include "ModelDeclare.h"
 
 #ifdef _UNICODE
 #if defined _M_IX86
