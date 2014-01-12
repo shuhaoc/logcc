@@ -1,0 +1,9 @@
+obj/
+ipch/
+pdb/
+*.sdf
+*.suo
+*.opensdf
+*.user
+bin/Debug/WinUI.exe
+bin/Debug/WinUI.ilk
