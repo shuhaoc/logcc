@@ -1,7 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinUI", "..\src\WinUI\WinUI.vcxproj", "{32DD4974-5AB9-4160-894F-542A44A7B819}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{73DF7D23-E81B-49F7-A999-4CFDBFA18813}"
+	ProjectSection(SolutionItems) = preProject
+		include\DebugInfo.h = include\DebugInfo.h
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinUI", "src\WinUI\WinUI.vcxproj", "{32DD4974-5AB9-4160-894F-542A44A7B819}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
