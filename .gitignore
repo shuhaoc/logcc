@@ -6,5 +6,5 @@ pdb/
 *.opensdf
 *.user
 *.aps
-bin/Debug/WinUI.exe
-bin/Debug/WinUI.ilk
+WinUI.*
+Model.*
