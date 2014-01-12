@@ -14,13 +14,18 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
+	vector<string> m_vecLines;
+
+	enum {
+		UpdateView_FileOPen = 1			// 不能从0开始，因为OnInitialUpdate会调用OnUpdate
+	};
 
 // 操作
 public:
 
 // 重写
 public:
-	virtual BOOL OnNewDocument();
+	//virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
@@ -45,4 +50,7 @@ protected:
 	// 用于为搜索处理程序设置搜索内容的 Helper 函数
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
+	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 };

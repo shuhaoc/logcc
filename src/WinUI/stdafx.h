@@ -37,12 +37,19 @@
 
 #include <afxcontrolbars.h>     // 功能区和控件条的 MFC 支持
 
+#include <assert.h>
 
+#include <sstream>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <hash_map>
 
+using namespace std;
 
+#include <boost/thread.hpp>
 
-
-
+#include "debug_stream.h"
 
 
 #ifdef _UNICODE
