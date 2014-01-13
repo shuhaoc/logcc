@@ -26,7 +26,7 @@ using namespace std;
 
 #include <boost/thread.hpp>
 
-#include <tstring.h>
-using shlib::common::tstring;
+#include <mrl/common/tstring.h>
+using mrl::common::tstring;
 
 #include "ModelDeclare.h"

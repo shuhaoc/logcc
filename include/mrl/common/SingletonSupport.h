@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
-namespace shlib {
+namespace mrl {
 namespace common {
 
 /**
- * µ¥¼şÖ§³Ö£¬²»¾ß±¸Ïß³Ì°²È«
+ * å•ä»¶æ”¯æŒï¼Œä¸å…·å¤‡çº¿ç¨‹å®‰å…¨
  * @author CaoShuhao
  * @date 2013-11-21
  */
@@ -12,8 +12,8 @@ template <typename T>
 class SingletonSupport {
 public:
 	/**
-	 * »ñÈ¡µ¥¼ş¶ÔÏóÖ¸Õë£¬ÓÃ»§²»¿ÉÊÍ·Å
-	 * @return µ¥¼ş¶ÔÏóÖ¸Õë
+	 * è·å–å•ä»¶å¯¹è±¡æŒ‡é’ˆï¼Œç”¨æˆ·ä¸å¯é‡Šæ”¾
+	 * @return å•ä»¶å¯¹è±¡æŒ‡é’ˆ
 	 * @author CaoShuhao
 	 * @date 2013-11-21
 	 */
@@ -26,7 +26,7 @@ public:
 	}
 
 	/**
-	 * ÊÍ·Åµ¥¼ş¶ÔÏó
+	 * é‡Šæ”¾å•ä»¶å¯¹è±¡
 	 * @author CaoShuhao
 	 * @date 2013-11-21
 	 */
@@ -36,13 +36,13 @@ public:
 	}
 
 protected:
-	// ½ûÓÃÖ±½Ó¹¹Ôì
+	// ç¦ç”¨ç›´æ¥æ„é€ 
 	SingletonSupport() { }
 	
 	virtual ~SingletonSupport() { }
 
-	// Èç¹ûµ¥¼şÀà×÷ÎªDLLµ¼³öÀà£¬½«µ¼ÖÂÁ´½Ó´íÎó
-	// ½ûÓÃ¿½±´¹¹Ôì¡¢¸³Öµ²Ù×÷·û
+	// å¦‚æœå•ä»¶ç±»ä½œä¸ºDLLå¯¼å‡ºç±»ï¼Œå°†å¯¼è‡´é“¾æ¥é”™è¯¯
+	// ç¦ç”¨æ‹·è´æ„é€ ã€èµ‹å€¼æ“ä½œç¬¦
 	//SingletonSupport(const SingletonSupport&);
 
 	//SingletonSupport& operator= (const SingletonSupport&);
@@ -52,13 +52,13 @@ private:
 };
 
 } // namespace common
-} // namespace shlib
+} // namespace mrl
 
-// ÔÚµ¥¼şÀàµÄÉùÃ÷ÖĞÌí¼Ó´Ëºê
-// Èç¹ûµ¥¼şÀà×÷ÎªDLLµ¼³öÀà£¬±ØĞëÌí¼Ó´ËÉùÃ÷
+// åœ¨å•ä»¶ç±»çš„å£°æ˜ä¸­æ·»åŠ æ­¤å®
+// å¦‚æœå•ä»¶ç±»ä½œä¸ºDLLå¯¼å‡ºç±»ï¼Œå¿…é¡»æ·»åŠ æ­¤å£°æ˜
 #define SHLIB_COMMON_SINGLETON_SUPPORT_DECLARE(ClassName) friend class \
-shlib::common::SingletonSupport<ClassName>;
+mrl::common::SingletonSupport<ClassName>;
 
-// ÔÚµ¥¼şÀàµÄcppÎÄ¼şÖĞÌí¼Ó´Ëºê
+// åœ¨å•ä»¶ç±»çš„cppæ–‡ä»¶ä¸­æ·»åŠ æ­¤å®
 #define SHLIB_COMMON_SINGLETON_SUPPORT_IMPLEMENT(ClassName) template <>	\
-ClassName* shlib::common::SingletonSupport<ClassName>::Instance = NULL;
+ClassName* mrl::common::SingletonSupport<ClassName>::Instance = NULL;

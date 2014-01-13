@@ -47,10 +47,9 @@
 
 using namespace std;
 
-#include <DebugInfo.h>
-#include <tstring.h>
-
-using shlib::common::tstring;
+#include <mrl/utility/DebugInfo.h>
+#include <mrl/common/tstring.h>
+using mrl::common::tstring;
 
 #include "ModelDeclare.h"
 
