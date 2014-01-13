@@ -1,8 +1,8 @@
 #include "stdafx.h"
+#include <mrl/utility/CodeConv.h>
 #include "LogQueryImpl.h"
 #include "LogItem.h"
 
-#include "StringHelper.h"
 
 LogQueryImpl::~LogQueryImpl() {
 	for_each(logItems.begin(), logItems.end(), [] (LogItem* item) { delete item; });
@@ -87,7 +87,7 @@ bool LogQueryImpl::load(const tstring& filePath) {
 #ifdef _UNICODE
 		LogItem* item = new LogItem();
 		item->line = ++lineNum;
-		item->text = common::utility::stringhelper::AsciiToUnicode(line);
+		item->text = mrl::utility::codeconv::asciiToUnicode(line);
 		item->selected = false;
 		logItems.push_back(item);
 #else

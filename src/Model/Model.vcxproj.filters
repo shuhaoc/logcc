@@ -24,22 +24,7 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Common.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonResult.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ExportMacro.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LogQueryImpl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="StringHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\ModelFactory.h">
@@ -63,9 +48,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ModelFactory.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="StringHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
