@@ -82,7 +82,7 @@ void CWinUIView::OnDraw(CDC* pDC)
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
 	// TODO: 在此处为本机数据添加绘制代码
-	//DEBUG_INFO("重绘");
+	//DEBUG_INFO(_T("重绘"));
 
 	CPoint scrollPosition = GetScrollPosition();
 	//DEBUG_INFO(scrollPosition.x << ", " << scrollPosition.y);
@@ -97,7 +97,7 @@ void CWinUIView::OnDraw(CDC* pDC)
 		LogItem* item = vecLines[i];
 
 		wostringstream oss;
-		oss << i + 1 << " " << item->text;
+		oss << beginLine + i + 1 << " " << item->text;
 		wstring line = oss.str();
 		::TextOut(memDC, 0, i * LINE_HEIGHT, line.c_str(), line.size());
 	}
