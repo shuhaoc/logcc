@@ -1,11 +1,11 @@
 #pragma once
 
 #include <mrl/common/SingletonSupport.h>
-#include "ModelDeclare.h"
+#include "ModelExport.h"
 
 class ILogQuery;
 
-class MODEL_INTERFACE ModelFactory : public mrl::common::SingletonSupport<ModelFactory> {
+class MODEL_EXPORT ModelFactory : public mrl::common::SingletonSupport<ModelFactory> {
 public:
 	ILogQuery* CreateLogQuery() const;
 

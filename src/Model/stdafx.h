@@ -29,4 +29,4 @@ using namespace std;
 #include <mrl/common/tstring.h>
 using mrl::common::tstring;
 
-#include "ModelDeclare.h"
+#include "ModelExport.h"

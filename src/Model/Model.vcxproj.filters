@@ -42,10 +42,10 @@
     <ClInclude Include="StringHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ModelDeclare.h">
+    <ClInclude Include="..\..\include\ModelFactory.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ModelFactory.h">
+    <ClInclude Include="..\..\include\ModelExport.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,16 +7,16 @@
 
 #ifdef MODEL_EXPORTS
 
-#define MODEL_INTERFACE __declspec(dllexport)
+#define MODEL_EXPORT __declspec(dllexport)
 
 #else
 
-#define MODEL_INTERFACE __declspec(dllimport)
+#define MODEL_EXPORT __declspec(dllimport)
 
 #endif
 
 #else
 
-#define MODEL_INTERFACE
+#define MODEL_EXPORT
 
 #endif
