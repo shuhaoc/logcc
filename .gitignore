@@ -6,5 +6,9 @@ pdb/
 *.opensdf
 *.user
 *.aps
-WinUI.*
-Model.*
+WinUI.exe
+WinUI.ilk
+Model.dll
+Model.lib
+Model.exp
+Model.ilk
