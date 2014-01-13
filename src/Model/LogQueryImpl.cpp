@@ -3,6 +3,7 @@
 #include "LogQueryImpl.h"
 #include "LogItem.h"
 
+#define MULTI_THREAD_GET_LINE
 
 LogQueryImpl::~LogQueryImpl() {
 	for_each(logItems.begin(), logItems.end(), [] (LogItem* item) { delete item; });
@@ -60,12 +61,25 @@ bool LogQueryImpl::load(const tstring& filePath) {
 	workers.create_thread([f, buffer2, &lines2] () { f(buffer2, &lines2); });
 	workers.join_all();
 
-	logItems.insert(logItems.end(), lines1.begin(), lines1.end());
-	if (lines1.size() && lines1.rbegin()->size() && *logItems.rbegin()->rbegin() != '\n') {
-		logItems.rbegin()->append(*lines2.begin());
-		logItems.insert(logItems.end(), lines2.begin() + 1, lines2.end());
+	if (lines1.size() && lines1.rbegin()->size() && *lines1.rbegin()->rbegin() != '\n') {
+		lines1.rbegin()->append(*lines2.begin());
+		lines1.insert(lines1.end(), lines2.begin() + 1, lines2.end());
 	} else {
-		logItems.insert(logItems.end(), lines2.begin(), lines2.end());
+		lines1.insert(lines1.end(), lines2.begin(), lines2.end());
+	}
+
+	for (unsigned i = 0; i < lines1.size(); i++) {
+		string& line = lines1[i];
+
+		LogItem* item = new LogItem();
+		item->line = i + 1;
+		#ifdef _UNICODE
+		item->text = mrl::utility::codeconv::asciiToUnicode(line);
+		#else
+		item->text = line;
+		#endif
+		item->selected = false;
+		logItems.push_back(item);
 	}
 #else
 	char* buffer = new char[length];
@@ -84,15 +98,15 @@ bool LogQueryImpl::load(const tstring& filePath) {
 	while (iss.good())
 	{
 		std::getline(iss, line);
-#ifdef _UNICODE
 		LogItem* item = new LogItem();
 		item->line = ++lineNum;
+#ifdef _UNICODE
 		item->text = mrl::utility::codeconv::asciiToUnicode(line);
+#else
+		item->text = line;
+#endif
 		item->selected = false;
 		logItems.push_back(item);
-#else
-#error 多字节字符集情况下尚未实现
-#endif
 	}
 #endif
 	this->filePath = filePath;
