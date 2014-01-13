@@ -31,7 +31,12 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+private:
+	bool m_bSplitterCreated;
+
 // 生成的消息映射函数
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };

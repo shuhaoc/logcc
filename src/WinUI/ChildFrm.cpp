@@ -6,6 +6,8 @@
 #include "WinUI.h"
 
 #include "ChildFrm.h"
+#include "WinUIDoc.h"
+#include "WinUIView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -16,11 +18,13 @@
 IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWndEx)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWndEx)
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
 
 CChildFrame::CChildFrame()
+	: m_bSplitterCreated(false)
 {
 	// TODO: 在此添加成员初始化代码
 }
@@ -31,10 +35,19 @@ CChildFrame::~CChildFrame()
 
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
 {
-	return m_wndSplitter.Create(this,
-		2, 2,			// TODO: 调整行数和列数
-		CSize(10, 10),	// TODO: 调整最小窗格大小
-		pContext);
+	//m_wndSplitter.Create(this,
+	//	2, 2,			// TODO: 调整行数和列数
+	//	CSize(10, 10),	// TODO: 调整最小窗格大小
+	//	pContext);
+	m_wndSplitter.CreateStatic(this, 2, 2);
+
+	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
+	m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
+	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
+	m_wndSplitter.CreateView(1, 1, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
+
+	m_bSplitterCreated = true;
+	return TRUE;
 }
 
 BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
@@ -61,3 +74,18 @@ void CChildFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 // CChildFrame 消息处理程序
+
+void CChildFrame::OnSize(UINT nType, int cx, int cy)
+{
+	CMDIChildWndEx::OnSize(nType, cx, cy);
+
+	// TODO: 在此处添加消息处理程序代码
+	CRect rect;
+	GetWindowRect(&rect);
+	if(m_bSplitterCreated)  // m_bSplitterCreated set in OnCreateClient
+	{
+		m_wndSplitter.SetColumnInfo(0, rect.Width() / 2, 10);
+		m_wndSplitter.SetColumnInfo(1, rect.Width() / 2, 10);
+		m_wndSplitter.RecalcLayout();
+	}
+}
