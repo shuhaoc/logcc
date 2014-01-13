@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include <mrl/utility/CodeConv.h>
 #include "LogQueryImpl.h"
 #include "LogItem.h"
@@ -91,7 +91,7 @@ bool LogQueryImpl::load(const tstring& filePath) {
 		item->selected = false;
 		logItems.push_back(item);
 #else
-#error ¶à×Ö½Ú×Ö·û¼¯Çé¿öÏÂÉĞÎ´ÊµÏÖ
+#error å¤šå­—èŠ‚å­—ç¬¦é›†æƒ…å†µä¸‹å°šæœªå®ç°
 #endif
 	}
 #endif
