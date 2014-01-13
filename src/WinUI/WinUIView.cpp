@@ -1,10 +1,10 @@
-
-// WinUIView.cpp : CWinUIView ÀàµÄÊµÏÖ
+ï»¿
+// WinUIView.cpp : CWinUIView ç±»çš„å®žçŽ°
 //
 
 #include "stdafx.h"
-// SHARED_HANDLERS ¿ÉÒÔÔÚÊµÏÖÔ¤ÀÀ¡¢ËõÂÔÍ¼ºÍËÑË÷É¸Ñ¡Æ÷¾ä±úµÄ
-// ATL ÏîÄ¿ÖÐ½øÐÐ¶¨Òå£¬²¢ÔÊÐíÓë¸ÃÏîÄ¿¹²ÏíÎÄµµ´úÂë¡£
+// SHARED_HANDLERS å¯ä»¥åœ¨å®žçŽ°é¢„è§ˆã€ç¼©ç•¥å›¾å’Œæœç´¢ç­›é€‰å™¨å¥æŸ„çš„
+// ATL é¡¹ç›®ä¸­è¿›è¡Œå®šä¹‰ï¼Œå¹¶å…è®¸ä¸Žè¯¥é¡¹ç›®å…±äº«æ–‡æ¡£ä»£ç ã€‚
 #ifndef SHARED_HANDLERS
 #include "WinUI.h"
 #endif
@@ -25,7 +25,7 @@
 IMPLEMENT_DYNCREATE(CWinUIView, CScrollView)
 
 BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
-	// ±ê×¼´òÓ¡ÃüÁî
+	// æ ‡å‡†æ‰“å°å‘½ä»¤
 	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CWinUIView::OnFilePrintPreview)
@@ -35,11 +35,11 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
-// CWinUIView ¹¹Ôì/Îö¹¹
+// CWinUIView æž„é€ /æžæž„
 
 CWinUIView::CWinUIView()
 {
-	// TODO: ÔÚ´Ë´¦Ìí¼Ó¹¹Ôì´úÂë
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ æž„é€ ä»£ç 
 
 }
 
@@ -49,13 +49,13 @@ CWinUIView::~CWinUIView()
 
 BOOL CWinUIView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: ÔÚ´Ë´¦Í¨¹ýÐÞ¸Ä
-	//  CREATESTRUCT cs À´ÐÞ¸Ä´°¿ÚÀà»òÑùÊ½
+	// TODO: åœ¨æ­¤å¤„é€šè¿‡ä¿®æ”¹
+	//  CREATESTRUCT cs æ¥ä¿®æ”¹çª—å£ç±»æˆ–æ ·å¼
 
 	return CScrollView::PreCreateWindow(cs);
 }
 
-// CWinUIView »æÖÆ
+// CWinUIView ç»˜åˆ¶
 
 void CWinUIView::OnDraw(CDC* pDC)
 {
@@ -78,11 +78,11 @@ void CWinUIView::OnDraw(CDC* pDC)
 	::FillRect(memDC, clientRect, bkgdBrush);
 
 	HFONT font = ::CreateFont(LINE_HEIGHT - 1, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-		DEFAULT_QUALITY, FIXED_PITCH, _T("ÐÂËÎÌå"));
+		DEFAULT_QUALITY, FIXED_PITCH, _T("æ–°å®‹ä½“"));
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
-	// TODO: ÔÚ´Ë´¦Îª±¾»úÊý¾ÝÌí¼Ó»æÖÆ´úÂë
-	//DEBUG_INFO(_T("ÖØ»æ"));
+	// TODO: åœ¨æ­¤å¤„ä¸ºæœ¬æœºæ•°æ®æ·»åŠ ç»˜åˆ¶ä»£ç 
+	//DEBUG_INFO(_T("é‡ç»˜"));
 
 	CPoint scrollPosition = GetScrollPosition();
 	//DEBUG_INFO(scrollPosition.x << ", " << scrollPosition.y);
@@ -119,7 +119,7 @@ void CWinUIView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
-	// TODO: ¼ÆËã´ËÊÓÍ¼µÄºÏ¼Æ´óÐ¡
+	// TODO: è®¡ç®—æ­¤è§†å›¾çš„åˆè®¡å¤§å°
 	UpdateScroll();
 	SetTimer(0, 500, NULL);
 }
@@ -138,7 +138,7 @@ void CWinUIView::UpdateScroll()
 }
 
 
-// CWinUIView ´òÓ¡
+// CWinUIView æ‰“å°
 
 
 void CWinUIView::OnFilePrintPreview()
@@ -150,18 +150,18 @@ void CWinUIView::OnFilePrintPreview()
 
 BOOL CWinUIView::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	// Ä¬ÈÏ×¼±¸
+	// é»˜è®¤å‡†å¤‡
 	return DoPreparePrinting(pInfo);
 }
 
 void CWinUIView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: Ìí¼Ó¶îÍâµÄ´òÓ¡Ç°½øÐÐµÄ³õÊ¼»¯¹ý³Ì
+	// TODO: æ·»åŠ é¢å¤–çš„æ‰“å°å‰è¿›è¡Œçš„åˆå§‹åŒ–è¿‡ç¨‹
 }
 
 void CWinUIView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: Ìí¼Ó´òÓ¡ºó½øÐÐµÄÇåÀí¹ý³Ì
+	// TODO: æ·»åŠ æ‰“å°åŽè¿›è¡Œçš„æ¸…ç†è¿‡ç¨‹
 }
 
 void CWinUIView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -178,7 +178,7 @@ void CWinUIView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 }
 
 
-// CWinUIView Õï¶Ï
+// CWinUIView è¯Šæ–­
 
 #ifdef _DEBUG
 void CWinUIView::AssertValid() const
@@ -191,7 +191,7 @@ void CWinUIView::Dump(CDumpContext& dc) const
 	CScrollView::Dump(dc);
 }
 
-CWinUIDoc* CWinUIView::GetDocument() const // ·Çµ÷ÊÔ°æ±¾ÊÇÄÚÁªµÄ
+CWinUIDoc* CWinUIView::GetDocument() const // éžè°ƒè¯•ç‰ˆæœ¬æ˜¯å†…è”çš„
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CWinUIDoc)));
 	return (CWinUIDoc*)m_pDocument;
@@ -199,10 +199,10 @@ CWinUIDoc* CWinUIView::GetDocument() const // ·Çµ÷ÊÔ°æ±¾ÊÇÄÚÁªµÄ
 #endif //_DEBUG
 
 
-// CWinUIView ÏûÏ¢´¦Àí³ÌÐò
+// CWinUIView æ¶ˆæ¯å¤„ç†ç¨‹åº
 void CWinUIView::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: ÔÚ´ËÌí¼ÓÏûÏ¢´¦Àí³ÌÐò´úÂëºÍ/»òµ÷ÓÃÄ¬ÈÏÖµ
+	// TODO: åœ¨æ­¤æ·»åŠ æ¶ˆæ¯å¤„ç†ç¨‹åºä»£ç å’Œ/æˆ–è°ƒç”¨é»˜è®¤å€¼
 	Invalidate();
 	CScrollView::OnTimer(nIDEvent);
 }
@@ -210,7 +210,7 @@ void CWinUIView::OnTimer(UINT_PTR nIDEvent)
 
 BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
 {
-	// TODO: ÔÚ´ËÌí¼ÓÏûÏ¢´¦Àí³ÌÐò´úÂëºÍ/»òµ÷ÓÃÄ¬ÈÏÖµ
+	// TODO: åœ¨æ­¤æ·»åŠ æ¶ˆæ¯å¤„ç†ç¨‹åºä»£ç å’Œ/æˆ–è°ƒç”¨é»˜è®¤å€¼
 
 	//return CScrollView::OnEraseBkgnd(pDC);
 	return TRUE;
@@ -218,7 +218,7 @@ BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
 
 //void CWinUIView::OnUpdate(CView* /*pSender*/, LPARAM lHint, CObject* /*pHint*/)
 //{
-//	// TODO: ÔÚ´ËÌí¼Ó×¨ÓÃ´úÂëºÍ/»òµ÷ÓÃ»ùÀà
+//	// TODO: åœ¨æ­¤æ·»åŠ ä¸“ç”¨ä»£ç å’Œ/æˆ–è°ƒç”¨åŸºç±»
 //	if (lHint == CWinUIDoc::UpdateView_FileOPen) {
 //		//CReadFileThread* thread = static_cast<CReadFileThread*>(
 //		//	::AfxBeginThread(RUNTIME_CLASS(CReadFileThread), 0, 0, CREATE_SUSPENDED));

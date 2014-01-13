@@ -1,5 +1,5 @@
-
-// MainFrm.h : CMainFrame ÀàµÄ½Ó¿Ú
+ï»¿
+// MainFrm.h : CMainFrame ç±»çš„æ¥å£
 //
 
 #pragma once
@@ -10,18 +10,18 @@ class CMainFrame : public CMDIFrameWndEx
 public:
 	CMainFrame();
 
-// ÌØĞÔ
+// ç‰¹æ€§
 public:
 
-// ²Ù×÷
+// æ“ä½œ
 public:
 
-// ÖØĞ´
+// é‡å†™
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
 
-// ÊµÏÖ
+// å®ç°
 public:
 	virtual ~CMainFrame();
 #ifdef _DEBUG
@@ -29,13 +29,13 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:  // ¿Ø¼şÌõÇ¶Èë³ÉÔ±
+protected:  // æ§ä»¶æ¡åµŒå…¥æˆå‘˜
 	CMFCMenuBar       m_wndMenuBar;
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
 	CMFCToolBarImages m_UserImages;
 
-// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnWindowManager();

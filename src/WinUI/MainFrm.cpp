@@ -1,5 +1,5 @@
-
-// MainFrm.cpp : CMainFrame ÀàµÄÊµÏÖ
+ï»¿
+// MainFrm.cpp : CMainFrame ç±»çš„å®ç°
 //
 
 #include "stdafx.h"
@@ -30,17 +30,17 @@ END_MESSAGE_MAP()
 
 static UINT indicators[] =
 {
-	ID_SEPARATOR,           // ×´Ì¬ĞĞÖ¸Ê¾Æ÷
+	ID_SEPARATOR,           // çŠ¶æ€è¡ŒæŒ‡ç¤ºå™¨
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
 	ID_INDICATOR_SCRL,
 };
 
-// CMainFrame ¹¹Ôì/Îö¹¹
+// CMainFrame æ„é€ /ææ„
 
 CMainFrame::CMainFrame()
 {
-	// TODO: ÔÚ´ËÌí¼Ó³ÉÔ±³õÊ¼»¯´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æˆå‘˜åˆå§‹åŒ–ä»£ç 
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_VS_2008);
 }
 
@@ -54,33 +54,33 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	BOOL bNameValid;
-	// »ùÓÚ³Ö¾ÃÖµÉèÖÃÊÓ¾õ¹ÜÀíÆ÷ºÍÑùÊ½
+	// åŸºäºæŒä¹…å€¼è®¾ç½®è§†è§‰ç®¡ç†å™¨å’Œæ ·å¼
 	OnApplicationLook(theApp.m_nAppLook);
 
 	CMDITabInfo mdiTabParams;
-	mdiTabParams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE; // ÆäËû¿ÉÓÃÑùÊ½...
-	mdiTabParams.m_bActiveTabCloseButton = TRUE;      // ÉèÖÃÎª FALSE »á½«¹Ø±Õ°´Å¥·ÅÖÃÔÚÑ¡Ïî¿¨ÇøÓòµÄÓÒ²à
-	mdiTabParams.m_bTabIcons = FALSE;    // ÉèÖÃÎª TRUE ½«ÔÚ MDI Ñ¡Ïî¿¨ÉÏÆôÓÃÎÄµµÍ¼±ê
-	mdiTabParams.m_bAutoColor = TRUE;    // ÉèÖÃÎª FALSE ½«½ûÓÃ MDI Ñ¡Ïî¿¨µÄ×Ô¶¯×ÅÉ«
-	mdiTabParams.m_bDocumentMenu = TRUE; // ÔÚÑ¡Ïî¿¨ÇøÓòµÄÓÒ±ßÔµÆôÓÃÎÄµµ²Ëµ¥
+	mdiTabParams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE; // å…¶ä»–å¯ç”¨æ ·å¼...
+	mdiTabParams.m_bActiveTabCloseButton = TRUE;      // è®¾ç½®ä¸º FALSE ä¼šå°†å…³é—­æŒ‰é’®æ”¾ç½®åœ¨é€‰é¡¹å¡åŒºåŸŸçš„å³ä¾§
+	mdiTabParams.m_bTabIcons = FALSE;    // è®¾ç½®ä¸º TRUE å°†åœ¨ MDI é€‰é¡¹å¡ä¸Šå¯ç”¨æ–‡æ¡£å›¾æ ‡
+	mdiTabParams.m_bAutoColor = TRUE;    // è®¾ç½®ä¸º FALSE å°†ç¦ç”¨ MDI é€‰é¡¹å¡çš„è‡ªåŠ¨ç€è‰²
+	mdiTabParams.m_bDocumentMenu = TRUE; // åœ¨é€‰é¡¹å¡åŒºåŸŸçš„å³è¾¹ç¼˜å¯ç”¨æ–‡æ¡£èœå•
 	EnableMDITabbedGroups(TRUE, mdiTabParams);
 
 	if (!m_wndMenuBar.Create(this))
 	{
-		TRACE0("Î´ÄÜ´´½¨²Ëµ¥À¸\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("æœªèƒ½åˆ›å»ºèœå•æ \n");
+		return -1;      // æœªèƒ½åˆ›å»º
 	}
 
 	m_wndMenuBar.SetPaneStyle(m_wndMenuBar.GetPaneStyle() | CBRS_SIZE_DYNAMIC | CBRS_TOOLTIPS | CBRS_FLYBY);
 
-	// ·ÀÖ¹²Ëµ¥À¸ÔÚ¼¤»îÊ±»ñµÃ½¹µã
+	// é˜²æ­¢èœå•æ åœ¨æ¿€æ´»æ—¶è·å¾—ç„¦ç‚¹
 	CMFCPopupMenu::SetForceMenuFocus(FALSE);
 
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(theApp.m_bHiColorIcons ? IDR_MAINFRAME_256 : IDR_MAINFRAME))
 	{
-		TRACE0("Î´ÄÜ´´½¨¹¤¾ßÀ¸\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("æœªèƒ½åˆ›å»ºå·¥å…·æ \n");
+		return -1;      // æœªèƒ½åˆ›å»º
 	}
 
 	CString strToolBarName;
@@ -93,17 +93,17 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	ASSERT(bNameValid);
 	m_wndToolBar.EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
 
-	// ÔÊĞíÓÃ»§¶¨ÒåµÄ¹¤¾ßÀ¸²Ù×÷:
+	// å…è®¸ç”¨æˆ·å®šä¹‰çš„å·¥å…·æ æ“ä½œ:
 	InitUserToolbars(NULL, uiFirstUserToolBarId, uiLastUserToolBarId);
 
 	if (!m_wndStatusBar.Create(this))
 	{
-		TRACE0("Î´ÄÜ´´½¨×´Ì¬À¸\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("æœªèƒ½åˆ›å»ºçŠ¶æ€æ \n");
+		return -1;      // æœªèƒ½åˆ›å»º
 	}
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
 
-	// TODO: Èç¹ûÄú²»Ï£Íû¹¤¾ßÀ¸ºÍ²Ëµ¥À¸¿ÉÍ£¿¿£¬ÇëÉ¾³ıÕâÎåĞĞ
+	// TODO: å¦‚æœæ‚¨ä¸å¸Œæœ›å·¥å…·æ å’Œèœå•æ å¯åœé ï¼Œè¯·åˆ é™¤è¿™äº”è¡Œ
 	m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
@@ -111,31 +111,31 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockPane(&m_wndToolBar);
 
 
-	// ÆôÓÃ Visual Studio 2005 ÑùÊ½Í£¿¿´°¿ÚĞĞÎª
+	// å¯ç”¨ Visual Studio 2005 æ ·å¼åœé çª—å£è¡Œä¸º
 	CDockingManager::SetDockingMode(DT_SMART);
-	// ÆôÓÃ Visual Studio 2005 ÑùÊ½Í£¿¿´°¿Ú×Ô¶¯Òş²ØĞĞÎª
+	// å¯ç”¨ Visual Studio 2005 æ ·å¼åœé çª—å£è‡ªåŠ¨éšè—è¡Œä¸º
 	EnableAutoHidePanes(CBRS_ALIGN_ANY);
 
-	// ÆôÓÃÔöÇ¿µÄ´°¿Ú¹ÜÀí¶Ô»°¿ò
+	// å¯ç”¨å¢å¼ºçš„çª—å£ç®¡ç†å¯¹è¯æ¡†
 	EnableWindowsDialog(ID_WINDOW_MANAGER, ID_WINDOW_MANAGER, TRUE);
 
-	// ÆôÓÃ¹¤¾ßÀ¸ºÍÍ£¿¿´°¿Ú²Ëµ¥Ìæ»»
+	// å¯ç”¨å·¥å…·æ å’Œåœé çª—å£èœå•æ›¿æ¢
 	EnablePaneMenu(TRUE, ID_VIEW_CUSTOMIZE, strCustomize, ID_VIEW_TOOLBAR);
 
-	// ÆôÓÃ¿ìËÙ(°´×¡ Alt ÍÏ¶¯)¹¤¾ßÀ¸×Ô¶¨Òå
+	// å¯ç”¨å¿«é€Ÿ(æŒ‰ä½ Alt æ‹–åŠ¨)å·¥å…·æ è‡ªå®šä¹‰
 	CMFCToolBar::EnableQuickCustomization();
 
 	if (CMFCToolBar::GetUserImages() == NULL)
 	{
-		// ¼ÓÔØÓÃ»§¶¨ÒåµÄ¹¤¾ßÀ¸Í¼Ïñ
+		// åŠ è½½ç”¨æˆ·å®šä¹‰çš„å·¥å…·æ å›¾åƒ
 		if (m_UserImages.Load(_T(".\\UserImages.bmp")))
 		{
 			CMFCToolBar::SetUserImages(&m_UserImages);
 		}
 	}
 
-	// ÆôÓÃ²Ëµ¥¸öĞÔ»¯(×î½üÊ¹ÓÃµÄÃüÁî)
-	// TODO: ¶¨ÒåÄú×Ô¼ºµÄ»ù±¾ÃüÁî£¬È·±£Ã¿¸öÏÂÀ­²Ëµ¥ÖÁÉÙÓĞÒ»¸ö»ù±¾ÃüÁî¡£
+	// å¯ç”¨èœå•ä¸ªæ€§åŒ–(æœ€è¿‘ä½¿ç”¨çš„å‘½ä»¤)
+	// TODO: å®šä¹‰æ‚¨è‡ªå·±çš„åŸºæœ¬å‘½ä»¤ï¼Œç¡®ä¿æ¯ä¸ªä¸‹æ‹‰èœå•è‡³å°‘æœ‰ä¸€ä¸ªåŸºæœ¬å‘½ä»¤ã€‚
 	CList<UINT, UINT> lstBasicCommands;
 
 	lstBasicCommands.AddTail(ID_FILE_NEW);
@@ -159,8 +159,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
-	// ½«ÎÄµµÃûºÍÓ¦ÓÃ³ÌĞòÃû³ÆÔÚ´°¿Ú±êÌâÀ¸ÉÏµÄË³Ğò½øĞĞ½»»»¡£Õâ
-	// ½«¸Ä½øÈÎÎñÀ¸µÄ¿ÉÓÃĞÔ£¬ÒòÎªÏÔÊ¾µÄÎÄµµÃû´øÓĞËõÂÔÍ¼¡£
+	// å°†æ–‡æ¡£åå’Œåº”ç”¨ç¨‹åºåç§°åœ¨çª—å£æ ‡é¢˜æ ä¸Šçš„é¡ºåºè¿›è¡Œäº¤æ¢ã€‚è¿™
+	// å°†æ”¹è¿›ä»»åŠ¡æ çš„å¯ç”¨æ€§ï¼Œå› ä¸ºæ˜¾ç¤ºçš„æ–‡æ¡£åå¸¦æœ‰ç¼©ç•¥å›¾ã€‚
 	ModifyStyle(0, FWS_PREFIXTITLE);
 
 	return 0;
@@ -170,13 +170,13 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if( !CMDIFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
-	// TODO: ÔÚ´Ë´¦Í¨¹ıĞŞ¸Ä
-	//  CREATESTRUCT cs À´ĞŞ¸Ä´°¿ÚÀà»òÑùÊ½
+	// TODO: åœ¨æ­¤å¤„é€šè¿‡ä¿®æ”¹
+	//  CREATESTRUCT cs æ¥ä¿®æ”¹çª—å£ç±»æˆ–æ ·å¼
 
 	return TRUE;
 }
 
-// CMainFrame Õï¶Ï
+// CMainFrame è¯Šæ–­
 
 #ifdef _DEBUG
 void CMainFrame::AssertValid() const
@@ -191,7 +191,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 
-// CMainFrame ÏûÏ¢´¦Àí³ÌĞò
+// CMainFrame æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 void CMainFrame::OnWindowManager()
 {
@@ -200,7 +200,7 @@ void CMainFrame::OnWindowManager()
 
 void CMainFrame::OnViewCustomize()
 {
-	CMFCToolBarsCustomizeDialog* pDlgCust = new CMFCToolBarsCustomizeDialog(this, TRUE /* É¨Ãè²Ëµ¥*/);
+	CMFCToolBarsCustomizeDialog* pDlgCust = new CMFCToolBarsCustomizeDialog(this, TRUE /* æ‰«æèœå•*/);
 	pDlgCust->EnableUserDefinedToolbars();
 	pDlgCust->Create();
 }
@@ -302,7 +302,7 @@ void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
 
 BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext) 
 {
-	// »ùÀà½«Ö´ĞĞÕæÕıµÄ¹¤×÷
+	// åŸºç±»å°†æ‰§è¡ŒçœŸæ­£çš„å·¥ä½œ
 
 	if (!CMDIFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext))
 	{
@@ -310,7 +310,7 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 	}
 
 
-	// ÎªËùÓĞÓÃ»§¹¤¾ßÀ¸ÆôÓÃ×Ô¶¨Òå°´Å¥
+	// ä¸ºæ‰€æœ‰ç”¨æˆ·å·¥å…·æ å¯ç”¨è‡ªå®šä¹‰æŒ‰é’®
 	BOOL bNameValid;
 	CString strCustomize;
 	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);

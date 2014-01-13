@@ -1,4 +1,4 @@
-//{{NO_DEPENDENCIES}}
+ï»¿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by WinUI.rc
 //
@@ -31,7 +31,7 @@
 #define ID_VIEW_APPLOOK_WINDOWS_7	219
 #define IDS_EDIT_MENU				306
 
-// ÐÂ¶ÔÏóµÄÏÂÒ»×éÄ¬ÈÏÖµ
+// æ–°å¯¹è±¡çš„ä¸‹ä¸€ç»„é»˜è®¤å€¼
 //
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS

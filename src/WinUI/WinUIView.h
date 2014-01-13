@@ -1,5 +1,5 @@
-
-// WinUIView.h : CWinUIView ÀàµÄ½Ó¿Ú
+ï»¿
+// WinUIView.h : CWinUIView ç±»çš„æ¥å£
 //
 
 #pragma once
@@ -7,28 +7,28 @@
 
 class CWinUIView : public CScrollView
 {
-protected: // ½ö´ÓĞòÁĞ»¯´´½¨
+protected: // ä»…ä»åºåˆ—åŒ–åˆ›å»º
 	CWinUIView();
 	DECLARE_DYNCREATE(CWinUIView)
 
-// ÌØĞÔ
+// ç‰¹æ€§
 public:
 	CWinUIDoc* GetDocument() const;
 
-// ²Ù×÷
+// æ“ä½œ
 public:
 
-// ÖØĞ´
+// é‡å†™
 public:
-	virtual void OnDraw(CDC* pDC);  // ÖØĞ´ÒÔ»æÖÆ¸ÃÊÓÍ¼
+	virtual void OnDraw(CDC* pDC);  // é‡å†™ä»¥ç»˜åˆ¶è¯¥è§†å›¾
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-	virtual void OnInitialUpdate(); // ¹¹ÔìºóµÚÒ»´Îµ÷ÓÃ
+	virtual void OnInitialUpdate(); // æ„é€ åç¬¬ä¸€æ¬¡è°ƒç”¨
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 
-// ÊµÏÖ
+// å®ç°
 public:
 	virtual ~CWinUIView();
 #ifdef _DEBUG
@@ -41,7 +41,7 @@ protected:
 private:
 	void UpdateScroll();
 
-// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
@@ -53,7 +53,7 @@ public:
 //	virtual void OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/);
 };
 
-#ifndef _DEBUG  // WinUIView.cpp ÖĞµÄµ÷ÊÔ°æ±¾
+#ifndef _DEBUG  // WinUIView.cpp ä¸­çš„è°ƒè¯•ç‰ˆæœ¬
 inline CWinUIDoc* CWinUIView::GetDocument() const
    { return reinterpret_cast<CWinUIDoc*>(m_pDocument); }
 #endif

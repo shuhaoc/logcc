@@ -1,5 +1,5 @@
-
-// ChildFrm.cpp : CChildFrame ÀàµÄÊµÏÖ
+ï»¿
+// ChildFrm.cpp : CChildFrame ç±»çš„å®ç°
 //
 
 #include "stdafx.h"
@@ -18,11 +18,11 @@ IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWndEx)
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWndEx)
 END_MESSAGE_MAP()
 
-// CChildFrame ¹¹Ôì/Îö¹¹
+// CChildFrame æ„é€ /ææ„
 
 CChildFrame::CChildFrame()
 {
-	// TODO: ÔÚ´ËÌí¼Ó³ÉÔ±³õÊ¼»¯´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æˆå‘˜åˆå§‹åŒ–ä»£ç 
 }
 
 CChildFrame::~CChildFrame()
@@ -32,21 +32,21 @@ CChildFrame::~CChildFrame()
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
 {
 	return m_wndSplitter.Create(this,
-		2, 2,			// TODO: µ÷ÕûĞĞÊıºÍÁĞÊı
-		CSize(10, 10),	// TODO: µ÷Õû×îĞ¡´°¸ñ´óĞ¡
+		2, 2,			// TODO: è°ƒæ•´è¡Œæ•°å’Œåˆ—æ•°
+		CSize(10, 10),	// TODO: è°ƒæ•´æœ€å°çª—æ ¼å¤§å°
 		pContext);
 }
 
 BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: ÔÚ´Ë´¦Í¨¹ıĞŞ¸Ä CREATESTRUCT cs À´ĞŞ¸Ä´°¿ÚÀà»òÑùÊ½
+	// TODO: åœ¨æ­¤å¤„é€šè¿‡ä¿®æ”¹ CREATESTRUCT cs æ¥ä¿®æ”¹çª—å£ç±»æˆ–æ ·å¼
 	if( !CMDIChildWndEx::PreCreateWindow(cs) )
 		return FALSE;
 
 	return TRUE;
 }
 
-// CChildFrame Õï¶Ï
+// CChildFrame è¯Šæ–­
 
 #ifdef _DEBUG
 void CChildFrame::AssertValid() const
@@ -60,4 +60,4 @@ void CChildFrame::Dump(CDumpContext& dc) const
 }
 #endif //_DEBUG
 
-// CChildFrame ÏûÏ¢´¦Àí³ÌĞò
+// CChildFrame æ¶ˆæ¯å¤„ç†ç¨‹åº
