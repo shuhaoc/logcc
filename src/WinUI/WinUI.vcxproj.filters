@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{40c62f65-4540-4214-bf99-3546130b0aa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -55,11 +58,17 @@
     <ClInclude Include="WinUIDoc.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="WinUIView.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="LogPainterFactory.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="ILogItemPainter.h">
+      <Filter>View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="WinUIView.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LogPainterFactory.cpp">
+      <Filter>View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

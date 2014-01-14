@@ -13,12 +13,14 @@
 #include "WinUIView.h"
 #include "ILogQuery.h"
 #include "LogItem.h"
+#include "ILogItemPainter.h"
+#include "LogPainterFactory.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-#define LINE_HEIGHT 15
+static const unsigned LineHeight = 15;
 
 // CWinUIView
 
@@ -33,6 +35,8 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_WM_RBUTTONUP()
 	ON_WM_TIMER()
 	ON_WM_ERASEBKGND()
+	ON_WM_LBUTTONUP()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CWinUIView 构造/析构
@@ -66,51 +70,50 @@ void CWinUIView::OnDraw(CDC* pDC)
 
 	CRect clientRect;
 	GetClientRect(clientRect);
+	DEBUG_INFO(_T("客户区大小：") << clientRect.right << ", " << clientRect.bottom);
 
 	HDC memDC = ::CreateCompatibleDC(pDC->GetSafeHdc());
 
 	HBITMAP memBmp = ::CreateCompatibleBitmap(pDC->GetSafeHdc(), clientRect.Width(), clientRect.Height());
-	::SelectObject(memDC, memBmp);
-
-	::SetBkMode(memDC, TRANSPARENT);
+	HGDIOBJ oldBmp = ::SelectObject(memDC, memBmp);
 
 	HBRUSH bkgdBrush = reinterpret_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH));
 	::FillRect(memDC, clientRect, bkgdBrush);
 
-	HFONT font = ::CreateFont(LINE_HEIGHT - 1, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+	HFONT font = ::CreateFont(LineHeight - 1, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
 	// TODO: 在此处为本机数据添加绘制代码
-	//DEBUG_INFO(_T("重绘"));
+	DEBUG_INFO(_T("重绘"));
 
 	CPoint scrollPosition = GetScrollPosition();
-	//DEBUG_INFO(scrollPosition.x << ", " << scrollPosition.y);
+	DEBUG_INFO(_T("滚动条位置：") << scrollPosition.x << ", " << scrollPosition.y);
 
-	unsigned beginLine = scrollPosition.y / LINE_HEIGHT;
-	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LINE_HEIGHT;
+	// 以最后一行为基准，即显示的最后一行一定要对齐客户区底部
+	// 顶部可以显示半行
+	int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : scrollPosition.y % LineHeight - LineHeight;
+	unsigned beginLine = scrollPosition.y / LineHeight;
+	// -1是为了避免越界，+1是为了底部能显示半行
+	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
+	endLine = min(endLine, GetDocument()->logQuery->getCount());
+	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
 
-	//DEBUG_INFO(beginLine << ", " << endLine);
-
-	vector<LogItem*> vecLines = GetDocument()->logQuery->getRange(beginLine, endLine + 1);
+	vector<LogItem*> vecLines = GetDocument()->logQuery->getRange(beginLine, endLine);
 	for (unsigned i = 0; i < vecLines.size(); i++) {
 		LogItem* item = vecLines[i];
-
-		wostringstream oss;
-		oss << beginLine + i + 1 << " " << item->text;
-		wstring line = oss.str();
-		::TextOut(memDC, 0, i * LINE_HEIGHT, line.c_str(), line.size());
+		CRect rect = clientRect;
+		rect.top = yLogLineStart + i * LineHeight;
+		rect.bottom = rect.top + LineHeight;
+		LogPainterFactory::GetInstance()->GetSingleLinePainter()->Draw(memDC, rect, *item);
 	}
 
 	::BitBlt(pDC->GetSafeHdc(), scrollPosition.x, scrollPosition.y, clientRect.Width(), clientRect.Height(),
 		memDC, 0, 0, SRCCOPY);
 
-	//wostringstream ossLoad;
-	//ossLoad << pDoc->m_nLoadTimespan;
-	//wstring load = ossLoad.str();
-	//pDC->TextOut(100, 0, load.c_str(), load.size());
-
+	::SelectObject(memDC, oldFont);
 	::DeleteObject(font);
+	::SelectObject(memDC, oldBmp);
 	::DeleteObject(memBmp);
 	::DeleteDC(memDC);
 }
@@ -130,11 +133,15 @@ void CWinUIView::UpdateScroll()
 	GetClientRect(clientRect);
 	CSize totalSize;
 	totalSize.cx = clientRect.Width();
-	totalSize.cy = GetDocument()->logQuery->getLineCount() * LINE_HEIGHT;
-	//CSize pageSize(clientRect.Width(), LINE_HEIGHT * 30);
-	//CSize lineSize(clientRect.Width(), LINE_HEIGHT);
-	//SetScrollSizes(MM_TEXT, totalSize, pageSize, lineSize);
+	totalSize.cy = GetDocument()->logQuery->getCount() * LineHeight;
+#define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
+#ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
+	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
+	CSize lineSize(clientRect.Width(), LineHeight);
+	SetScrollSizes(MM_TEXT, totalSize, pageSize, lineSize);
+#else
 	SetScrollSizes(MM_TEXT, totalSize);
+#endif
 }
 
 
@@ -211,19 +218,31 @@ void CWinUIView::OnTimer(UINT_PTR nIDEvent)
 BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-
-	//return CScrollView::OnEraseBkgnd(pDC);
+#ifdef LOGCC_WINUI_USE_DEFAULT_ERASE_BACKGROUND
+	return CScrollView::OnEraseBkgnd(pDC);
+#else
 	return TRUE;
+#endif
 }
 
-//void CWinUIView::OnUpdate(CView* /*pSender*/, LPARAM lHint, CObject* /*pHint*/)
-//{
-//	// TODO: 在此添加专用代码和/或调用基类
-//	if (lHint == CWinUIDoc::UpdateView_FileOPen) {
-//		//CReadFileThread* thread = static_cast<CReadFileThread*>(
-//		//	::AfxBeginThread(RUNTIME_CLASS(CReadFileThread), 0, 0, CREATE_SUSPENDED));
-//		//thread->m_strFilePath = GetDocument()->GetPathName();
-//		//thread->m_hwndCallback = GetSafeHwnd();
-//		//thread->ResumeThread();
-//	}
-//}
+void CWinUIView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	CPoint scrollPosition = GetScrollPosition();
+	unsigned i = (scrollPosition.y + point.y) / LineHeight;
+	if (i < GetDocument()->logQuery->getCount()) {
+		GetDocument()->logQuery->select(i);
+		DEBUG_INFO(_T("选中行：") << i);
+	}
+	Invalidate();
+
+	CScrollView::OnLButtonUp(nFlags, point);
+}
+
+
+void CWinUIView::OnSize(UINT nType, int cx, int cy)
+{
+	CScrollView::OnSize(nType, cx, cy);
+	UpdateScroll();
+	// TODO: 在此处添加消息处理程序代码
+}

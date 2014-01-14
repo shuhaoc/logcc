@@ -32,7 +32,7 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-12
 	 */
-	virtual unsigned getLineCount() const = 0;
+	virtual unsigned getCount() const = 0;
 
 	/**
 	 * 获取索引在[begin, end)区间内的日志行
@@ -42,4 +42,21 @@ public:
 	 * @date 2014-1-12
 	 */
 	virtual vector<LogItem*> getRange(unsigned begin, unsigned end) const = 0;
+
+	/**
+	 * 根据索引获取日志行
+	 * @param i [in] 索引
+	 * @return 日志行
+	 * @author CaoShuhao
+	 * @date 2014-1-15
+	 */
+	virtual LogItem* getIndex(unsigned i) const = 0;
+
+	/**
+	 * 设置某行为选中，其他所有行为非选中
+	 * @param i [in] 索引
+	 * @author CaoShuhao
+	 * @date 2014-1-15
+	 */
+	virtual void select(unsigned i) const = 0;
 };
