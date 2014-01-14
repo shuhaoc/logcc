@@ -113,7 +113,7 @@ bool LogQueryImpl::load(const tstring& filePath) {
 	return true;
 }
 
-unsigned LogQueryImpl::getLineCount() const {
+unsigned LogQueryImpl::getCount() const {
 	return logItems.size();
 }
 
@@ -122,13 +122,25 @@ const tstring& LogQueryImpl::getFilePath() const {
 }
 
 vector<LogItem*> LogQueryImpl::getRange(unsigned begin, unsigned end) const {
+	assert(begin <= end && end <= logItems.size());
+
 	vector<LogItem*> subset;
 	for (unsigned i = begin; i < end; i++) {
-		if (i < logItems.size()) {
-			subset.push_back(logItems[i]);
-		} else {
-			break;
-		}
+		subset.push_back(logItems[i]);
 	}
 	return subset;
+}
+
+LogItem* LogQueryImpl::getIndex(unsigned i) const {
+	assert(i < logItems.size());
+	return logItems[i];
+}
+
+void LogQueryImpl::select(unsigned i) const {
+	assert(i < logItems.size());
+
+	for (unsigned j = 0; j < logItems.size(); j++) {
+		LogItem* item = logItems[j];
+		item->selected = (i == j);
+	}
 }

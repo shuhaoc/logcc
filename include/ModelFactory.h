@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <mrl/common/SingletonSupport.h>
 #include "ModelExport.h"

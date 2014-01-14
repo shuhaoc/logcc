@@ -1,17 +1,17 @@
-#pragma once
+ï»¿#pragma once
 
 /**
- * ÈÕÖ¾ĞĞ
+ * æ—¥å¿—è¡Œ
  * @author CaoShuhao
  * @date 2014-1-12
  */
 struct LogItem {
-	/* ĞĞºÅ */
+	/* è¡Œå· */
 	unsigned line;
 
-	/* Ô­ÎÄ */
+	/* åŸæ–‡ */
 	tstring text;
 
-	/* ÊÇ·ñÑ¡ÖĞ */
+	/* æ˜¯å¦é€‰ä¸­ */
 	bool selected;
 };
