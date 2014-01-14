@@ -3,7 +3,7 @@
 #include "ILogQuery.h"
 
 class LogQueryImpl : public ILogQuery {
-public:
+protected:
 	virtual ~LogQueryImpl();
 
 	virtual bool load(const tstring& filePath);
