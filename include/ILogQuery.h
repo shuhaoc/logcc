@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 
 struct LogItem;
 
 /**
- * ÈÕÖ¾²éÑ¯£¬Ã¿¸ö¶ÔÏó¶ÔÓ¦Ò»¸öÈÕÖ¾ÎÄ¼ş
+ * æ—¥å¿—æŸ¥è¯¢ï¼Œæ¯ä¸ªå¯¹è±¡å¯¹åº”ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶
  * @author CaoShuhao
  * @date 2014-1-12
  */
@@ -12,32 +12,32 @@ public:
 	virtual ~ILogQuery() { }
 
 	/**
-	 * Í¬²½¶ÁÈ¡ÎÄ¼ş²¢°´·ÖĞĞ
-	 * @param filePath [in] ÎÄ¼şÃû
+	 * åŒæ­¥è¯»å–æ–‡ä»¶å¹¶æŒ‰åˆ†è¡Œ
+	 * @param filePath [in] æ–‡ä»¶è·¯å¾„
 	 * @author CaoShuhao
 	 * @date 2014-1-12
 	 */
 	virtual bool load(const tstring& filePath) = 0;
 
 	/**
-	 * »ñÈ¡ÈÕÖ¾Â·¾¶
-	 * @return 
+	 * è·å–æ—¥å¿—è·¯å¾„
+	 * @return æ–‡ä»¶è·¯å¾„
 	 * @author CaoShuhao
 	 * @date 2014-1-12
 	 */
 	virtual const tstring& getFilePath() const = 0;
 
 	/**
-	 * ²éÑ¯ĞĞÊı
+	 * æŸ¥è¯¢è¡Œæ•°
 	 * @author CaoShuhao
 	 * @date 2014-1-12
 	 */
 	virtual unsigned getLineCount() const = 0;
 
 	/**
-	 * »ñÈ¡Ë÷ÒıÔÚ[begin, end)Çø¼äÄÚµÄÈÕÖ¾ĞĞ
-	 * @param begin [in] ÆğÊ¼ĞĞ
-	 * @param end [in] ×îºóÒ»ĞĞµÄÏÂÒ»ĞĞ
+	 * è·å–ç´¢å¼•åœ¨[begin, end)åŒºé—´å†…çš„æ—¥å¿—è¡Œ
+	 * @param begin [in] èµ·å§‹è¡Œ
+	 * @param end [in] æœ€åä¸€è¡Œçš„ä¸‹ä¸€è¡Œ
 	 * @author CaoShuhao
 	 * @date 2014-1-12
 	 */
