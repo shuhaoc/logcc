@@ -11,3 +11,5 @@ pdb/
 *.dll
 *.lib
 *.exp
+!mrl.lib
+!mrl.dll
