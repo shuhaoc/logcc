@@ -92,11 +92,11 @@ void CWinUIView::OnDraw(CDC* pDC)
 	CPoint scrollPosition = GetScrollPosition();
 	DEBUG_INFO(_T("滚动条位置：") << scrollPosition.x << ", " << scrollPosition.y);
 
-	// 以最后一行为基准，即显示的最后一行一定要对齐客户区底部
+	// UNDONE: 以最后一行为基准，即显示的最后一行一定要对齐客户区底部
 	// 顶部可以显示半行
 	int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : scrollPosition.y % LineHeight - LineHeight;
 	unsigned beginLine = scrollPosition.y / LineHeight;
-	// -1是为了避免越界，+1是为了底部能显示半行
+	// +1是为了底部能显示半行
 	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
 	endLine = min(endLine, GetDocument()->logQuery->getCount());
 	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
