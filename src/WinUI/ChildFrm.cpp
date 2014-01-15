@@ -38,7 +38,7 @@ CChildFrame::~CChildFrame()
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
 {
 #define LOGCC_WINUI_USE_SPLIT_VIEW
-#ifdef LOGCC_WINUI_USE_SPLIT_VIEW
+#ifndef LOGCC_WINUI_USE_SPLIT_VIEW
 	m_wndSplitter.Create(this,
 		2, 2,			// TODO: 调整行数和列数
 		CSize(10, 10),	// TODO: 调整最小窗格大小
