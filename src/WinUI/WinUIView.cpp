@@ -38,6 +38,8 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_WM_LBUTTONUP()
 	ON_WM_SIZE()
 	ON_WM_VSCROLL()
+	ON_WM_KEYUP()
+	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 // CWinUIView 构造/析构
@@ -125,6 +127,7 @@ void CWinUIView::OnInitialUpdate()
 
 	// TODO: 计算此视图的合计大小
 	UpdateScroll();
+	SetFocus();
 }
 
 void CWinUIView::UpdateScroll()
@@ -241,7 +244,6 @@ void CWinUIView::OnSize(UINT nType, int cx, int cy)
 	UpdateScroll();
 }
 
-
 void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
@@ -250,4 +252,76 @@ void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		Invalidate();
 	}
 	CScrollView::OnVScroll(nSBCode, nPos, pScrollBar);
+}
+
+
+void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	CPoint curPosition = GetScrollPosition();
+	if (::GetKeyState(VK_CONTROL) & 0x80000000)
+	{
+		if (nChar == VK_HOME)
+		{
+			// 跳到第一页
+			curPosition.y = 0;
+		}
+		else if (nChar == VK_END)
+		{
+			// 跳到最后一页，多出没事
+			curPosition.y = (GetDocument()->logQuery->getCount()) * LineHeight;
+		}
+		else if (nChar == VK_UP)
+		{
+			// 向上1行
+			curPosition.y -= LineHeight;
+			curPosition.y = max(curPosition.y, 0);
+		}
+		else if (nChar == VK_DOWN)
+		{
+			// 向下1行
+			curPosition.y += LineHeight;
+		}
+	}
+	if (nChar == VK_PRIOR)
+	{
+		// 向上1页
+		CRect clientRect;
+		GetClientRect(clientRect);
+		curPosition.y -= clientRect.Height() / LineHeight * LineHeight;
+		curPosition.y = max(curPosition.y, 0);
+	}
+	else if (nChar == VK_NEXT)
+	{
+		// 向下1页
+		CRect clientRect;
+		GetClientRect(clientRect);
+		curPosition.y += clientRect.Height() / LineHeight * LineHeight;
+	}
+	ScrollToPosition(curPosition);
+
+	CScrollView::OnKeyUp(nChar, nRepCnt, nFlags);
+}
+
+
+BOOL CWinUIView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	DEBUG_INFO(_T("zDelta = ") << zDelta << _T(", x = ") << pt.x << _T(", y = ") << pt.y);
+
+	CPoint curPosition = GetScrollPosition();
+	if (zDelta < 0)
+	{
+		// 向下10行
+		curPosition.y += LineHeight * 10;
+	}
+	else
+	{
+		// 向上10行
+		curPosition.y -= LineHeight * 10;
+		curPosition.y = max(curPosition.y, 0);
+	}
+	ScrollToPosition(curPosition);
+
+	return CScrollView::OnMouseWheel(nFlags, zDelta, pt);
 }
