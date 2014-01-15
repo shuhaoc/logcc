@@ -33,7 +33,7 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CWinUIView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
-	ON_WM_TIMER()
+//	ON_WM_TIMER()
 	ON_WM_ERASEBKGND()
 	ON_WM_LBUTTONUP()
 	ON_WM_SIZE()
@@ -42,7 +42,7 @@ END_MESSAGE_MAP()
 
 // CWinUIView 构造/析构
 
-CWinUIView::CWinUIView() : corrupt(false)
+CWinUIView::CWinUIView()
 {
 	// TODO: 在此处添加构造代码
 
@@ -92,7 +92,6 @@ void CWinUIView::OnDraw(CDC* pDC)
 	CPoint scrollPosition = GetScrollPosition();
 	DEBUG_INFO(_T("滚动条位置：") << scrollPosition.x << ", " << scrollPosition.y);
 
-	// UNDONE: 以最后一行为基准，即显示的最后一行一定要对齐客户区底部
 	// 顶部可以显示半行
 	int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : scrollPosition.y % LineHeight - LineHeight;
 	unsigned beginLine = scrollPosition.y / LineHeight;
@@ -118,8 +117,6 @@ void CWinUIView::OnDraw(CDC* pDC)
 	::SelectObject(memDC, oldBmp);
 	::DeleteObject(memBmp);
 	::DeleteDC(memDC);
-
-	corrupt = false;
 }
 
 void CWinUIView::OnInitialUpdate()
@@ -128,7 +125,6 @@ void CWinUIView::OnInitialUpdate()
 
 	// TODO: 计算此视图的合计大小
 	UpdateScroll();
-	SetTimer(0, 500, NULL);
 }
 
 void CWinUIView::UpdateScroll()
@@ -212,16 +208,6 @@ CWinUIDoc* CWinUIView::GetDocument() const // 非调试版本是内联的
 
 
 // CWinUIView 消息处理程序
-void CWinUIView::OnTimer(UINT_PTR nIDEvent)
-{
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	if (corrupt) {
-		DEBUG_INFO(_T("描画重叠挽救"));
-		Invalidate();
-	}
-	CScrollView::OnTimer(nIDEvent);
-}
-
 
 BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
 {
@@ -259,10 +245,9 @@ void CWinUIView::OnSize(UINT nType, int cx, int cy)
 void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	if (nSBCode != SB_ENDSCROLL)
+	if (nSBCode == SB_ENDSCROLL)
 	{
-		DEBUG_INFO(_T("滚动到：") << nPos);
-		corrupt = true;
+		Invalidate();
 	}
 	CScrollView::OnVScroll(nSBCode, nPos, pScrollBar);
 }
