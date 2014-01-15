@@ -70,6 +70,15 @@
     <ClInclude Include="ILogItemPainter.h">
       <Filter>View</Filter>
     </ClInclude>
+    <ClInclude Include="LogDetailView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LogCtrlView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LogTextView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinUI.cpp">
@@ -92,6 +101,15 @@
     </ClCompile>
     <ClCompile Include="LogPainterFactory.cpp">
       <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="LogDetailView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LogCtrlView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LogTextView.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

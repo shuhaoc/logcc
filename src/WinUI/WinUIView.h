@@ -41,6 +41,8 @@ protected:
 private:
 	void UpdateScroll();
 
+	bool corrupt;
+
 // 生成的消息映射函数
 protected:
 	afx_msg void OnFilePrintPreview();
@@ -52,6 +54,7 @@ public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };
 
 #ifndef _DEBUG  // WinUIView.cpp 中的调试版本

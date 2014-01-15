@@ -7,7 +7,9 @@
 
 #include "ChildFrm.h"
 #include "WinUIDoc.h"
+#include "LogCtrlView.h"
 #include "WinUIView.h"
+#include "LogTextView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,18 +37,19 @@ CChildFrame::~CChildFrame()
 
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
 {
-	//m_wndSplitter.Create(this,
-	//	2, 2,			// TODO: 调整行数和列数
-	//	CSize(10, 10),	// TODO: 调整最小窗格大小
-	//	pContext);
-	m_wndSplitter.CreateStatic(this, 2, 2);
-
-	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
-	m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
-	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
-	m_wndSplitter.CreateView(1, 1, RUNTIME_CLASS(CWinUIView), CSize(300, 300), pContext);
-
+#define LOGCC_WINUI_USE_SPLIT_VIEW
+#ifdef LOGCC_WINUI_USE_SPLIT_VIEW
+	m_wndSplitter.Create(this,
+		2, 2,			// TODO: 调整行数和列数
+		CSize(10, 10),	// TODO: 调整最小窗格大小
+		pContext);
+#else
+	m_wndSplitter.CreateStatic(this, 3, 1);
+	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CLogCtrlView), CSize(10, 10), pContext);
+	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CWinUIView), CSize(10, 10), pContext);
+	m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(CLogTextView), CSize(10, 10), pContext);
 	m_bSplitterCreated = true;
+#endif
 	return TRUE;
 }
 
@@ -84,8 +87,10 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy)
 	GetWindowRect(&rect);
 	if(m_bSplitterCreated)  // m_bSplitterCreated set in OnCreateClient
 	{
-		m_wndSplitter.SetColumnInfo(0, rect.Width() / 2, 10);
-		m_wndSplitter.SetColumnInfo(1, rect.Width() / 2, 10);
+		m_wndSplitter.SetColumnInfo(0, rect.Width(), 10);
+		m_wndSplitter.SetRowInfo(0, 50, 10); 
+		m_wndSplitter.SetRowInfo(1, max(rect.Height() - 200, 10), 10); 
+		m_wndSplitter.SetRowInfo(2, 150, 10); 
 		m_wndSplitter.RecalcLayout();
 	}
 }

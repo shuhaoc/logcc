@@ -136,11 +136,21 @@ LogItem* LogQueryImpl::getIndex(unsigned i) const {
 	return logItems[i];
 }
 
-void LogQueryImpl::select(unsigned i) const {
+void LogQueryImpl::select(unsigned i) {
 	assert(i < logItems.size());
 
 	for (unsigned j = 0; j < logItems.size(); j++) {
 		LogItem* item = logItems[j];
 		item->selected = (i == j);
+	}
+	forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); });
+}
+
+LogItem* LogQueryImpl::getSelected() const {
+	auto i = find_if(logItems.begin(), logItems.end(), [] (LogItem* p) { return p->selected; });
+	if (i != logItems.end()) {
+		return *i;
+	} else {
+		return NULL;
 	}
 }

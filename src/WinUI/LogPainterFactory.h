@@ -23,6 +23,15 @@ public:
 	 */
 	ILogItemPainter* GetSingleLinePainter() const;
 
+	/**
+	 * 详细视图中文本描画
+	 * @return 描画器
+	 * @author CaoShuhao
+	 * @date 2014-1-15
+	 */
+	ILogItemPainter* GetLineDetailPainter() const;
+
 private:
 	ILogItemPainter* singleLinePainter;
+	ILogItemPainter* lineDetailPainter;
 };

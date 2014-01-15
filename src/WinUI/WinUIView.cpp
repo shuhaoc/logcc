@@ -37,11 +37,12 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_WM_ERASEBKGND()
 	ON_WM_LBUTTONUP()
 	ON_WM_SIZE()
+	ON_WM_VSCROLL()
 END_MESSAGE_MAP()
 
 // CWinUIView 构造/析构
 
-CWinUIView::CWinUIView()
+CWinUIView::CWinUIView() : corrupt(false)
 {
 	// TODO: 在此处添加构造代码
 
@@ -70,7 +71,8 @@ void CWinUIView::OnDraw(CDC* pDC)
 
 	CRect clientRect;
 	GetClientRect(clientRect);
-	DEBUG_INFO(_T("客户区大小：") << clientRect.right << ", " << clientRect.bottom);
+	DEBUG_INFO(_T("客户区区域：") << clientRect.left << ", " << clientRect.top << ", "
+		<< clientRect.right << ", " << clientRect.bottom);
 
 	HDC memDC = ::CreateCompatibleDC(pDC->GetSafeHdc());
 
@@ -116,6 +118,8 @@ void CWinUIView::OnDraw(CDC* pDC)
 	::SelectObject(memDC, oldBmp);
 	::DeleteObject(memBmp);
 	::DeleteDC(memDC);
+
+	corrupt = false;
 }
 
 void CWinUIView::OnInitialUpdate()
@@ -133,7 +137,8 @@ void CWinUIView::UpdateScroll()
 	GetClientRect(clientRect);
 	CSize totalSize;
 	totalSize.cx = clientRect.Width();
-	totalSize.cy = GetDocument()->logQuery->getCount() * LineHeight;
+	// 加1是为了最后一行一定可见
+	totalSize.cy = (GetDocument()->logQuery->getCount() + 1) * LineHeight;
 #define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 #ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
@@ -210,7 +215,10 @@ CWinUIDoc* CWinUIView::GetDocument() const // 非调试版本是内联的
 void CWinUIView::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	Invalidate();
+	if (corrupt) {
+		DEBUG_INFO(_T("描画重叠挽救"));
+		Invalidate();
+	}
 	CScrollView::OnTimer(nIDEvent);
 }
 
@@ -245,4 +253,16 @@ void CWinUIView::OnSize(UINT nType, int cx, int cy)
 	CScrollView::OnSize(nType, cx, cy);
 	// TODO: 在此处添加消息处理程序代码
 	UpdateScroll();
+}
+
+
+void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (nSBCode != SB_ENDSCROLL)
+	{
+		DEBUG_INFO(_T("滚动到：") << nPos);
+		corrupt = true;
+	}
+	CScrollView::OnVScroll(nSBCode, nPos, pScrollBar);
 }

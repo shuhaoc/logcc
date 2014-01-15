@@ -16,7 +16,9 @@ protected:
 
 	virtual LogItem* getIndex(unsigned i) const;
 
-	virtual void select(unsigned i) const;
+	virtual void select(unsigned i);
+
+	virtual LogItem* getSelected() const;
 private:
 	tstring filePath;
 	vector<LogItem*> logItems;

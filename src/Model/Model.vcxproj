@@ -79,6 +79,9 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\ILogQuery.h" />
+    <ClInclude Include="..\..\include\ILogQueryObserver.h" />
+    <ClInclude Include="..\..\include\LogItem.h" />
     <ClInclude Include="..\..\include\ModelExport.h" />
     <ClInclude Include="..\..\include\ModelFactory.h" />
     <ClInclude Include="LogQueryImpl.h" />

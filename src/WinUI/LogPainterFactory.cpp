@@ -8,7 +8,7 @@ class LogSingleLinePainter : public ILogItemPainter {
 		int oldBkMode = ::SetBkMode(hdc, TRANSPARENT);
 
 		if (item.selected) {
-			HBRUSH bkgdBrush = ::CreateSolidBrush(RGB(214, 235, 255));
+			HBRUSH bkgdBrush = ::CreateSolidBrush(0x00FF9933);
 			HGDIOBJ oldBrush = ::SelectObject(hdc, bkgdBrush);
 
 			::FillRect(hdc, &rect, bkgdBrush);
@@ -28,16 +28,29 @@ class LogSingleLinePainter : public ILogItemPainter {
 	}
 };
 
+class LogLineDetailPainter : public ILogItemPainter {
+	virtual void Draw(HDC hdc, const RECT& rect, const LogItem& item) {
+		RECT drawRect = rect;
+		::DrawText(hdc, item.text.c_str(), item.text.size(), &drawRect, DT_NOCLIP | DT_WORDBREAK | DT_NOPREFIX);
+	}
+};
+
 SHLIB_COMMON_SINGLETON_SUPPORT_IMPLEMENT(LogPainterFactory)
 
 LogPainterFactory::LogPainterFactory()
-: singleLinePainter(new LogSingleLinePainter()) {
+: singleLinePainter(new LogSingleLinePainter())
+, lineDetailPainter(new LogLineDetailPainter()) {
 }
 
 LogPainterFactory::~LogPainterFactory() {
 	delete singleLinePainter;
+	delete lineDetailPainter;
 }
 
 ILogItemPainter* LogPainterFactory::GetSingleLinePainter() const {
 	return singleLinePainter;	
+}
+
+ILogItemPainter* LogPainterFactory::GetLineDetailPainter() const {
+	return lineDetailPainter;
 }

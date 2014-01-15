@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include <mrl/common/ObserverContainer.h>
+#include "ILogQueryObserver.h"
+
 struct LogItem;
 
 /**
@@ -7,7 +10,7 @@ struct LogItem;
  * @author CaoShuhao
  * @date 2014-1-12
  */
-class ILogQuery {
+class ILogQuery : public mrl::common::ObserverContainer<ILogQueryObserver> {
 public:
 	virtual ~ILogQuery() { }
 
@@ -58,5 +61,13 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-15
 	 */
-	virtual void select(unsigned i) const = 0;
+	virtual void select(unsigned i) = 0;
+
+	/**
+	 * 返回当前选中行，没有选中时返回NULL
+	 * @return 选中行
+	 * @author CaoShuhao
+	 * @date 2014-1-15
+	 */
+	virtual LogItem* getSelected() const = 0;
 };
