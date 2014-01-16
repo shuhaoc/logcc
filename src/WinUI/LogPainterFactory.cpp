@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "LogPainterFactory.h"
 #include "ILogItemPainter.h"
 #include "LogItem.h"
