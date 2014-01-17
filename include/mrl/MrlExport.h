@@ -1,9 +1,6 @@
 ﻿#pragma once
 
-// 静态链接取消此宏定义
-#define MRL_DYNAMIC_LINK
-
-#ifdef MRL_DYNAMIC_LINK
+#ifndef MRL_STATIC_LINK
 
 #ifdef MRL_EXPORTS
 
