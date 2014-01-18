@@ -339,15 +339,16 @@ BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	GetClientRect(rect);
 	if (rect.Height() >= length) return CScrollView::OnMouseWheel(nFlags, zDelta, pt);
 
+	int delta = rect.Height() / LineHeight / 2 * LineHeight;
 	if (zDelta < 0)
 	{
-		// 向下10行
-		curPosition.y += LineHeight * 10;
+		// 向下半页
+		curPosition.y += delta;
 	}
 	else
 	{
-		// 向上10行
-		curPosition.y -= LineHeight * 10;
+		// 向上半页
+		curPosition.y -= delta;
 		curPosition.y = max(curPosition.y, 0);
 	}
 	ScrollToPosition(curPosition);
