@@ -34,7 +34,6 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CWinUIView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
-//	ON_WM_TIMER()
 	ON_WM_ERASEBKGND()
 	ON_WM_LBUTTONUP()
 	ON_WM_SIZE()
@@ -45,7 +44,7 @@ END_MESSAGE_MAP()
 
 // CWinUIView 构造/析构
 
-CWinUIView::CWinUIView()
+CWinUIView::CWinUIView() : length(0)
 {
 	// TODO: 在此处添加构造代码
 
@@ -100,10 +99,10 @@ void CWinUIView::OnDraw(CDC* pDC)
 	unsigned beginLine = scrollPosition.y / LineHeight;
 	// +1是为了底部能显示半行
 	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
-	endLine = min(endLine, GetDocument()->queryResult->getCount());
+	endLine = min(endLine, GetDocument()->logQuery->getCurQueryResult()->getCount());
 	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
 
-	vector<LogItem*> vecLines = GetDocument()->queryResult->getRange(beginLine, endLine);
+	vector<LogItem*> vecLines = GetDocument()->logQuery->getCurQueryResult()->getRange(beginLine, endLine);
 	for (unsigned i = 0; i < vecLines.size(); i++) {
 		LogItem* item = vecLines[i];
 		CRect rect = clientRect;
@@ -126,9 +125,16 @@ void CWinUIView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
-	// TODO: 计算此视图的合计大小
+	GetDocument()->logQuery->registerObserver(this);
+
 	UpdateScroll();
 	SetFocus();
+}
+
+void CWinUIView::PostNcDestroy()
+{
+	GetDocument()->logQuery->unregisterObserver(this);
+	__super::PostNcDestroy();
 }
 
 void CWinUIView::UpdateScroll()
@@ -138,7 +144,7 @@ void CWinUIView::UpdateScroll()
 	CSize totalSize;
 	totalSize.cx = clientRect.Width();
 	// 加1是为了最后一行一定可见
-	totalSize.cy = (GetDocument()->queryResult->getCount() + 1) * LineHeight;
+	totalSize.cy = length = (GetDocument()->logQuery->getCurQueryResult()->getCount() + 1) * LineHeight;
 #define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 #ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
@@ -149,6 +155,11 @@ void CWinUIView::UpdateScroll()
 #endif
 }
 
+void CWinUIView::NotifyQueryResultChanged()
+{
+	UpdateScroll();
+	Invalidate();
+}
 
 // CWinUIView 打印
 
@@ -228,10 +239,12 @@ void CWinUIView::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint scrollPosition = GetScrollPosition();
 	unsigned i = (scrollPosition.y + point.y) / LineHeight;
-	if (i < GetDocument()->queryResult->getCount()) {
-		GetDocument()->logQuery->select(i);
+	if (i < GetDocument()->logQuery->getCurQueryResult()->getCount()) {
+		LogItem* item = GetDocument()->logQuery->getCurQueryResult()->getIndex(i);
+		GetDocument()->logQuery->setSelected(item);
 		DEBUG_INFO(_T("选中行：") << i);
 	}
+	// UNDONE: 使用Model驱动而不是Controller
 	Invalidate();
 
 	CScrollView::OnLButtonUp(nFlags, point);
@@ -260,6 +273,15 @@ void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint curPosition = GetScrollPosition();
+	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
+
+	// NOTICE: 很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
+	//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
+	CRect rect;
+	GetClientRect(rect);
+	if (rect.Height() >= length) return;
+
+
 	if (::GetKeyState(VK_CONTROL) & 0x80000000)
 	{
 		if (nChar == VK_HOME)
@@ -270,7 +292,7 @@ void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		else if (nChar == VK_END)
 		{
 			// 跳到最后一页，多出没事
-			curPosition.y = (GetDocument()->queryResult->getCount()) * LineHeight;
+			curPosition.y = (GetDocument()->logQuery->getCurQueryResult()->getCount()) * LineHeight;
 		}
 		else if (nChar == VK_UP)
 		{
@@ -311,6 +333,12 @@ BOOL CWinUIView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	DEBUG_INFO(_T("zDelta = ") << zDelta << _T(", x = ") << pt.x << _T(", y = ") << pt.y);
 
 	CPoint curPosition = GetScrollPosition();
+	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
+
+	CRect rect;
+	GetClientRect(rect);
+	if (rect.Height() >= length) return CScrollView::OnMouseWheel(nFlags, zDelta, pt);
+
 	if (zDelta < 0)
 	{
 		// 向下10行

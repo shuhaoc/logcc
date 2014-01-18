@@ -40,7 +40,7 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-15
 	 */
-	void forEachObserver(std::function<void (ObserverT*)> f) {
+	void forEachObserver(std::function<void (ObserverT*)> f) const {
 		std::for_each(observerList.begin(), observerList.end(), [f] (ObserverT* p) { f(p); });
 	}
 

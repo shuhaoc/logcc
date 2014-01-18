@@ -6,6 +6,11 @@
 
 #define MULTI_THREAD_GET_LINE
 
+
+LogQueryImpl::LogQueryImpl()
+	: curQueryResult(new LogQueryResult()) {
+}
+
 LogQueryImpl::~LogQueryImpl() {
 	for_each(logItems.begin(), logItems.end(), [] (LogItem* item) { delete item; });
 }
@@ -118,14 +123,12 @@ const tstring& LogQueryImpl::getFilePath() const {
 	return filePath;
 }
 
-void LogQueryImpl::select(unsigned i) {
-	assert(i < logItems.size());
-
+void LogQueryImpl::setSelected(const LogItem* item) {
 	for (unsigned j = 0; j < logItems.size(); j++) {
-		LogItem* item = logItems[j];
-		item->selected = (i == j);
+		LogItem* p = logItems[j];
+		p->selected = (item == p);
 	}
-	forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); });
+	notifyGeneralDataChanged();
 }
 
 LogItem* LogQueryImpl::getSelected() const {
@@ -137,14 +140,25 @@ LogItem* LogQueryImpl::getSelected() const {
 	}
 }
 
-LogQueryResult* LogQueryImpl::query(const tstring& criteria) const {
+LogQueryResult* LogQueryImpl::query(const tstring& criteria) {
 	vector<LogItem*> queryResult;
 	for (auto i = logItems.begin(); i != logItems.end(); i++) {
 		LogItem* item = *i;
-		// UNDONE: 在这里调用复杂的条件查询接口
+		// TODO: 在这里调用复杂的条件查询接口
 		if (item->text.find(criteria) != tstring::npos) {
 			queryResult.push_back(item);
 		}
 	}
-	return new LogQueryResult(queryResult);
+	setCurQueryResult(new LogQueryResult(queryResult));
+	notifyQueryResultChanged();
+	return curQueryResult;
+}
+
+void LogQueryImpl::setCurQueryResult(LogQueryResult* curQueryResult) {
+	delete this->curQueryResult;
+	this->curQueryResult = curQueryResult;
+}
+
+LogQueryResult* LogQueryImpl::getCurQueryResult() const {
+	return curQueryResult;
 }

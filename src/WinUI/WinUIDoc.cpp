@@ -25,22 +25,16 @@ END_MESSAGE_MAP()
 // CWinUIDoc 构造/析构
 
 CWinUIDoc::CWinUIDoc()
-	: queryResult(NULL)
 {
 	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
-	queryResult = new LogQueryResult();
 }
 
 CWinUIDoc::~CWinUIDoc()
 {
 	delete logQuery;
-	delete queryResult;
 }
 
-void CWinUIDoc::setQueryResult(LogQueryResult* queryResult) {
-	delete this->queryResult;
-	this->queryResult = queryResult;
-}
+// CWinUIDoc 命令
 
 BOOL CWinUIDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
@@ -53,7 +47,7 @@ BOOL CWinUIDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	clock_t end = ::clock();
 	DEBUG_INFO(end - begin);
 
-	setQueryResult(logQuery->query(_T("")));
+	logQuery->query(_T(""));
 
 	return TRUE;
 }
@@ -62,5 +56,3 @@ BOOL CWinUIDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	return TRUE;
 }
-
-// CWinUIDoc 命令

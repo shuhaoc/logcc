@@ -16,8 +16,8 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
+
 	ILogQuery* logQuery;
-	LogQueryResult* queryResult;
 
 // 操作
 public:
@@ -30,9 +30,6 @@ public:
 // 实现
 public:
 	virtual ~CWinUIDoc();
-
-protected:
-	void setQueryResult(LogQueryResult* queryResult);
 
 // 生成的消息映射函数
 protected:

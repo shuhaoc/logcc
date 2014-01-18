@@ -4,6 +4,11 @@
 
 struct LogItem;
 
+/**
+ * 日志查询结果集
+ * @author CaoShuhao
+ * @date 2014-1-19
+ */
 class LogQueryResult {
 public:
 	LogQueryResult() { }

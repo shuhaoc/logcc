@@ -5,6 +5,9 @@
 class LogQueryResult;
 
 class LogQueryImpl : public ILogQuery {
+public:
+	LogQueryImpl();
+
 protected:
 	virtual ~LogQueryImpl();
 
@@ -12,12 +15,18 @@ protected:
 
 	virtual const tstring& getFilePath() const;
 
-	virtual LogQueryResult* query(const tstring& criteria) const;
+	virtual LogQueryResult* query(const tstring& criteria);
 
-	virtual void select(unsigned i);
+	virtual void setSelected(const LogItem* item);
 
 	virtual LogItem* getSelected() const;
+
+	virtual LogQueryResult* getCurQueryResult() const;
+
 private:
+	void setCurQueryResult(LogQueryResult* curQueryResult);
+
 	tstring filePath;
 	vector<LogItem*> logItems;
+	LogQueryResult* curQueryResult;
 };
