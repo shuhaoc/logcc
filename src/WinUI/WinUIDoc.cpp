@@ -15,6 +15,7 @@
 
 #include "ModelFactory.h"
 #include "ILogQuery.h"
+#include "LogQueryResult.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,16 +34,25 @@ END_MESSAGE_MAP()
 // CWinUIDoc 构造/析构
 
 CWinUIDoc::CWinUIDoc()
+	: queryResult(NULL)
 {
 	// TODO: 在此添加一次性构造代码
 	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
+	queryResult = new LogQueryResult();
 }
 
 CWinUIDoc::~CWinUIDoc()
 {
 	delete logQuery;
+	delete queryResult;
 }
 
+void CWinUIDoc::setQueryResult(LogQueryResult* queryResult) {
+	delete this->queryResult;
+	this->queryResult = queryResult;
+}
+
+// UNDONE: 重写此方法，禁用新建
 //BOOL CWinUIDoc::OnNewDocument()
 //{
 //	if (!CDocument::OnNewDocument())
@@ -56,6 +66,7 @@ CWinUIDoc::~CWinUIDoc()
 
 // CWinUIDoc 序列化
 
+// UNDONE: 删除
 void CWinUIDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
@@ -68,6 +79,7 @@ void CWinUIDoc::Serialize(CArchive& ar)
 	}
 }
 
+// UNDONE: 删除
 #ifdef SHARED_HANDLERS
 
 // 缩略图的支持
@@ -123,7 +135,7 @@ void CWinUIDoc::SetSearchContent(const CString& value)
 #endif // SHARED_HANDLERS
 
 // CWinUIDoc 诊断
-
+// UNDONE: 删除
 #ifdef _DEBUG
 void CWinUIDoc::AssertValid() const
 {
@@ -152,7 +164,8 @@ BOOL CWinUIDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	clock_t end = ::clock();
 	DEBUG_INFO(end - begin);
 
-	//UpdateAllViews(NULL, UpdateView_FileOPen);
+	setQueryResult(logQuery->query(_T("")));
+
 	return TRUE;
 }
 
@@ -160,7 +173,5 @@ BOOL CWinUIDoc::OnOpenDocument(LPCTSTR lpszPathName)
 BOOL CWinUIDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	// TODO: 在此添加专用代码和/或调用基类
-
-	//return CDocument::OnSaveDocument(lpszPathName);
 	return TRUE;
 }

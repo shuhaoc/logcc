@@ -12,6 +12,7 @@
 #include "WinUIDoc.h"
 #include "WinUIView.h"
 #include "ILogQuery.h"
+#include "LogQueryResult.h"
 #include "LogItem.h"
 #include "ILogItemPainter.h"
 #include "LogPainterFactory.h"
@@ -99,10 +100,10 @@ void CWinUIView::OnDraw(CDC* pDC)
 	unsigned beginLine = scrollPosition.y / LineHeight;
 	// +1是为了底部能显示半行
 	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
-	endLine = min(endLine, GetDocument()->logQuery->getCount());
+	endLine = min(endLine, GetDocument()->queryResult->getCount());
 	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
 
-	vector<LogItem*> vecLines = GetDocument()->logQuery->getRange(beginLine, endLine);
+	vector<LogItem*> vecLines = GetDocument()->queryResult->getRange(beginLine, endLine);
 	for (unsigned i = 0; i < vecLines.size(); i++) {
 		LogItem* item = vecLines[i];
 		CRect rect = clientRect;
@@ -137,7 +138,7 @@ void CWinUIView::UpdateScroll()
 	CSize totalSize;
 	totalSize.cx = clientRect.Width();
 	// 加1是为了最后一行一定可见
-	totalSize.cy = (GetDocument()->logQuery->getCount() + 1) * LineHeight;
+	totalSize.cy = (GetDocument()->queryResult->getCount() + 1) * LineHeight;
 #define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 #ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
@@ -227,7 +228,7 @@ void CWinUIView::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint scrollPosition = GetScrollPosition();
 	unsigned i = (scrollPosition.y + point.y) / LineHeight;
-	if (i < GetDocument()->logQuery->getCount()) {
+	if (i < GetDocument()->queryResult->getCount()) {
 		GetDocument()->logQuery->select(i);
 		DEBUG_INFO(_T("选中行：") << i);
 	}
@@ -269,7 +270,7 @@ void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		else if (nChar == VK_END)
 		{
 			// 跳到最后一页，多出没事
-			curPosition.y = (GetDocument()->logQuery->getCount()) * LineHeight;
+			curPosition.y = (GetDocument()->queryResult->getCount()) * LineHeight;
 		}
 		else if (nChar == VK_UP)
 		{

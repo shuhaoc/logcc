@@ -2,6 +2,7 @@
 #include <mrl/utility/CodeConv.h>
 #include "LogQueryImpl.h"
 #include "LogItem.h"
+#include "LogQueryResult.h"
 
 #define MULTI_THREAD_GET_LINE
 
@@ -113,27 +114,8 @@ bool LogQueryImpl::load(const tstring& filePath) {
 	return true;
 }
 
-unsigned LogQueryImpl::getCount() const {
-	return logItems.size();
-}
-
 const tstring& LogQueryImpl::getFilePath() const {
 	return filePath;
-}
-
-vector<LogItem*> LogQueryImpl::getRange(unsigned begin, unsigned end) const {
-	assert(begin <= end && end <= logItems.size());
-
-	vector<LogItem*> subset;
-	for (unsigned i = begin; i < end; i++) {
-		subset.push_back(logItems[i]);
-	}
-	return subset;
-}
-
-LogItem* LogQueryImpl::getIndex(unsigned i) const {
-	assert(i < logItems.size());
-	return logItems[i];
 }
 
 void LogQueryImpl::select(unsigned i) {
@@ -153,4 +135,16 @@ LogItem* LogQueryImpl::getSelected() const {
 	} else {
 		return NULL;
 	}
+}
+
+LogQueryResult* LogQueryImpl::query(const tstring& criteria) const {
+	vector<LogItem*> queryResult;
+	for (auto i = logItems.begin(); i != logItems.end(); i++) {
+		LogItem* item = *i;
+		// UNDONE: 在这里调用复杂的条件查询接口
+		if (item->text.find(criteria) != tstring::npos) {
+			queryResult.push_back(item);
+		}
+	}
+	return new LogQueryResult(queryResult);
 }

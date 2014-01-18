@@ -62,5 +62,8 @@
     <ClCompile Include="ModelFactory.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="LogQueryResult.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

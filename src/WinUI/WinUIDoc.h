@@ -6,6 +6,7 @@
 #pragma once
 
 class ILogQuery;
+class LogQueryResult;
 
 class CWinUIDoc : public CDocument
 {
@@ -16,7 +17,7 @@ protected: // 仅从序列化创建
 // 特性
 public:
 	ILogQuery* logQuery;
-	//vector<string> m_vecLines;
+	LogQueryResult* queryResult;
 
 	//enum {
 	//	UpdateView_FileOPen = 1			// 不能从0开始，因为OnInitialUpdate会调用OnUpdate
@@ -43,6 +44,7 @@ public:
 #endif
 
 protected:
+	void setQueryResult(LogQueryResult* queryResult);
 
 // 生成的消息映射函数
 protected:
