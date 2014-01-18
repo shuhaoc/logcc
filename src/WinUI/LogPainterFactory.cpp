@@ -22,7 +22,8 @@ class LogSingleLinePainter : public ILogItemPainter {
 		tstring line = oss.str();
 
 		unsigned height = rect.top - rect.bottom;
-		::TextOut(hdc, rect.left, rect.top, line.c_str(), line.size());
+		::DrawText(hdc, line.c_str(), line.size(), const_cast<RECT*>(&rect),
+			DT_NOCLIP | DT_WORDBREAK | DT_NOPREFIX | DT_EXPANDTABS);
 
 		::SetBkMode(hdc, oldBkMode);
 	}
