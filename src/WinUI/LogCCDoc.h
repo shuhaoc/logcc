@@ -1,5 +1,5 @@
 ﻿
-// WinUIDoc.h : CWinUIDoc 类的接口
+// LogCCDoc.h : CLogCCDoc 类的接口
 //
 
 
@@ -8,11 +8,11 @@
 class ILogQuery;
 class LogQueryResult;
 
-class CWinUIDoc : public CDocument
+class CLogCCDoc : public CDocument
 {
 protected: // 仅从序列化创建
-	CWinUIDoc();
-	DECLARE_DYNCREATE(CWinUIDoc)
+	CLogCCDoc();
+	DECLARE_DYNCREATE(CLogCCDoc)
 
 // 特性
 public:
@@ -29,7 +29,7 @@ public:
 
 // 实现
 public:
-	virtual ~CWinUIDoc();
+	virtual ~CLogCCDoc();
 
 // 生成的消息映射函数
 protected:

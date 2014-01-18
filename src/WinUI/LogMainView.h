@@ -1,5 +1,5 @@
 ﻿
-// WinUIView.h : CWinUIView 类的接口
+// LogMainView.h : CLogMainView 类的接口
 //
 
 #pragma once
@@ -7,15 +7,15 @@
 #include "ILogQueryObserver.h"
 
 
-class CWinUIView : public CScrollView, public ILogQueryObserver
+class CLogMainView : public CScrollView, public ILogQueryObserver
 {
 protected: // 仅从序列化创建
-	CWinUIView();
-	DECLARE_DYNCREATE(CWinUIView)
+	CLogMainView();
+	DECLARE_DYNCREATE(CLogMainView)
 
 // 特性
 public:
-	CWinUIDoc* GetDocument() const;
+	CLogCCDoc* GetDocument() const;
 
 // 操作
 public:
@@ -33,7 +33,7 @@ protected:
 
 // 实现
 public:
-	virtual ~CWinUIView();
+	virtual ~CLogMainView();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -61,8 +61,8 @@ protected:
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 };
 
-#ifndef _DEBUG  // WinUIView.cpp 中的调试版本
-inline CWinUIDoc* CWinUIView::GetDocument() const
-   { return reinterpret_cast<CWinUIDoc*>(m_pDocument); }
+#ifndef _DEBUG  // LogMainView.cpp 中的调试版本
+inline CLogCCDoc* CLogMainView::GetDocument() const
+   { return reinterpret_cast<CLogCCDoc*>(m_pDocument); }
 #endif
 

@@ -5,22 +5,22 @@
 #include "stdafx.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
-#include "WinUI.h"
+#include "LogCC.h"
 #include "MainFrm.h"
 
 #include "ChildFrm.h"
-#include "WinUIDoc.h"
-#include "WinUIView.h"
+#include "LogCCDoc.h"
+#include "LogMainView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CWinUIApp
+// CLogCCApp
 
-BEGIN_MESSAGE_MAP(CWinUIApp, CWinAppEx)
-	ON_COMMAND(ID_APP_ABOUT, &CWinUIApp::OnAppAbout)
+BEGIN_MESSAGE_MAP(CLogCCApp, CWinAppEx)
+	ON_COMMAND(ID_APP_ABOUT, &CLogCCApp::OnAppAbout)
 	// 基于文件的标准文档命令
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
@@ -29,9 +29,9 @@ BEGIN_MESSAGE_MAP(CWinUIApp, CWinAppEx)
 END_MESSAGE_MAP()
 
 
-// CWinUIApp 构造
+// CLogCCApp 构造
 
-CWinUIApp::CWinUIApp()
+CLogCCApp::CLogCCApp()
 {
 	m_bHiColorIcons = TRUE;
 
@@ -52,14 +52,14 @@ CWinUIApp::CWinUIApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-// 唯一的一个 CWinUIApp 对象
+// 唯一的一个 CLogCCApp 对象
 
-CWinUIApp theApp;
+CLogCCApp theApp;
 
 
-// CWinUIApp 初始化
+// CLogCCApp 初始化
 
-BOOL CWinUIApp::InitInstance()
+BOOL CLogCCApp::InitInstance()
 {
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
@@ -113,9 +113,9 @@ BOOL CWinUIApp::InitInstance()
 	// 将用作文档、框架窗口和视图之间的连接
 	CMultiDocTemplate* pDocTemplate;
 	pDocTemplate = new CMultiDocTemplate(IDR_LogCCTYPE,
-		RUNTIME_CLASS(CWinUIDoc),
+		RUNTIME_CLASS(CLogCCDoc),
 		RUNTIME_CLASS(CChildFrame), // 自定义 MDI 子框架
-		RUNTIME_CLASS(CWinUIView));
+		RUNTIME_CLASS(CLogMainView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
@@ -153,7 +153,7 @@ BOOL CWinUIApp::InitInstance()
 	return TRUE;
 }
 
-int CWinUIApp::ExitInstance()
+int CLogCCApp::ExitInstance()
 {
 	//TODO: 处理可能已添加的附加资源
 	AfxOleTerm(FALSE);
@@ -161,7 +161,7 @@ int CWinUIApp::ExitInstance()
 	return CWinAppEx::ExitInstance();
 }
 
-// CWinUIApp 消息处理程序
+// CLogCCApp 消息处理程序
 
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
@@ -195,15 +195,15 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 // 用于运行对话框的应用程序命令
-void CWinUIApp::OnAppAbout()
+void CLogCCApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
 }
 
-// CWinUIApp 自定义加载/保存方法
+// CLogCCApp 自定义加载/保存方法
 
-void CWinUIApp::PreLoadState()
+void CLogCCApp::PreLoadState()
 {
 	BOOL bNameValid;
 	CString strName;
@@ -212,15 +212,15 @@ void CWinUIApp::PreLoadState()
 	GetContextMenuManager()->AddMenu(strName, IDR_POPUP_EDIT);
 }
 
-void CWinUIApp::LoadCustomState()
+void CLogCCApp::LoadCustomState()
 {
 }
 
-void CWinUIApp::SaveCustomState()
+void CLogCCApp::SaveCustomState()
 {
 }
 
-// CWinUIApp 消息处理程序
+// CLogCCApp 消息处理程序
 
 
 

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class CWinUIDoc;
+class CLogCCDoc;
 
 // CLogCtrlView 窗体视图
 
@@ -11,7 +11,7 @@ class CLogCtrlView : public CFormView
 protected:
 	CLogCtrlView();           // 动态创建所使用的受保护的构造函数
 	virtual ~CLogCtrlView();
-	CWinUIDoc* GetDocument() const;
+	CLogCCDoc* GetDocument() const;
 
 public:
 	enum { IDD = IDD_LOGCTRLVIEW };
@@ -35,7 +35,7 @@ public:
 };
 
 
-#ifndef _DEBUG  // WinUIView.cpp 中的调试版本
-inline CWinUIDoc* CLogCtrlView::GetDocument() const
-   { return reinterpret_cast<CWinUIDoc*>(m_pDocument); }
+#ifndef _DEBUG  // LogMainView.cpp 中的调试版本
+inline CLogCCDoc* CLogCtrlView::GetDocument() const
+   { return reinterpret_cast<CLogCCDoc*>(m_pDocument); }
 #endif

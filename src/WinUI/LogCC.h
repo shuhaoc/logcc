@@ -1,5 +1,5 @@
 ﻿
-// WinUI.h : WinUI 应用程序的主头文件
+// LogCC.h : WinUI 应用程序的主头文件
 //
 #pragma once
 
@@ -10,14 +10,14 @@
 #include "resource.h"       // 主符号
 
 
-// CWinUIApp:
+// CLogCCApp:
 // 有关此类的实现，请参阅 WinUI.cpp
 //
 
-class CWinUIApp : public CWinAppEx
+class CLogCCApp : public CWinAppEx
 {
 public:
-	CWinUIApp();
+	CLogCCApp();
 
 
 // 重写
@@ -37,4 +37,4 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CWinUIApp theApp;
+extern CLogCCApp theApp;

@@ -3,12 +3,12 @@
 //
 
 #include "stdafx.h"
-#include "WinUI.h"
+#include "LogCC.h"
 
 #include "ChildFrm.h"
-#include "WinUIDoc.h"
+#include "LogCCDoc.h"
 #include "LogCtrlView.h"
-#include "WinUIView.h"
+#include "LogMainView.h"
 #include "LogTextView.h"
 
 #ifdef _DEBUG
@@ -46,7 +46,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 #else
 	m_wndSplitter.CreateStatic(this, 3, 1);
 	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CLogCtrlView), CSize(10, 10), pContext);
-	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CWinUIView), CSize(10, 10), pContext);
+	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CLogMainView), CSize(10, 10), pContext);
 	m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(CLogTextView), CSize(10, 10), pContext);
 	m_bSplitterCreated = true;
 #endif

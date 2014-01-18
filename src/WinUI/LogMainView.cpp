@@ -1,16 +1,16 @@
 ﻿
-// WinUIView.cpp : CWinUIView 类的实现
+// LogMainView.cpp : CLogMainView 类的实现
 //
 
 #include "stdafx.h"
 // SHARED_HANDLERS 可以在实现预览、缩略图和搜索筛选器句柄的
 // ATL 项目中进行定义，并允许与该项目共享文档代码。
 #ifndef SHARED_HANDLERS
-#include "WinUI.h"
+#include "LogCC.h"
 #endif
 
-#include "WinUIDoc.h"
-#include "WinUIView.h"
+#include "LogCCDoc.h"
+#include "LogMainView.h"
 #include "ILogQuery.h"
 #include "LogQueryResult.h"
 #include "LogItem.h"
@@ -23,15 +23,15 @@
 
 static const unsigned LineHeight = 15;
 
-// CWinUIView
+// CLogMainView
 
-IMPLEMENT_DYNCREATE(CWinUIView, CScrollView)
+IMPLEMENT_DYNCREATE(CLogMainView, CScrollView)
 
-BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
+BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	// 标准打印命令
 	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CWinUIView::OnFilePrintPreview)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CLogMainView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_ERASEBKGND()
@@ -42,19 +42,19 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
-// CWinUIView 构造/析构
+// CLogMainView 构造/析构
 
-CWinUIView::CWinUIView() : length(0)
+CLogMainView::CLogMainView() : length(0)
 {
 	// TODO: 在此处添加构造代码
 
 }
 
-CWinUIView::~CWinUIView()
+CLogMainView::~CLogMainView()
 {
 }
 
-BOOL CWinUIView::PreCreateWindow(CREATESTRUCT& cs)
+BOOL CLogMainView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
@@ -62,11 +62,11 @@ BOOL CWinUIView::PreCreateWindow(CREATESTRUCT& cs)
 	return CScrollView::PreCreateWindow(cs);
 }
 
-// CWinUIView 绘制
+// CLogMainView 绘制
 
-void CWinUIView::OnDraw(CDC* pDC)
+void CLogMainView::OnDraw(CDC* pDC)
 {
-	CWinUIDoc* pDoc = GetDocument();
+	CLogCCDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
@@ -121,7 +121,7 @@ void CWinUIView::OnDraw(CDC* pDC)
 	::DeleteDC(memDC);
 }
 
-void CWinUIView::OnInitialUpdate()
+void CLogMainView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
@@ -131,13 +131,13 @@ void CWinUIView::OnInitialUpdate()
 	SetFocus();
 }
 
-void CWinUIView::PostNcDestroy()
+void CLogMainView::PostNcDestroy()
 {
 	GetDocument()->logQuery->unregisterObserver(this);
 	__super::PostNcDestroy();
 }
 
-void CWinUIView::UpdateScroll()
+void CLogMainView::UpdateScroll()
 {
 	CRect clientRect;
 	GetClientRect(clientRect);
@@ -155,45 +155,45 @@ void CWinUIView::UpdateScroll()
 #endif
 }
 
-void CWinUIView::NotifyQueryResultChanged()
+void CLogMainView::NotifyQueryResultChanged()
 {
 	UpdateScroll();
 	Invalidate();
 }
 
-// CWinUIView 打印
+// CLogMainView 打印
 
 
-void CWinUIView::OnFilePrintPreview()
+void CLogMainView::OnFilePrintPreview()
 {
 #ifndef SHARED_HANDLERS
 	AFXPrintPreview(this);
 #endif
 }
 
-BOOL CWinUIView::OnPreparePrinting(CPrintInfo* pInfo)
+BOOL CLogMainView::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	// 默认准备
 	return DoPreparePrinting(pInfo);
 }
 
-void CWinUIView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CLogMainView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: 添加额外的打印前进行的初始化过程
 }
 
-void CWinUIView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CLogMainView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: 添加打印后进行的清理过程
 }
 
-void CWinUIView::OnRButtonUp(UINT /* nFlags */, CPoint point)
+void CLogMainView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
 	ClientToScreen(&point);
 	OnContextMenu(this, point);
 }
 
-void CWinUIView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
+void CLogMainView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 {
 #ifndef SHARED_HANDLERS
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
@@ -201,30 +201,30 @@ void CWinUIView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 }
 
 
-// CWinUIView 诊断
+// CLogMainView 诊断
 
 #ifdef _DEBUG
-void CWinUIView::AssertValid() const
+void CLogMainView::AssertValid() const
 {
 	CScrollView::AssertValid();
 }
 
-void CWinUIView::Dump(CDumpContext& dc) const
+void CLogMainView::Dump(CDumpContext& dc) const
 {
 	CScrollView::Dump(dc);
 }
 
-CWinUIDoc* CWinUIView::GetDocument() const // 非调试版本是内联的
+CLogCCDoc* CLogMainView::GetDocument() const // 非调试版本是内联的
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CWinUIDoc)));
-	return (CWinUIDoc*)m_pDocument;
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CLogCCDoc)));
+	return (CLogCCDoc*)m_pDocument;
 }
 #endif //_DEBUG
 
 
-// CWinUIView 消息处理程序
+// CLogMainView 消息处理程序
 
-BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
+BOOL CLogMainView::OnEraseBkgnd(CDC* pDC)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 #ifdef LOGCC_WINUI_USE_DEFAULT_ERASE_BACKGROUND
@@ -234,7 +234,7 @@ BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
 #endif
 }
 
-void CWinUIView::OnLButtonUp(UINT nFlags, CPoint point)
+void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint scrollPosition = GetScrollPosition();
@@ -251,14 +251,14 @@ void CWinUIView::OnLButtonUp(UINT nFlags, CPoint point)
 }
 
 
-void CWinUIView::OnSize(UINT nType, int cx, int cy)
+void CLogMainView::OnSize(UINT nType, int cx, int cy)
 {
 	CScrollView::OnSize(nType, cx, cy);
 	// TODO: 在此处添加消息处理程序代码
 	UpdateScroll();
 }
 
-void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	if (nSBCode == SB_ENDSCROLL)
@@ -269,7 +269,7 @@ void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 }
 
 
-void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+void CLogMainView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint curPosition = GetScrollPosition();
@@ -327,7 +327,7 @@ void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 }
 
 
-BOOL CWinUIView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	DEBUG_INFO(_T("zDelta = ") << zDelta << _T(", x = ") << pt.x << _T(", y = ") << pt.y);

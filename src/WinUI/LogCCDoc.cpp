@@ -1,9 +1,9 @@
 ﻿
-// WinUIDoc.cpp : CWinUIDoc 类的实现
+// LogCCDoc.cpp : CLogCCDoc 类的实现
 //
 
 #include "stdafx.h"
-#include "WinUIDoc.h"
+#include "LogCCDoc.h"
 #include "ModelFactory.h"
 #include "ILogQuery.h"
 #include "LogQueryResult.h"
@@ -14,29 +14,29 @@
 
 #define MULTI_THREAD_GET_LINE
 
-// CWinUIDoc
+// CLogCCDoc
 
-IMPLEMENT_DYNCREATE(CWinUIDoc, CDocument)
+IMPLEMENT_DYNCREATE(CLogCCDoc, CDocument)
 
-BEGIN_MESSAGE_MAP(CWinUIDoc, CDocument)
+BEGIN_MESSAGE_MAP(CLogCCDoc, CDocument)
 END_MESSAGE_MAP()
 
 
-// CWinUIDoc 构造/析构
+// CLogCCDoc 构造/析构
 
-CWinUIDoc::CWinUIDoc()
+CLogCCDoc::CLogCCDoc()
 {
 	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
 }
 
-CWinUIDoc::~CWinUIDoc()
+CLogCCDoc::~CLogCCDoc()
 {
 	delete logQuery;
 }
 
-// CWinUIDoc 命令
+// CLogCCDoc 命令
 
-BOOL CWinUIDoc::OnOpenDocument(LPCTSTR lpszPathName)
+BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	if (!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
@@ -52,7 +52,7 @@ BOOL CWinUIDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return TRUE;
 }
 
-BOOL CWinUIDoc::OnSaveDocument(LPCTSTR lpszPathName)
+BOOL CLogCCDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	return TRUE;
 }
