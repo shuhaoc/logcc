@@ -4,6 +4,7 @@
 #include "ILogQueryObserver.h"
 
 struct LogItem;
+class LogQueryResult;
 
 /**
  * 日志查询，每个对象对应一个日志文件
@@ -45,4 +46,13 @@ public:
 	 * @date 2014-1-15
 	 */
 	virtual LogItem* getSelected() const = 0;
+
+	/**
+	 * 条件查询
+	 * @param criteria [in] 条件
+	 * @return 查询结果集
+	 * @author CaoShuhao
+	 * @date 2014-1-18
+	 */
+	virtual LogQueryResult* query(const tstring& criteria) const = 0;
 };
