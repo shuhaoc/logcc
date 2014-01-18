@@ -107,7 +107,6 @@
     <None Include="res\WinUI.rc2" />
     <None Include="res\WinUIDoc.ico" />
     <None Include="UserImages.bmp" />
-    <None Include="WinUI.reg" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />

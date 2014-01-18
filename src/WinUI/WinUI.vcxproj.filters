@@ -24,7 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="WinUI.reg" />
     <None Include="UserImages.bmp">
       <Filter>资源文件</Filter>
     </None>
