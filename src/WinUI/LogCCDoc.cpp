@@ -41,9 +41,13 @@ BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 
 	m_strPathName = lpszPathName;
+#ifdef _DEBUG
 	clock_t begin = ::clock();
+#endif // _DEBUG
 	logQuery->load(m_strPathName.GetBuffer());
+#ifdef _DEBUG
 	clock_t end = ::clock();
+#endif // _DEBUG
 	DEBUG_INFO(end - begin);
 
 	logQuery->query(_T(""));
@@ -55,4 +59,11 @@ BOOL CLogCCDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	// UNDONE: 另存为会进入此函数
 	return TRUE;
+}
+
+
+BOOL CLogCCDoc::OnNewDocument()
+{
+	// 禁用新建文档
+	return FALSE;
 }
