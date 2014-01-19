@@ -70,7 +70,7 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-20
 	 */
-	virtual void scrollTo(int y) = 0;
+	virtual void scrollTo(int y) = 0; // UNDONE: 奇怪的接口方法
 
 protected:
 	void notifyGeneralDataChanged() const {
