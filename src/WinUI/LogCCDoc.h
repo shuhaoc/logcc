@@ -8,6 +8,7 @@
 class ILogQuery;
 class LogQueryResult;
 
+// UNDONE: 重命名
 class CLogCCDoc : public CDocument
 {
 protected: // 仅从序列化创建

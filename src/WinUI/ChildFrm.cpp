@@ -68,8 +68,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	m_bSplitterCreated = true;
 
 	CWnd* ctrlView = m_wndSplitter.GetPane(0, 0);
-	LogCtrlController* ctrlController = new LogCtrlController();
-	ctrlController->Create(::AfxRegisterWndClass(0), NULL, 0, CRect(), this, 0);
+	LogCtrlController* ctrlController = new LogCtrlController(this);
 	ControllerMap[ctrlView->GetSafeHwnd()] = ctrlController->GetSafeHwnd();
 	OriginWndProcMap[ctrlView->GetSafeHwnd()] = reinterpret_cast<WNDPROC>(::SetWindowLong(
 		ctrlView->GetSafeHwnd(), GWL_WNDPROC, reinterpret_cast<long>(ControllerRouteProc)));

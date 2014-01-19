@@ -4,7 +4,7 @@
 
 // LogMainController
 
-class LogMainController : public CWnd, public ControllerBase
+class LogMainController : public ControllerBase
 {
 	DECLARE_DYNAMIC(LogMainController)
 

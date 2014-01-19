@@ -12,9 +12,9 @@
 
 IMPLEMENT_DYNAMIC(LogMainController, CWnd)
 
-LogMainController::LogMainController(CWnd* parent)
+LogMainController::LogMainController(CWnd* parent) : ControllerBase(parent)
 {
-	Create(::AfxRegisterWndClass(0), NULL, 0, CRect(), parent, 0);
+
 }
 
 LogMainController::~LogMainController()

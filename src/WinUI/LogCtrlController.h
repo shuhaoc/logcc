@@ -4,12 +4,12 @@
 
 // LogCtrlController
 
-class LogCtrlController : public CWnd, public ControllerBase
+class LogCtrlController : public ControllerBase
 {
 	DECLARE_DYNAMIC(LogCtrlController)
 
 public:
-	LogCtrlController();
+	LogCtrlController(CWnd* parent);
 	virtual ~LogCtrlController();
 
 private:

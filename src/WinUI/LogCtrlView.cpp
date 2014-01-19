@@ -68,6 +68,6 @@ void CLogCtrlView::OnEnChangeCriteria()
 BOOL CLogCtrlView::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 在此添加专用代码和/或调用基类
-
+	// UNDONE: 删除此函数
 	return __super::PreTranslateMessage(pMsg);
 }
