@@ -32,8 +32,8 @@ public:
 	virtual ~CLogMainView();
 
 protected:
-	virtual void NotifyGeneralDataChanged();
-	virtual void NotifyQueryResultChanged();
+	virtual void onGeneralDataChanged();
+	virtual void onQueryResultChanged();
 
 private:
 	void UpdateScroll();

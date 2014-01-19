@@ -66,10 +66,10 @@ public:
 
 protected:
 	void notifyGeneralDataChanged() const {
-		forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); });
+		forEachObserver([] (ILogQueryObserver* p) { p->onGeneralDataChanged(); });
 	}
 
 	void notifyQueryResultChanged() const {
-		forEachObserver([] (ILogQueryObserver* p) { p->NotifyQueryResultChanged(); });
+		forEachObserver([] (ILogQueryObserver* p) { p->onQueryResultChanged(); });
 	}
 };

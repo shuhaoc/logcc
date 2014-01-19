@@ -77,8 +77,7 @@ void CLogTextView::PostNcDestroy()
 	CFormView::PostNcDestroy();
 }
 
-void CLogTextView::NotifyGeneralDataChanged()
-{
+void CLogTextView::onGeneralDataChanged() {
 	LogItem* item = GetDocument()->logQuery->getSelected();
 	if (item) {
 		textEdit.SetWindowText(item->text.c_str());

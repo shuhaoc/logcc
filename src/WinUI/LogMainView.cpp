@@ -139,13 +139,11 @@ void CLogMainView::UpdateScroll()
 #endif
 }
 
-void CLogMainView::NotifyGeneralDataChanged()
-{
+void CLogMainView::onGeneralDataChanged() {
 	Invalidate();
 }
 
-void CLogMainView::NotifyQueryResultChanged()
-{
+void CLogMainView::onQueryResultChanged() {
 	UpdateScroll();
 	Invalidate();
 }

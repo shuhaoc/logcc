@@ -12,12 +12,12 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-15
 	 */
-	virtual void NotifyGeneralDataChanged() { };
+	virtual void onGeneralDataChanged() { };
 
 	/**
 	 * 查询结果变更
 	 * @author CaoShuhao
 	 * @date 2014-1-19
 	 */
-	virtual void NotifyQueryResultChanged() { };
+	virtual void onQueryResultChanged() { };
 };
