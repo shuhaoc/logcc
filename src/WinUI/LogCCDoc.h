@@ -29,6 +29,7 @@ public:
 
 // 重写
 public:
+	virtual BOOL OnNewDocument();
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 
@@ -40,5 +41,5 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-	virtual BOOL OnNewDocument();
+	afx_msg void OnUpdateFileSaveAs(CCmdUI *pCmdUI);
 };

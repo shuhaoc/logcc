@@ -17,6 +17,7 @@
 IMPLEMENT_DYNCREATE(CLogCCDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CLogCCDoc, CDocument)
+	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, &CLogCCDoc::OnUpdateFileSaveAs)
 END_MESSAGE_MAP()
 
 
@@ -66,4 +67,11 @@ BOOL CLogCCDoc::OnNewDocument()
 {
 	// 禁用新建文档
 	return FALSE;
+}
+
+
+void CLogCCDoc::OnUpdateFileSaveAs(CCmdUI *pCmdUI)
+{
+	// UNDONE: 暂时禁用另存为，实现后去掉此函数
+	pCmdUI->Enable(FALSE);
 }
