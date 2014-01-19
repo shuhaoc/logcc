@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <IMfcView.h>
+
 class CLogCCDoc;
 
 // CLogCtrlView 窗体视图
@@ -32,6 +34,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnEnChangeCriteria();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 

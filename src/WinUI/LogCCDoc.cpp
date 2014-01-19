@@ -12,8 +12,6 @@
 #define new DEBUG_NEW
 #endif
 
-#define MULTI_THREAD_GET_LINE
-
 // CLogCCDoc
 
 IMPLEMENT_DYNCREATE(CLogCCDoc, CDocument)
@@ -38,6 +36,7 @@ CLogCCDoc::~CLogCCDoc()
 
 BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
+	// UNDONE: 不需要调用基类方法
 	if (!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
 

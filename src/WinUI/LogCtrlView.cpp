@@ -62,5 +62,12 @@ CLogCCDoc* CLogCtrlView::GetDocument() const // 非调试版本是内联的
 void CLogCtrlView::OnEnChangeCriteria()
 {
 	UpdateData(TRUE);
-	GetDocument()->logQuery->query(criteria.GetBuffer());
+	GetDocument()->criteria = criteria.GetBuffer();
+}
+
+BOOL CLogCtrlView::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	return __super::PreTranslateMessage(pMsg);
 }
