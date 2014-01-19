@@ -17,9 +17,9 @@ public:
 	CLogCCDoc* GetDocument() const;
 	enum { IDD = IDD_LOGTEXTVIEW };
 #ifdef _DEBUG
-	virtual void AssertValid() const;
+//	virtual void AssertValid() const;
 #ifndef _WIN32_WCE
-	virtual void Dump(CDumpContext& dc) const;
+//	virtual void Dump(CDumpContext& dc) const;
 #endif
 #endif
 	virtual void NotifyGeneralDataChanged();

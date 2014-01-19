@@ -31,7 +31,7 @@ BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	// 标准打印命令
 	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CLogMainView::OnFilePrintPreview)
+//	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CLogMainView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_ERASEBKGND()
@@ -54,13 +54,13 @@ CLogMainView::~CLogMainView()
 {
 }
 
-BOOL CLogMainView::PreCreateWindow(CREATESTRUCT& cs)
-{
-	// TODO: 在此处通过修改
-	//  CREATESTRUCT cs 来修改窗口类或样式
-
-	return CScrollView::PreCreateWindow(cs);
-}
+//BOOL CLogMainView::PreCreateWindow(CREATESTRUCT& cs)
+//{
+//	// TODO: 在此处通过修改
+//	//  CREATESTRUCT cs 来修改窗口类或样式
+//
+//	return CScrollView::PreCreateWindow(cs);
+//}
 
 // CLogMainView 绘制
 
@@ -164,28 +164,28 @@ void CLogMainView::NotifyQueryResultChanged()
 // CLogMainView 打印
 
 
-void CLogMainView::OnFilePrintPreview()
-{
-#ifndef SHARED_HANDLERS
-	AFXPrintPreview(this);
-#endif
-}
+//void CLogMainView::OnFilePrintPreview()
+//{
+//#ifndef SHARED_HANDLERS
+//	AFXPrintPreview(this);
+//#endif
+//}
 
-BOOL CLogMainView::OnPreparePrinting(CPrintInfo* pInfo)
-{
-	// 默认准备
-	return DoPreparePrinting(pInfo);
-}
+//BOOL CLogMainView::OnPreparePrinting(CPrintInfo* pInfo)
+//{
+//	// 默认准备
+//	return DoPreparePrinting(pInfo);
+//}
 
-void CLogMainView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-	// TODO: 添加额外的打印前进行的初始化过程
-}
+//void CLogMainView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+//{
+//	// TODO: 添加额外的打印前进行的初始化过程
+//}
 
-void CLogMainView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-	// TODO: 添加打印后进行的清理过程
-}
+//void CLogMainView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+//{
+//	// TODO: 添加打印后进行的清理过程
+//}
 
 void CLogMainView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
@@ -206,15 +206,15 @@ void CLogMainView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 // CLogMainView 诊断
 
 #ifdef _DEBUG
-void CLogMainView::AssertValid() const
-{
-	CScrollView::AssertValid();
-}
+//void CLogMainView::AssertValid() const
+//{
+//	CScrollView::AssertValid();
+//}
 
-void CLogMainView::Dump(CDumpContext& dc) const
-{
-	CScrollView::Dump(dc);
-}
+//void CLogMainView::Dump(CDumpContext& dc) const
+//{
+//	CScrollView::Dump(dc);
+//}
 
 CLogCCDoc* CLogMainView::GetDocument() const // 非调试版本是内联的
 {

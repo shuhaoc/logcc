@@ -37,16 +37,16 @@ END_MESSAGE_MAP()
 // CLogTextView 诊断
 
 #ifdef _DEBUG
-void CLogTextView::AssertValid() const
-{
-	CFormView::AssertValid();
-}
+//void CLogTextView::AssertValid() const
+//{
+//	CFormView::AssertValid();
+//}
 
 #ifndef _WIN32_WCE
-void CLogTextView::Dump(CDumpContext& dc) const
-{
-	CFormView::Dump(dc);
-}
+//void CLogTextView::Dump(CDumpContext& dc) const
+//{
+//	CFormView::Dump(dc);
+//}
 #endif
 
 CLogCCDoc* CLogTextView::GetDocument() const // 非调试版本是内联的
