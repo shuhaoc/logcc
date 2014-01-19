@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <IMfcView.h>
-
 class CLogCCDoc;
 
 // CLogCtrlView 窗体视图
