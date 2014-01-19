@@ -14,11 +14,11 @@ WinUI.vcxproj.filters
     这是使用“应用程序向导”生成的 VC++ 项目筛选器文件。
     它包含有关项目文件与筛选器之间的关联信息。在 IDE 中，通过这种关联，在特定节点下以分组形式显示具有相似扩展名的文件。例如，“.cpp”文件与“源文件”筛选器关联。
 
-WinUI.h
-这是应用程序的主要头文件。它包括其他项目特定的头文件(包括 Resource.h)，并声明 CWinUIApp 应用程序类。
+LogCC.h
+这是应用程序的主要头文件。它包括其他项目特定的头文件(包括 Resource.h)，并声明 CLogCCApp 应用程序类。
 
-WinUI.cpp
-这是包含应用程序类 CWinUIApp 的主要应用程序源文件。
+LogCC.cpp
+这是包含应用程序类 CLogCCApp 的主要应用程序源文件。
 
 WinUI.rc
 这是程序使用的所有 Microsoft Windows 资源的列表。它包括 RES 子目录中存储的图标、位图和光标。此文件可以直接在 Microsoft Visual C++ 中进行编辑。项目资源位于 2052 中。
@@ -54,8 +54,8 @@ ChildFrm.h，ChildFrm.cpp
 
 应用程序向导创建一个文档类型和一个视图:
 
-WinUIDoc.h，WinUIDoc.cpp - 文档
-这些文件包含 CWinUIDoc 类。编辑这些文件可以添加特殊文档数据并可实现文件保存和加载(通过 CWinUIDoc::Serialize)。
+LogCCDoc.h，LogCCDoc.cpp - 文档
+这些文件包含 CLogCCDoc 类。编辑这些文件可以添加特殊文档数据并可实现文件保存和加载(通过 CLogCCDoc::Serialize)。
 文档将具有下列字符串:
 文件扩展名:      log
 文件类型 ID:        LogCC.Document
@@ -65,12 +65,12 @@ WinUIDoc.h，WinUIDoc.cpp - 文档
 文件的新简称: LogCC
 文件类型全名: LogCC.Document
 
-WinUIView.h，WinUIView.cpp - 文档的视图
-这些文件包含 CWinUIView 类。
-CWinUIView 对象用于查看 CWinUIDoc 对象。
+LogMainView.h，LogMainView.cpp - 文档的视图
+这些文件包含 CLogMainView 类。
+CLogMainView 对象用于查看 CLogCCDoc 对象。
 
 res\WinUIDoc.ico
-这是图标文件，它用作 CWinUIDoc 类的 MDI 子窗口的图标。此图标包括在主要资源文件 WinUI.rc 中。
+这是图标文件，它用作 CLogCCDoc 类的 MDI 子窗口的图标。此图标包括在主要资源文件 WinUI.rc 中。
 
 
 

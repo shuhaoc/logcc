@@ -1,17 +1,18 @@
 ﻿
-// WinUIView.cpp : CWinUIView 类的实现
+// LogMainView.cpp : CLogMainView 类的实现
 //
 
 #include "stdafx.h"
 // SHARED_HANDLERS 可以在实现预览、缩略图和搜索筛选器句柄的
 // ATL 项目中进行定义，并允许与该项目共享文档代码。
 #ifndef SHARED_HANDLERS
-#include "WinUI.h"
+#include "LogCC.h"
 #endif
 
-#include "WinUIDoc.h"
-#include "WinUIView.h"
+#include "LogCCDoc.h"
+#include "LogMainView.h"
 #include "ILogQuery.h"
+#include "LogQueryResult.h"
 #include "LogItem.h"
 #include "ILogItemPainter.h"
 #include "LogPainterFactory.h"
@@ -22,18 +23,17 @@
 
 static const unsigned LineHeight = 15;
 
-// CWinUIView
+// CLogMainView
 
-IMPLEMENT_DYNCREATE(CWinUIView, CScrollView)
+IMPLEMENT_DYNCREATE(CLogMainView, CScrollView)
 
-BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
+BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	// 标准打印命令
 	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CWinUIView::OnFilePrintPreview)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CLogMainView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
-//	ON_WM_TIMER()
 	ON_WM_ERASEBKGND()
 	ON_WM_LBUTTONUP()
 	ON_WM_SIZE()
@@ -42,19 +42,19 @@ BEGIN_MESSAGE_MAP(CWinUIView, CScrollView)
 	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
-// CWinUIView 构造/析构
+// CLogMainView 构造/析构
 
-CWinUIView::CWinUIView()
+CLogMainView::CLogMainView() : length(0)
 {
 	// TODO: 在此处添加构造代码
 
 }
 
-CWinUIView::~CWinUIView()
+CLogMainView::~CLogMainView()
 {
 }
 
-BOOL CWinUIView::PreCreateWindow(CREATESTRUCT& cs)
+BOOL CLogMainView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
@@ -62,11 +62,11 @@ BOOL CWinUIView::PreCreateWindow(CREATESTRUCT& cs)
 	return CScrollView::PreCreateWindow(cs);
 }
 
-// CWinUIView 绘制
+// CLogMainView 绘制
 
-void CWinUIView::OnDraw(CDC* pDC)
+void CLogMainView::OnDraw(CDC* pDC)
 {
-	CWinUIDoc* pDoc = GetDocument();
+	CLogCCDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
@@ -99,10 +99,10 @@ void CWinUIView::OnDraw(CDC* pDC)
 	unsigned beginLine = scrollPosition.y / LineHeight;
 	// +1是为了底部能显示半行
 	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
-	endLine = min(endLine, GetDocument()->logQuery->getCount());
+	endLine = min(endLine, GetDocument()->logQuery->getCurQueryResult()->getCount());
 	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
 
-	vector<LogItem*> vecLines = GetDocument()->logQuery->getRange(beginLine, endLine);
+	vector<LogItem*> vecLines = GetDocument()->logQuery->getCurQueryResult()->getRange(beginLine, endLine);
 	for (unsigned i = 0; i < vecLines.size(); i++) {
 		LogItem* item = vecLines[i];
 		CRect rect = clientRect;
@@ -121,23 +121,30 @@ void CWinUIView::OnDraw(CDC* pDC)
 	::DeleteDC(memDC);
 }
 
-void CWinUIView::OnInitialUpdate()
+void CLogMainView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
-	// TODO: 计算此视图的合计大小
+	GetDocument()->logQuery->registerObserver(this);
+
 	UpdateScroll();
 	SetFocus();
 }
 
-void CWinUIView::UpdateScroll()
+void CLogMainView::PostNcDestroy()
+{
+	GetDocument()->logQuery->unregisterObserver(this);
+	__super::PostNcDestroy();
+}
+
+void CLogMainView::UpdateScroll()
 {
 	CRect clientRect;
 	GetClientRect(clientRect);
 	CSize totalSize;
 	totalSize.cx = clientRect.Width();
 	// 加1是为了最后一行一定可见
-	totalSize.cy = (GetDocument()->logQuery->getCount() + 1) * LineHeight;
+	totalSize.cy = length = (GetDocument()->logQuery->getCurQueryResult()->getCount() + 1) * LineHeight;
 #define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 #ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
@@ -148,40 +155,47 @@ void CWinUIView::UpdateScroll()
 #endif
 }
 
+void CLogMainView::NotifyQueryResultChanged()
+{
+	UpdateScroll();
+	Invalidate();
+}
 
-// CWinUIView 打印
+// CLogMainView 打印
 
 
-void CWinUIView::OnFilePrintPreview()
+void CLogMainView::OnFilePrintPreview()
 {
 #ifndef SHARED_HANDLERS
 	AFXPrintPreview(this);
 #endif
 }
 
-BOOL CWinUIView::OnPreparePrinting(CPrintInfo* pInfo)
+BOOL CLogMainView::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	// 默认准备
 	return DoPreparePrinting(pInfo);
 }
 
-void CWinUIView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CLogMainView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: 添加额外的打印前进行的初始化过程
 }
 
-void CWinUIView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CLogMainView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: 添加打印后进行的清理过程
 }
 
-void CWinUIView::OnRButtonUp(UINT /* nFlags */, CPoint point)
+void CLogMainView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
+#ifdef LOGCC_WINUI_MAIN_VIEW_ENABLE_CONTEXT_MENU
 	ClientToScreen(&point);
 	OnContextMenu(this, point);
+#endif
 }
 
-void CWinUIView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
+void CLogMainView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 {
 #ifndef SHARED_HANDLERS
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
@@ -189,30 +203,30 @@ void CWinUIView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 }
 
 
-// CWinUIView 诊断
+// CLogMainView 诊断
 
 #ifdef _DEBUG
-void CWinUIView::AssertValid() const
+void CLogMainView::AssertValid() const
 {
 	CScrollView::AssertValid();
 }
 
-void CWinUIView::Dump(CDumpContext& dc) const
+void CLogMainView::Dump(CDumpContext& dc) const
 {
 	CScrollView::Dump(dc);
 }
 
-CWinUIDoc* CWinUIView::GetDocument() const // 非调试版本是内联的
+CLogCCDoc* CLogMainView::GetDocument() const // 非调试版本是内联的
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CWinUIDoc)));
-	return (CWinUIDoc*)m_pDocument;
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CLogCCDoc)));
+	return (CLogCCDoc*)m_pDocument;
 }
 #endif //_DEBUG
 
 
-// CWinUIView 消息处理程序
+// CLogMainView 消息处理程序
 
-BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
+BOOL CLogMainView::OnEraseBkgnd(CDC* pDC)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 #ifdef LOGCC_WINUI_USE_DEFAULT_ERASE_BACKGROUND
@@ -222,29 +236,31 @@ BOOL CWinUIView::OnEraseBkgnd(CDC* pDC)
 #endif
 }
 
-void CWinUIView::OnLButtonUp(UINT nFlags, CPoint point)
+void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint scrollPosition = GetScrollPosition();
 	unsigned i = (scrollPosition.y + point.y) / LineHeight;
-	if (i < GetDocument()->logQuery->getCount()) {
-		GetDocument()->logQuery->select(i);
+	if (i < GetDocument()->logQuery->getCurQueryResult()->getCount()) {
+		LogItem* item = GetDocument()->logQuery->getCurQueryResult()->getIndex(i);
+		GetDocument()->logQuery->setSelected(item);
 		DEBUG_INFO(_T("选中行：") << i);
 	}
+	// UNDONE: 使用Model驱动而不是Controller
 	Invalidate();
 
 	CScrollView::OnLButtonUp(nFlags, point);
 }
 
 
-void CWinUIView::OnSize(UINT nType, int cx, int cy)
+void CLogMainView::OnSize(UINT nType, int cx, int cy)
 {
 	CScrollView::OnSize(nType, cx, cy);
 	// TODO: 在此处添加消息处理程序代码
 	UpdateScroll();
 }
 
-void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	if (nSBCode == SB_ENDSCROLL)
@@ -255,10 +271,19 @@ void CWinUIView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 }
 
 
-void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+void CLogMainView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint curPosition = GetScrollPosition();
+	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
+
+	// NOTICE: 很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
+	//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
+	CRect rect;
+	GetClientRect(rect);
+	if (rect.Height() >= length) return;
+
+
 	if (::GetKeyState(VK_CONTROL) & 0x80000000)
 	{
 		if (nChar == VK_HOME)
@@ -269,7 +294,7 @@ void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		else if (nChar == VK_END)
 		{
 			// 跳到最后一页，多出没事
-			curPosition.y = (GetDocument()->logQuery->getCount()) * LineHeight;
+			curPosition.y = (GetDocument()->logQuery->getCurQueryResult()->getCount()) * LineHeight;
 		}
 		else if (nChar == VK_UP)
 		{
@@ -304,21 +329,28 @@ void CWinUIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 }
 
 
-BOOL CWinUIView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	DEBUG_INFO(_T("zDelta = ") << zDelta << _T(", x = ") << pt.x << _T(", y = ") << pt.y);
 
 	CPoint curPosition = GetScrollPosition();
+	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
+
+	CRect rect;
+	GetClientRect(rect);
+	if (rect.Height() >= length) return CScrollView::OnMouseWheel(nFlags, zDelta, pt);
+
+	int delta = rect.Height() / LineHeight / 2 * LineHeight;
 	if (zDelta < 0)
 	{
-		// 向下10行
-		curPosition.y += LineHeight * 10;
+		// 向下半页
+		curPosition.y += delta;
 	}
 	else
 	{
-		// 向上10行
-		curPosition.y -= LineHeight * 10;
+		// 向上半页
+		curPosition.y -= delta;
 		curPosition.y = max(curPosition.y, 0);
 	}
 	ScrollToPosition(curPosition);

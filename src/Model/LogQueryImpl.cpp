@@ -2,8 +2,14 @@
 #include <mrl/utility/CodeConv.h>
 #include "LogQueryImpl.h"
 #include "LogItem.h"
+#include "LogQueryResult.h"
 
 #define MULTI_THREAD_GET_LINE
+
+
+LogQueryImpl::LogQueryImpl()
+	: curQueryResult(new LogQueryResult()) {
+}
 
 LogQueryImpl::~LogQueryImpl() {
 	for_each(logItems.begin(), logItems.end(), [] (LogItem* item) { delete item; });
@@ -113,37 +119,16 @@ bool LogQueryImpl::load(const tstring& filePath) {
 	return true;
 }
 
-unsigned LogQueryImpl::getCount() const {
-	return logItems.size();
-}
-
 const tstring& LogQueryImpl::getFilePath() const {
 	return filePath;
 }
 
-vector<LogItem*> LogQueryImpl::getRange(unsigned begin, unsigned end) const {
-	assert(begin <= end && end <= logItems.size());
-
-	vector<LogItem*> subset;
-	for (unsigned i = begin; i < end; i++) {
-		subset.push_back(logItems[i]);
-	}
-	return subset;
-}
-
-LogItem* LogQueryImpl::getIndex(unsigned i) const {
-	assert(i < logItems.size());
-	return logItems[i];
-}
-
-void LogQueryImpl::select(unsigned i) {
-	assert(i < logItems.size());
-
+void LogQueryImpl::setSelected(const LogItem* item) {
 	for (unsigned j = 0; j < logItems.size(); j++) {
-		LogItem* item = logItems[j];
-		item->selected = (i == j);
+		LogItem* p = logItems[j];
+		p->selected = (item == p);
 	}
-	forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); });
+	notifyGeneralDataChanged();
 }
 
 LogItem* LogQueryImpl::getSelected() const {
@@ -153,4 +138,27 @@ LogItem* LogQueryImpl::getSelected() const {
 	} else {
 		return NULL;
 	}
+}
+
+LogQueryResult* LogQueryImpl::query(const tstring& criteria) {
+	vector<LogItem*> queryResult;
+	for (auto i = logItems.begin(); i != logItems.end(); i++) {
+		LogItem* item = *i;
+		// TODO: 在这里调用复杂的条件查询接口
+		if (item->text.find(criteria) != tstring::npos) {
+			queryResult.push_back(item);
+		}
+	}
+	setCurQueryResult(new LogQueryResult(queryResult));
+	notifyQueryResultChanged();
+	return curQueryResult;
+}
+
+void LogQueryImpl::setCurQueryResult(LogQueryResult* curQueryResult) {
+	delete this->curQueryResult;
+	this->curQueryResult = curQueryResult;
+}
+
+LogQueryResult* LogQueryImpl::getCurQueryResult() const {
+	return curQueryResult;
 }

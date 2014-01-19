@@ -2,24 +2,31 @@
 
 #include "ILogQuery.h"
 
+class LogQueryResult;
+
 class LogQueryImpl : public ILogQuery {
+public:
+	LogQueryImpl();
+
 protected:
 	virtual ~LogQueryImpl();
 
 	virtual bool load(const tstring& filePath);
 
-	virtual unsigned getCount() const;
-
 	virtual const tstring& getFilePath() const;
 
-	virtual vector<LogItem*> getRange(unsigned begin, unsigned end) const;
+	virtual LogQueryResult* query(const tstring& criteria);
 
-	virtual LogItem* getIndex(unsigned i) const;
-
-	virtual void select(unsigned i);
+	virtual void setSelected(const LogItem* item);
 
 	virtual LogItem* getSelected() const;
+
+	virtual LogQueryResult* getCurQueryResult() const;
+
 private:
+	void setCurQueryResult(LogQueryResult* curQueryResult);
+
 	tstring filePath;
 	vector<LogItem*> logItems;
+	LogQueryResult* curQueryResult;
 };

@@ -3,7 +3,7 @@
 //
 
 #include "stdafx.h"
-#include "WinUI.h"
+#include "LogCC.h"
 
 #include "MainFrm.h"
 

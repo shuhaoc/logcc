@@ -2,8 +2,8 @@
 //
 
 #include "stdafx.h"
-#include "WinUI.h"
-#include "WinUIDoc.h"
+#include "LogCC.h"
+#include "LogCCDoc.h"
 #include "LogTextView.h"
 #include "ILogQuery.h"
 #include "LogItem.h"
@@ -49,10 +49,10 @@ void CLogTextView::Dump(CDumpContext& dc) const
 }
 #endif
 
-CWinUIDoc* CLogTextView::GetDocument() const // 非调试版本是内联的
+CLogCCDoc* CLogTextView::GetDocument() const // 非调试版本是内联的
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CWinUIDoc)));
-	return (CWinUIDoc*)m_pDocument;
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CLogCCDoc)));
+	return (CLogCCDoc*)m_pDocument;
 }
 #endif //_DEBUG
 

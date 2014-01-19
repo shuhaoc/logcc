@@ -14,7 +14,7 @@ protected:
 	virtual ~CLogTextView();
 
 public:
-	CWinUIDoc* GetDocument() const;
+	CLogCCDoc* GetDocument() const;
 	enum { IDD = IDD_LOGTEXTVIEW };
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -37,8 +37,8 @@ private:
 };
 
 
-#ifndef _DEBUG  // WinUIView.cpp 中的调试版本
-inline CWinUIDoc* CLogTextView::GetDocument() const
-   { return reinterpret_cast<CWinUIDoc*>(m_pDocument); }
+#ifndef _DEBUG  // LogMainView.cpp 中的调试版本
+inline CLogCCDoc* CLogTextView::GetDocument() const
+   { return reinterpret_cast<CLogCCDoc*>(m_pDocument); }
 #endif
 

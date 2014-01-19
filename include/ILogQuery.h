@@ -4,6 +4,7 @@
 #include "ILogQueryObserver.h"
 
 struct LogItem;
+class LogQueryResult;
 
 /**
  * 日志查询，每个对象对应一个日志文件
@@ -13,6 +14,10 @@ struct LogItem;
 class ILogQuery : public mrl::common::ObserverContainer<ILogQueryObserver> {
 public:
 	virtual ~ILogQuery() { }
+
+	void notifyGeneralDataChanged() const { forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); }); }
+
+	void notifyQueryResultChanged() const { forEachObserver([] (ILogQueryObserver* p) { p->NotifyQueryResultChanged(); }); }
 
 	/**
 	 * 同步读取文件并按分行
@@ -31,37 +36,12 @@ public:
 	virtual const tstring& getFilePath() const = 0;
 
 	/**
-	 * 查询行数
-	 * @author CaoShuhao
-	 * @date 2014-1-12
-	 */
-	virtual unsigned getCount() const = 0;
-
-	/**
-	 * 获取索引在[begin, end)区间内的日志行
-	 * @param begin [in] 起始行
-	 * @param end [in] 最后一行的下一行
-	 * @author CaoShuhao
-	 * @date 2014-1-12
-	 */
-	virtual vector<LogItem*> getRange(unsigned begin, unsigned end) const = 0;
-
-	/**
-	 * 根据索引获取日志行
-	 * @param i [in] 索引
-	 * @return 日志行
-	 * @author CaoShuhao
-	 * @date 2014-1-15
-	 */
-	virtual LogItem* getIndex(unsigned i) const = 0;
-
-	/**
 	 * 设置某行为选中，其他所有行为非选中
-	 * @param i [in] 索引
+	 * @param item [in] 日志项
 	 * @author CaoShuhao
 	 * @date 2014-1-15
 	 */
-	virtual void select(unsigned i) = 0;
+	virtual void setSelected(const LogItem* item) = 0;
 
 	/**
 	 * 返回当前选中行，没有选中时返回NULL
@@ -70,4 +50,21 @@ public:
 	 * @date 2014-1-15
 	 */
 	virtual LogItem* getSelected() const = 0;
+
+	/**
+	 * 条件查询
+	 * @param criteria [in] 条件
+	 * @return 查询结果集
+	 * @author CaoShuhao
+	 * @date 2014-1-18
+	 */
+	virtual LogQueryResult* query(const tstring& criteria) = 0;
+
+	/**
+	 * 获取当前查询结果
+	 * @return 查询结果集
+	 * @author CaoShuhao
+	 * @date 2014-1-19
+	 */
+	virtual LogQueryResult* getCurQueryResult() const = 0;
 };

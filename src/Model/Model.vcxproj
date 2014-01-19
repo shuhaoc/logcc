@@ -99,6 +99,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="LogQueryImpl.cpp" />
+    <ClCompile Include="LogQueryResult.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelFactory.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -3,13 +3,14 @@
 //
 
 #include "stdafx.h"
-#include "WinUI.h"
+#include "LogCC.h"
 
 #include "ChildFrm.h"
-#include "WinUIDoc.h"
+#include "LogCCDoc.h"
 #include "LogCtrlView.h"
-#include "WinUIView.h"
+#include "LogMainView.h"
 #include "LogTextView.h"
+#include "LogCtrlController.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,6 +36,21 @@ CChildFrame::~CChildFrame()
 {
 }
 
+// UNDONE: 封装起来
+static hash_map<HWND, HWND> ControllerMap;
+
+static hash_map<HWND, WNDPROC> OriginWndProcMap;
+
+static LRESULT CALLBACK ControllerRouteProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+	HWND controller = ControllerMap[hwnd];
+	WNDPROC originProc = OriginWndProcMap[hwnd];
+	LRESULT result = ::CallWindowProc(originProc, hwnd, msg, wparam, lparam);
+	if (controller) {
+		::SendMessage(controller, msg, wparam, lparam);
+	}
+	return result;
+}
+
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
 {
 #define LOGCC_WINUI_USE_SPLIT_VIEW
@@ -46,9 +62,17 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 #else
 	m_wndSplitter.CreateStatic(this, 3, 1);
 	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CLogCtrlView), CSize(10, 10), pContext);
-	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CWinUIView), CSize(10, 10), pContext);
+	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CLogMainView), CSize(10, 10), pContext);
 	m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(CLogTextView), CSize(10, 10), pContext);
 	m_bSplitterCreated = true;
+	CWnd* ctrlView = m_wndSplitter.GetPane(0, 0);
+	LogCtrlController* ctrlController = new LogCtrlController();
+	ctrlController->Create(::AfxRegisterWndClass(0), NULL, 0, CRect(), this, 0);
+	ControllerMap[ctrlView->GetSafeHwnd()] = ctrlController->GetSafeHwnd();
+	OriginWndProcMap[ctrlView->GetSafeHwnd()] = reinterpret_cast<WNDPROC>(::SetWindowLong(
+		ctrlView->GetSafeHwnd(), GWL_WNDPROC, reinterpret_cast<long>(ControllerRouteProc)));
+	ctrlController->setViewData(pContext->m_pCurrentDoc);
+	// UNDONE: 没有释放内存和回设指针
 #endif
 	return TRUE;
 }
@@ -88,9 +112,11 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy)
 	if(m_bSplitterCreated)  // m_bSplitterCreated set in OnCreateClient
 	{
 		m_wndSplitter.SetColumnInfo(0, rect.Width(), 10);
-		m_wndSplitter.SetRowInfo(0, 50, 10); 
-		m_wndSplitter.SetRowInfo(1, max(rect.Height() - 200, 10), 10); 
-		m_wndSplitter.SetRowInfo(2, 150, 10); 
+		const int ctrlViewHeight = 32;
+		const int textViewHeight = 100;
+		m_wndSplitter.SetRowInfo(0, ctrlViewHeight, 10);
+		m_wndSplitter.SetRowInfo(1, max(rect.Height() - ctrlViewHeight - textViewHeight, 10), 10); 
+		m_wndSplitter.SetRowInfo(2, textViewHeight, 10);
 		m_wndSplitter.RecalcLayout();
 	}
 }
