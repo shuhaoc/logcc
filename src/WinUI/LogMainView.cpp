@@ -31,8 +31,7 @@ BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_ERASEBKGND()
-//	ON_WM_LBUTTONUP()
-	ON_WM_SIZE()
+//	ON_WM_SIZE()
 	ON_WM_VSCROLL()
 	ON_WM_KEYUP()
 	ON_WM_MOUSEWHEEL()
@@ -42,8 +41,6 @@ END_MESSAGE_MAP()
 
 CLogMainView::CLogMainView() : length(0)
 {
-	// TODO: 在此处添加构造代码
-
 }
 
 CLogMainView::~CLogMainView()
@@ -76,7 +73,6 @@ void CLogMainView::OnDraw(CDC* pDC)
 		DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
-	// TODO: 在此处为本机数据添加绘制代码
 	DEBUG_INFO(_T("重绘"));
 
 	CPoint scrollPosition = GetScrollPosition();
@@ -182,7 +178,6 @@ CLogCCDoc* CLogMainView::GetDocument() const // 非调试版本是内联的
 
 BOOL CLogMainView::OnEraseBkgnd(CDC* pDC)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
 #ifdef LOGCC_WINUI_USE_DEFAULT_ERASE_BACKGROUND
 	return CScrollView::OnEraseBkgnd(pDC);
 #else
@@ -190,26 +185,8 @@ BOOL CLogMainView::OnEraseBkgnd(CDC* pDC)
 #endif
 }
 
-//void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point)
-//{
-//	// TODO: 在此添加消息处理程序代码和/或调用默认值
-//	// UNDONE: 使用Model驱动而不是Controller
-//	//Invalidate();
-//
-//	CScrollView::OnLButtonUp(nFlags, point);
-//}
-
-
-void CLogMainView::OnSize(UINT nType, int cx, int cy)
-{
-	CScrollView::OnSize(nType, cx, cy);
-	// TODO: 在此处添加消息处理程序代码
-	UpdateScroll();
-}
-
 void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	if (nSBCode == SB_ENDSCROLL)
 	{
 		Invalidate();
@@ -220,7 +197,6 @@ void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 void CLogMainView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CPoint curPosition = GetScrollPosition();
 	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
 
@@ -278,7 +254,6 @@ void CLogMainView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	DEBUG_INFO(_T("zDelta = ") << zDelta << _T(", x = ") << pt.x << _T(", y = ") << pt.y);
 
 	CPoint curPosition = GetScrollPosition();
@@ -308,7 +283,6 @@ BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 BOOL CLogMainView::PreTranslateMessage(MSG* pMsg)
 {
 	// 更新UI数据到ViewData
-
 	CPoint scrollPos = GetScrollPosition();
 	GetDocument()->yScrollPos = scrollPos.y;
 	
