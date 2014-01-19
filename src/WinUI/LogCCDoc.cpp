@@ -22,7 +22,7 @@ END_MESSAGE_MAP()
 
 // CLogCCDoc 构造/析构
 
-CLogCCDoc::CLogCCDoc()
+CLogCCDoc::CLogCCDoc() : yScrollPos(0), lineHeight(0)
 {
 	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
 }

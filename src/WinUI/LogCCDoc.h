@@ -20,6 +20,9 @@ public:
 	mutable ILogQuery* logQuery;
 	tstring criteria;
 
+	int yScrollPos;
+	int lineHeight;
+
 // 操作
 public:
 

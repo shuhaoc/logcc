@@ -89,6 +89,9 @@
     <ClInclude Include="..\..\include\ControllerBase.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="LogMainController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogPainterFactory.cpp">
@@ -119,6 +122,9 @@
       <Filter>src\View</Filter>
     </ClCompile>
     <ClCompile Include="LogCtrlController.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="LogMainController.cpp">
       <Filter>src\Controller</Filter>
     </ClCompile>
   </ItemGroup>

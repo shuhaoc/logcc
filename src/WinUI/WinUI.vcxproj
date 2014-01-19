@@ -117,6 +117,7 @@
     <ClInclude Include="LogCtrlController.h" />
     <ClInclude Include="LogCtrlView.h" />
     <ClInclude Include="LogMainView.h" />
+    <ClInclude Include="LogMainController.h" />
     <ClInclude Include="LogPainterFactory.h" />
     <ClInclude Include="LogTextView.h" />
     <ClInclude Include="MainFrm.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="LogCtrlController.cpp" />
     <ClCompile Include="LogCtrlView.cpp" />
     <ClCompile Include="LogMainView.cpp" />
+    <ClCompile Include="LogMainController.cpp" />
     <ClCompile Include="LogPainterFactory.cpp" />
     <ClCompile Include="LogTextView.cpp" />
     <ClCompile Include="MainFrm.cpp" />

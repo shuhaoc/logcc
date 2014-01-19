@@ -40,6 +40,7 @@ public:
 #endif
 
 protected:
+	virtual void NotifyGeneralDataChanged();
 	virtual void NotifyQueryResultChanged();
 
 private:
@@ -54,11 +55,13 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+//	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 #ifndef _DEBUG  // LogMainView.cpp 中的调试版本

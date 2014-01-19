@@ -35,7 +35,7 @@ BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_ERASEBKGND()
-	ON_WM_LBUTTONUP()
+//	ON_WM_LBUTTONUP()
 	ON_WM_SIZE()
 	ON_WM_VSCROLL()
 	ON_WM_KEYUP()
@@ -155,6 +155,11 @@ void CLogMainView::UpdateScroll()
 #endif
 }
 
+void CLogMainView::NotifyGeneralDataChanged()
+{
+	Invalidate();
+}
+
 void CLogMainView::NotifyQueryResultChanged()
 {
 	UpdateScroll();
@@ -236,21 +241,14 @@ BOOL CLogMainView::OnEraseBkgnd(CDC* pDC)
 #endif
 }
 
-void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point)
-{
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	CPoint scrollPosition = GetScrollPosition();
-	unsigned i = (scrollPosition.y + point.y) / LineHeight;
-	if (i < GetDocument()->logQuery->getCurQueryResult()->getCount()) {
-		LogItem* item = GetDocument()->logQuery->getCurQueryResult()->getIndex(i);
-		GetDocument()->logQuery->setSelected(item);
-		DEBUG_INFO(_T("选中行：") << i);
-	}
-	// UNDONE: 使用Model驱动而不是Controller
-	Invalidate();
-
-	CScrollView::OnLButtonUp(nFlags, point);
-}
+//void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point)
+//{
+//	// TODO: 在此添加消息处理程序代码和/或调用默认值
+//	// UNDONE: 使用Model驱动而不是Controller
+//	//Invalidate();
+//
+//	CScrollView::OnLButtonUp(nFlags, point);
+//}
 
 
 void CLogMainView::OnSize(UINT nType, int cx, int cy)
@@ -277,7 +275,7 @@ void CLogMainView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CPoint curPosition = GetScrollPosition();
 	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
 
-	// NOTICE: 很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
+	// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
 	//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
 	CRect rect;
 	GetClientRect(rect);
@@ -356,4 +354,16 @@ BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	ScrollToPosition(curPosition);
 
 	return CScrollView::OnMouseWheel(nFlags, zDelta, pt);
+}
+
+BOOL CLogMainView::PreTranslateMessage(MSG* pMsg)
+{
+	// 更新UI数据到ViewData
+
+	CPoint scrollPos = GetScrollPosition();
+	GetDocument()->yScrollPos = scrollPos.y;
+	
+	GetDocument()->lineHeight = LineHeight;
+
+	return __super::PreTranslateMessage(pMsg);
 }

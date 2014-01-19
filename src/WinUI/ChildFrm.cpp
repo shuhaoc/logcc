@@ -11,6 +11,7 @@
 #include "LogMainView.h"
 #include "LogTextView.h"
 #include "LogCtrlController.h"
+#include "LogMainController.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -65,6 +66,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CLogMainView), CSize(10, 10), pContext);
 	m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(CLogTextView), CSize(10, 10), pContext);
 	m_bSplitterCreated = true;
+
 	CWnd* ctrlView = m_wndSplitter.GetPane(0, 0);
 	LogCtrlController* ctrlController = new LogCtrlController();
 	ctrlController->Create(::AfxRegisterWndClass(0), NULL, 0, CRect(), this, 0);
@@ -72,6 +74,14 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	OriginWndProcMap[ctrlView->GetSafeHwnd()] = reinterpret_cast<WNDPROC>(::SetWindowLong(
 		ctrlView->GetSafeHwnd(), GWL_WNDPROC, reinterpret_cast<long>(ControllerRouteProc)));
 	ctrlController->setViewData(pContext->m_pCurrentDoc);
+
+	CWnd* mainView = m_wndSplitter.GetPane(1, 0);
+	LogMainController* mainController = new LogMainController(this);
+	ControllerMap[mainView->GetSafeHwnd()] = mainController->GetSafeHwnd();
+	OriginWndProcMap[mainView->GetSafeHwnd()] = reinterpret_cast<WNDPROC>(::SetWindowLong(
+		mainView->GetSafeHwnd(), GWL_WNDPROC, reinterpret_cast<long>(ControllerRouteProc)));
+	mainController->setViewData(pContext->m_pCurrentDoc);
+
 	// UNDONE: 没有释放内存和回设指针
 #endif
 	return TRUE;
