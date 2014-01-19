@@ -54,5 +54,6 @@ BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 BOOL CLogCCDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
+	// UNDONE: 另存为会进入此函数
 	return TRUE;
 }
