@@ -88,7 +88,7 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy)
 	if(m_bSplitterCreated)  // m_bSplitterCreated set in OnCreateClient
 	{
 		m_wndSplitter.SetColumnInfo(0, rect.Width(), 10);
-		m_wndSplitter.SetRowInfo(0, 50, 10); 
+		m_wndSplitter.SetRowInfo(0, 40, 10); 
 		m_wndSplitter.SetRowInfo(1, max(rect.Height() - 200, 10), 10); 
 		m_wndSplitter.SetRowInfo(2, 150, 10); 
 		m_wndSplitter.RecalcLayout();
