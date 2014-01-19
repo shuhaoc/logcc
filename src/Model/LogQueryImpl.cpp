@@ -163,3 +163,7 @@ void LogQueryImpl::setCurQueryResult(LogQueryResult* curQueryResult) {
 LogQueryResult* LogQueryImpl::getCurQueryResult() const {
 	return curQueryResult;
 }
+
+void LogQueryImpl::scrollTo(int y) {
+	notifyScrollPositionChanged(y);
+}

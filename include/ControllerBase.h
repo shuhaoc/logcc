@@ -10,10 +10,10 @@ public:
 
 	virtual void PostNcDestroy() { delete this; }
 
-	const BasicViewData* getViewData() const { return viewData; }
+	BasicViewData* getViewData() const { return viewData; }
 
-	void setViewData(const BasicViewData* viewData) { this->viewData = viewData; }
+	void setViewData(BasicViewData* viewData) { this->viewData = viewData; }
 
 private:
-	const BasicViewData* viewData;
+	BasicViewData* viewData;
 };

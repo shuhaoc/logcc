@@ -23,6 +23,9 @@ public:
 
 	int yScrollPos;
 	int lineHeight;
+	CRect clientRect;
+
+	int length;
 
 // 操作
 public:

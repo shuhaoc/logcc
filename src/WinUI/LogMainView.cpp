@@ -31,15 +31,11 @@ BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_ERASEBKGND()
-//	ON_WM_SIZE()
-	ON_WM_VSCROLL()
-	ON_WM_KEYUP()
-	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 // CLogMainView 构造/析构
 
-CLogMainView::CLogMainView() : length(0)
+CLogMainView::CLogMainView()
 {
 }
 
@@ -128,7 +124,7 @@ void CLogMainView::UpdateScroll()
 	CSize totalSize;
 	totalSize.cx = clientRect.Width();
 	// 加1是为了最后一行一定可见
-	totalSize.cy = length = (GetDocument()->logQuery->getCurQueryResult()->getCount() + 1) * LineHeight;
+	GetDocument()->length = totalSize.cy = (GetDocument()->logQuery->getCurQueryResult()->getCount() + 1) * LineHeight;
 #define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 #ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
@@ -146,6 +142,12 @@ void CLogMainView::onGeneralDataChanged() {
 void CLogMainView::onQueryResultChanged() {
 	UpdateScroll();
 	Invalidate();
+}
+
+void CLogMainView::onScrollPositionChanged(int yPosition) {
+	CPoint position = GetScrollPosition();
+	position.y = yPosition;
+	ScrollToPosition(position);
 }
 
 void CLogMainView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -192,92 +194,6 @@ void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CScrollView::OnVScroll(nSBCode, nPos, pScrollBar);
 }
 
-
-void CLogMainView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
-{
-	CPoint curPosition = GetScrollPosition();
-	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
-
-	// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
-	//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
-	CRect rect;
-	GetClientRect(rect);
-	if (rect.Height() >= length) return;
-
-
-	if (::GetKeyState(VK_CONTROL) & 0x80000000)
-	{
-		if (nChar == VK_HOME)
-		{
-			// 跳到第一页
-			curPosition.y = 0;
-		}
-		else if (nChar == VK_END)
-		{
-			// 跳到最后一页，多出没事
-			curPosition.y = (GetDocument()->logQuery->getCurQueryResult()->getCount()) * LineHeight;
-		}
-		else if (nChar == VK_UP)
-		{
-			// 向上1行
-			curPosition.y -= LineHeight;
-			curPosition.y = max(curPosition.y, 0);
-		}
-		else if (nChar == VK_DOWN)
-		{
-			// 向下1行
-			curPosition.y += LineHeight;
-		}
-	}
-	if (nChar == VK_PRIOR)
-	{
-		// 向上1页
-		CRect clientRect;
-		GetClientRect(clientRect);
-		curPosition.y -= clientRect.Height() / LineHeight * LineHeight;
-		curPosition.y = max(curPosition.y, 0);
-	}
-	else if (nChar == VK_NEXT)
-	{
-		// 向下1页
-		CRect clientRect;
-		GetClientRect(clientRect);
-		curPosition.y += clientRect.Height() / LineHeight * LineHeight;
-	}
-	ScrollToPosition(curPosition);
-
-	CScrollView::OnKeyUp(nChar, nRepCnt, nFlags);
-}
-
-
-BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
-{
-	DEBUG_INFO(_T("zDelta = ") << zDelta << _T(", x = ") << pt.x << _T(", y = ") << pt.y);
-
-	CPoint curPosition = GetScrollPosition();
-	DEBUG_INFO(_T("滚动位置：") << curPosition.x << _T(", ") << curPosition.y);
-
-	CRect rect;
-	GetClientRect(rect);
-	if (rect.Height() >= length) return CScrollView::OnMouseWheel(nFlags, zDelta, pt);
-
-	int delta = rect.Height() / LineHeight / 2 * LineHeight;
-	if (zDelta < 0)
-	{
-		// 向下半页
-		curPosition.y += delta;
-	}
-	else
-	{
-		// 向上半页
-		curPosition.y -= delta;
-		curPosition.y = max(curPosition.y, 0);
-	}
-	ScrollToPosition(curPosition);
-
-	return CScrollView::OnMouseWheel(nFlags, zDelta, pt);
-}
-
 BOOL CLogMainView::PreTranslateMessage(MSG* pMsg)
 {
 	// 更新UI数据到ViewData
@@ -285,6 +201,8 @@ BOOL CLogMainView::PreTranslateMessage(MSG* pMsg)
 	GetDocument()->yScrollPos = scrollPos.y;
 	
 	GetDocument()->lineHeight = LineHeight;
+
+	GetClientRect(GetDocument()->clientRect);
 
 	return __super::PreTranslateMessage(pMsg);
 }

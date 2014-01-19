@@ -23,6 +23,8 @@ protected:
 
 	virtual LogQueryResult* getCurQueryResult() const;
 
+	virtual void scrollTo(int y);
+
 private:
 	void setCurQueryResult(LogQueryResult* curQueryResult);
 
