@@ -189,8 +189,10 @@ void CLogMainView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 void CLogMainView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
+#ifdef LOGCC_WINUI_MAIN_VIEW_ENABLE_CONTEXT_MENU
 	ClientToScreen(&point);
 	OnContextMenu(this, point);
+#endif
 }
 
 void CLogMainView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
