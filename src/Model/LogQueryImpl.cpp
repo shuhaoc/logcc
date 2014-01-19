@@ -13,6 +13,7 @@ LogQueryImpl::LogQueryImpl()
 
 LogQueryImpl::~LogQueryImpl() {
 	for_each(logItems.begin(), logItems.end(), [] (LogItem* item) { delete item; });
+	delete curQueryResult;
 }
 
 bool LogQueryImpl::load(const tstring& filePath) {	
