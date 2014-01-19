@@ -15,10 +15,6 @@ class ILogQuery : public mrl::common::ObserverContainer<ILogQueryObserver> {
 public:
 	virtual ~ILogQuery() { }
 
-	void notifyGeneralDataChanged() const { forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); }); }
-
-	void notifyQueryResultChanged() const { forEachObserver([] (ILogQueryObserver* p) { p->NotifyQueryResultChanged(); }); }
-
 	/**
 	 * 同步读取文件并按分行
 	 * @param filePath [in] 文件路径
@@ -67,4 +63,13 @@ public:
 	 * @date 2014-1-19
 	 */
 	virtual LogQueryResult* getCurQueryResult() const = 0;
+
+protected:
+	void notifyGeneralDataChanged() const {
+		forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); });
+	}
+
+	void notifyQueryResultChanged() const {
+		forEachObserver([] (ILogQueryObserver* p) { p->NotifyQueryResultChanged(); });
+	}
 };
