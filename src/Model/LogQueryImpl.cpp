@@ -183,10 +183,20 @@ void LogQueryImpl::scrollTo(int y) {
 }
 
 void LogQueryImpl::startMonitor() {
+#define LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
 	monitorThread = new boost::thread(([this] () {
 		monitoring = true;
 		HANDLE file = ::CreateFile(filePath.c_str(), GENERIC_READ, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+#ifdef LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
+		tstring dir = filePath.substr(0, filePath.find_last_of(_T('\\')));
+		HANDLE change = ::FindFirstChangeNotification(dir.c_str(), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE);
+		while (monitoring) {
+			DWORD waitResult = ::WaitForSingleObject(change, 100);
+			if (waitResult == WAIT_OBJECT_0) {
+				if (::FindNextChangeNotification(change)) {
+					::OutputDebugStringA("监测到文件夹变化\n");
+#elif defined LOGCC_MODEL_USE_GET_FILE_TIME_TO_MONITOR_FILE
 		FILETIME initialWriteTime;
 		::GetFileTime(file, NULL, NULL, &initialWriteTime);
 		while (monitoring) {
@@ -200,7 +210,9 @@ void LogQueryImpl::startMonitor() {
 					|| (lastWriteTime.dwHighDateTime == initialWriteTime.dwHighDateTime
 						&& lastWriteTime.dwLowDateTime > initialWriteTime.dwLowDateTime)) {
 					initialWriteTime = lastWriteTime;
-
+#else
+#error 请至少定义一种文件监控方案
+#endif
 					DWORD fileSize = ::GetFileSize(file, NULL);
 					char* buffer = new char[fileSize + 1];
 					DWORD readSize = 0;
@@ -240,15 +252,11 @@ void LogQueryImpl::startMonitor() {
 					}
 				}
 				// 没有更新，继续循环
-			} else {
-				// 文件被删除，停止监控
-				monitoring = false;
-				LogQueryImpl* that = this;
-				taskWnd->post(new SimpleTask([that] () {
-					that->clear();
-				}));
 			}
 		}
+#ifdef LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
+		::FindCloseChangeNotification(change);
+#endif
 		::CloseHandle(file);
 		::OutputDebugStringA("监控线程退出！\n");
 	}));
