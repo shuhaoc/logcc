@@ -64,7 +64,7 @@ void CLogMainView::OnDraw(CDC* pDC)
 	HBRUSH bkgdBrush = reinterpret_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH));
 	::FillRect(memDC, clientRect, bkgdBrush);
 
-	HFONT font = ::CreateFont(LineHeight - 1, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+	HFONT font = ::CreateFont(LineHeight - 2, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
