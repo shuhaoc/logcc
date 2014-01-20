@@ -37,10 +37,6 @@ CLogCCDoc::~CLogCCDoc()
 
 BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	// UNDONE: 不需要调用基类方法
-	if (!CDocument::OnOpenDocument(lpszPathName))
-		return FALSE;
-
 	m_strPathName = lpszPathName;
 #ifdef _DEBUG
 	clock_t begin = ::clock();
