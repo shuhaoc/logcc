@@ -48,4 +48,6 @@ BOOL CLogCtrlView::OnCommand(WPARAM wParam, LPARAM lParam)
 	criteriaEdit.GetWindowText(criteria);
 	GetDocument()->criteria = criteria.GetBuffer();
 	DEBUG_INFO(GetDocument()->criteria);
+
+	return CFormView::OnCommand(wParam, lParam);
 }
