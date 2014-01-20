@@ -13,6 +13,7 @@ LogQueryImpl::LogQueryImpl()
 
 LogQueryImpl::~LogQueryImpl() {
 	for_each(logItems.begin(), logItems.end(), [] (LogItem* item) { delete item; });
+	delete curQueryResult;
 }
 
 bool LogQueryImpl::load(const tstring& filePath) {	
@@ -116,6 +117,33 @@ bool LogQueryImpl::load(const tstring& filePath) {
 	}
 #endif
 	this->filePath = filePath;
+
+#ifdef _DEBUG
+	boost::thread test([filePath, length] () {
+		size_t lastLength = length;
+		for (;;) {
+			ifstream file(filePath, ios_base::in | ios_base::binary);
+			// UNDONE: 验证文件不追加而修改的情况
+			file.seekg(0, ios_base::end);
+			size_t curLength = static_cast<size_t>(file.tellg());
+			if (curLength > lastLength) {
+				file.seekg(lastLength);
+				size_t remain = curLength - lastLength;
+				char* buf = new char[remain + 1];
+				file.read(buf, remain);
+				if (file.gcount() == remain) {
+					buf[remain] = 0;
+					::OutputDebugStringA(buf);
+					lastLength = curLength;
+				}
+				delete[] buf;
+			}
+			::Sleep(100);
+		}
+	});
+
+#endif // _DEBUG
+
 	return true;
 }
 
@@ -161,4 +189,8 @@ void LogQueryImpl::setCurQueryResult(LogQueryResult* curQueryResult) {
 
 LogQueryResult* LogQueryImpl::getCurQueryResult() const {
 	return curQueryResult;
+}
+
+void LogQueryImpl::scrollTo(int y) {
+	notifyScrollPositionChanged(y);
 }

@@ -2,12 +2,18 @@
 
 typedef CDocument BasicViewData;
 
-class ControllerBase {
+class ControllerBase : public CWnd {
 public:
-	const BasicViewData* getViewData() const { return viewData; }
+	ControllerBase(CWnd* parent) {
+		Create(::AfxRegisterWndClass(0), NULL, 0, CRect(), parent, 0);
+	}
 
-	void setViewData(const BasicViewData* viewData) { this->viewData = viewData; }
+	virtual void PostNcDestroy() { delete this; }
+
+	BasicViewData* getViewData() const { return viewData; }
+
+	void setViewData(BasicViewData* viewData) { this->viewData = viewData; }
 
 private:
-	const BasicViewData* viewData;
+	BasicViewData* viewData;
 };

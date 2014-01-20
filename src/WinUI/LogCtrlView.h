@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "afxwin.h"
 
 class CLogCCDoc;
 
@@ -18,14 +19,13 @@ public:
 
 private:
 	// 搜索条件
-	CString criteria;
+	CEdit criteriaEdit;
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
-public:
-	afx_msg void OnEnChangeCriteria();
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 };
 
 

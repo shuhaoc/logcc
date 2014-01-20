@@ -11,7 +11,7 @@
 
 IMPLEMENT_DYNAMIC(LogCtrlController, CWnd)
 
-LogCtrlController::LogCtrlController()
+LogCtrlController::LogCtrlController(CWnd* parent) : ControllerBase(parent)
 {
 
 }

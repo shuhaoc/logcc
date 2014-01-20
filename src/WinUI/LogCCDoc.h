@@ -8,6 +8,7 @@
 class ILogQuery;
 class LogQueryResult;
 
+// UNDONE: 重命名
 class CLogCCDoc : public CDocument
 {
 protected: // 仅从序列化创建
@@ -22,12 +23,16 @@ public:
 
 	int yScrollPos;
 	int lineHeight;
+	CRect clientRect;
+
+	int length;
 
 // 操作
 public:
 
 // 重写
 public:
+	virtual BOOL OnNewDocument();
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 
@@ -38,4 +43,6 @@ public:
 // 生成的消息映射函数
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnUpdateFileSaveAs(CCmdUI *pCmdUI);
 };

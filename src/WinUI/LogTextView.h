@@ -22,7 +22,7 @@ public:
 //	virtual void Dump(CDumpContext& dc) const;
 #endif
 #endif
-	virtual void NotifyGeneralDataChanged();
+	virtual void onGeneralDataChanged();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持

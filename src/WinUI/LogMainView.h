@@ -32,23 +32,18 @@ public:
 	virtual ~CLogMainView();
 
 protected:
-	virtual void NotifyGeneralDataChanged();
-	virtual void NotifyQueryResultChanged();
+	virtual void onGeneralDataChanged();
+	virtual void onQueryResultChanged();
+	virtual void onScrollPositionChanged(int yPosition);
 
 private:
 	void UpdateScroll();
 
-	int length;
-
 // 生成的消息映射函数
 protected:
 	DECLARE_MESSAGE_MAP()
-	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

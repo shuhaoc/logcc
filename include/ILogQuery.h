@@ -15,10 +15,6 @@ class ILogQuery : public mrl::common::ObserverContainer<ILogQueryObserver> {
 public:
 	virtual ~ILogQuery() { }
 
-	void notifyGeneralDataChanged() const { forEachObserver([] (ILogQueryObserver* p) { p->NotifyGeneralDataChanged(); }); }
-
-	void notifyQueryResultChanged() const { forEachObserver([] (ILogQueryObserver* p) { p->NotifyQueryResultChanged(); }); }
-
 	/**
 	 * 同步读取文件并按分行
 	 * @param filePath [in] 文件路径
@@ -67,4 +63,25 @@ public:
 	 * @date 2014-1-19
 	 */
 	virtual LogQueryResult* getCurQueryResult() const = 0;
+
+	/**
+	 * 滚动视图
+	 * @param y [in] y轴坐标
+	 * @author CaoShuhao
+	 * @date 2014-1-20
+	 */
+	virtual void scrollTo(int y) = 0; // UNDONE: 奇怪的接口方法
+
+protected:
+	void notifyGeneralDataChanged() const {
+		forEachObserver([] (ILogQueryObserver* p) { p->onGeneralDataChanged(); });
+	}
+
+	void notifyQueryResultChanged() const {
+		forEachObserver([] (ILogQueryObserver* p) { p->onQueryResultChanged(); });
+	}
+
+	void notifyScrollPositionChanged(int y) const {
+		forEachObserver([y] (ILogQueryObserver* p) { p->onScrollPositionChanged(y); });
+	}
 };

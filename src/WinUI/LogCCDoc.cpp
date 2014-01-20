@@ -17,12 +17,13 @@
 IMPLEMENT_DYNCREATE(CLogCCDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CLogCCDoc, CDocument)
+	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, &CLogCCDoc::OnUpdateFileSaveAs)
 END_MESSAGE_MAP()
 
 
 // CLogCCDoc 构造/析构
 
-CLogCCDoc::CLogCCDoc() : yScrollPos(0), lineHeight(0)
+CLogCCDoc::CLogCCDoc() : yScrollPos(0), lineHeight(0), length(0)
 {
 	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
 }
@@ -41,9 +42,13 @@ BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 
 	m_strPathName = lpszPathName;
+#ifdef _DEBUG
 	clock_t begin = ::clock();
+#endif // _DEBUG
 	logQuery->load(m_strPathName.GetBuffer());
+#ifdef _DEBUG
 	clock_t end = ::clock();
+#endif // _DEBUG
 	DEBUG_INFO(end - begin);
 
 	logQuery->query(_T(""));
@@ -55,4 +60,18 @@ BOOL CLogCCDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	// UNDONE: 另存为会进入此函数
 	return TRUE;
+}
+
+
+BOOL CLogCCDoc::OnNewDocument()
+{
+	// 禁用新建文档
+	return FALSE;
+}
+
+
+void CLogCCDoc::OnUpdateFileSaveAs(CCmdUI *pCmdUI)
+{
+	// UNDONE: 暂时禁用另存为，实现后去掉此函数
+	pCmdUI->Enable(FALSE);
 }

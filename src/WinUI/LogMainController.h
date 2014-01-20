@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include "ControllerBase.h"
 
 // LogMainController
 
-class LogMainController : public CWnd, public ControllerBase
+class LogMainController : public ControllerBase
 {
 	DECLARE_DYNAMIC(LogMainController)
 
@@ -15,6 +15,8 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 };
 
 

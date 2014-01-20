@@ -13,7 +13,6 @@ IMPLEMENT_DYNCREATE(CLogCtrlView, CFormView)
 
 CLogCtrlView::CLogCtrlView()
 	: CFormView(CLogCtrlView::IDD)
-	, criteria(_T(""))
 {
 
 }
@@ -25,13 +24,11 @@ CLogCtrlView::~CLogCtrlView()
 void CLogCtrlView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_CRITERIA, criteria);
+	DDX_Control(pDX, IDC_CRITERIA, criteriaEdit);
 }
 
 BEGIN_MESSAGE_MAP(CLogCtrlView, CFormView)
-	ON_EN_CHANGE(IDC_CRITERIA, &CLogCtrlView::OnEnChangeCriteria)
 END_MESSAGE_MAP()
-
 
 #ifdef _DEBUG
 CLogCCDoc* CLogCtrlView::GetDocument() const // 非调试版本是内联的
@@ -45,8 +42,10 @@ CLogCCDoc* CLogCtrlView::GetDocument() const // 非调试版本是内联的
 // CLogCtrlView 消息处理程序
 
 
-void CLogCtrlView::OnEnChangeCriteria()
+BOOL CLogCtrlView::OnCommand(WPARAM wParam, LPARAM lParam)
 {
-	UpdateData(TRUE);
+	CString criteria;
+	criteriaEdit.GetWindowText(criteria);
 	GetDocument()->criteria = criteria.GetBuffer();
+	DEBUG_INFO(GetDocument()->criteria);
 }
