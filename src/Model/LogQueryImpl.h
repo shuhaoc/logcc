@@ -3,6 +3,8 @@
 #include "ILogQuery.h"
 
 class LogQueryResult;
+class SimpleTaskMessageWindow;
+namespace boost { class thread; }
 
 class LogQueryImpl : public ILogQuery {
 public:
@@ -25,10 +27,23 @@ protected:
 
 	virtual void scrollTo(int y);
 
+	void reset(const vector<LogItem*>& logItems);
+
+	void clear();
+
 private:
 	void setCurQueryResult(LogQueryResult* curQueryResult);
 
 	tstring filePath;
 	vector<LogItem*> logItems;
+	tstring curQueryCriteria;
 	LogQueryResult* curQueryResult;
+
+	SimpleTaskMessageWindow* taskWnd;
+
+	// UNDONE: 抽出复用
+	void startMonitor();
+
+	bool monitoring;
+	boost::thread* monitorThread;
 };
