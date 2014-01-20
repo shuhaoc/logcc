@@ -33,21 +33,7 @@ BEGIN_MESSAGE_MAP(CLogCtrlView, CFormView)
 END_MESSAGE_MAP()
 
 
-// CLogCtrlView 诊断
-
 #ifdef _DEBUG
-void CLogCtrlView::AssertValid() const
-{
-	CFormView::AssertValid();
-}
-
-#ifndef _WIN32_WCE
-void CLogCtrlView::Dump(CDumpContext& dc) const
-{
-	CFormView::Dump(dc);
-}
-#endif
-
 CLogCCDoc* CLogCtrlView::GetDocument() const // 非调试版本是内联的
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CLogCCDoc)));
@@ -63,11 +49,4 @@ void CLogCtrlView::OnEnChangeCriteria()
 {
 	UpdateData(TRUE);
 	GetDocument()->criteria = criteria.GetBuffer();
-}
-
-BOOL CLogCtrlView::PreTranslateMessage(MSG* pMsg)
-{
-	// TODO: 在此添加专用代码和/或调用基类
-
-	return __super::PreTranslateMessage(pMsg);
 }

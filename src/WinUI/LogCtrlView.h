@@ -15,12 +15,6 @@ protected:
 
 public:
 	enum { IDD = IDD_LOGCTRLVIEW };
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-#ifndef _WIN32_WCE
-	virtual void Dump(CDumpContext& dc) const;
-#endif
-#endif
 
 private:
 	// 搜索条件
@@ -32,7 +26,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnEnChangeCriteria();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 
