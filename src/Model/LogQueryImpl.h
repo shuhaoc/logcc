@@ -39,6 +39,7 @@ private:
 	tstring filePath;
 	vector<LogItem*> logItems;
 	tstring curQueryCriteria;
+	boost::basic_regex<TCHAR>* curQueryRegex;
 	LogQueryResult* curQueryResult;
 
 	SimpleTaskMessageWindow* taskWnd;

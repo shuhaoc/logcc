@@ -10,7 +10,8 @@ LogQueryImpl::LogQueryImpl()
 	: curQueryResult(new LogQueryResult())
 	, taskWnd(new SimpleTaskMessageWindow())
 	, monitorThread(NULL)
-	, monitoring(false) {
+	, monitoring(false)
+	, curQueryRegex(new boost::basic_regex<TCHAR>(_T(""))) {
 }
 
 LogQueryImpl::~LogQueryImpl() {
@@ -54,16 +55,21 @@ LogItem* LogQueryImpl::getSelected() const {
 
 LogQueryResult* LogQueryImpl::query(const tstring& criteria) {
 	curQueryCriteria = criteria;
+	try {
+		auto newRegex = new boost::basic_regex<TCHAR>(criteria);
+		delete this->curQueryRegex;
+		this->curQueryRegex = newRegex;
 
-	vector<LogItem*> queryResult;
-	for (auto i = logItems.begin(); i != logItems.end(); i++) {
-		LogItem* item = *i;
-		// TODO: 在这里调用复杂的条件查询接口
-		if (item->text.find(criteria) != tstring::npos) {
-			queryResult.push_back(item);
+		vector<LogItem*> queryResult;
+		for (auto i = logItems.begin(); i != logItems.end(); i++) {
+			LogItem* item = *i;
+			if (boost::regex_search(item->text, *curQueryRegex)) {
+				queryResult.push_back(item);
+			}
 		}
+		setCurQueryResult(new LogQueryResult(queryResult));
+	} catch (...) {
 	}
-	setCurQueryResult(new LogQueryResult(queryResult));
 	return curQueryResult;
 }
 
