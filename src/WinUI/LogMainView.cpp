@@ -135,7 +135,8 @@ void CLogMainView::UpdateScroll()
 #endif
 #define LOGCC_WINUI_SCROLL_TO_END_ON_UPDATE
 #ifdef LOGCC_WINUI_SCROLL_TO_END_ON_UPDATE
-	ScrollToPosition(CPoint(0, 0xFFFF));
+	int y = totalSize.cy - clientRect.Height();
+	ScrollToPosition(CPoint(0, max(y, 0)));
 #endif
 }
 

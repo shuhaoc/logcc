@@ -186,6 +186,7 @@ void LogQueryImpl::reset(const vector<LogItem*>& logItems) {
 
 void LogQueryImpl::clear() {
 	logItems.clear();
+	query(curQueryCriteria);
 }
 
 void LogQueryImpl::asyncReload() {
