@@ -30,6 +30,7 @@ IMPLEMENT_DYNCREATE(CLogMainView, CScrollView)
 BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	ON_WM_ERASEBKGND()
 	ON_WM_VSCROLL()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CLogMainView 构造/析构
@@ -193,4 +194,12 @@ BOOL CLogMainView::PreTranslateMessage(MSG* pMsg)
 	GetClientRect(GetDocument()->clientRect);
 
 	return __super::PreTranslateMessage(pMsg);
+}
+
+void CLogMainView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	if (GetForegroundWindow() == AfxGetMainWnd()) {
+		SetFocus();
+	}
+	__super::OnMouseMove(nFlags, point);
 }

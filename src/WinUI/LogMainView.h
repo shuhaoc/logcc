@@ -46,6 +46,7 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // LogMainView.cpp 中的调试版本
