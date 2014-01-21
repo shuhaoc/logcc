@@ -132,6 +132,10 @@ void CLogMainView::UpdateScroll()
 #else
 	SetScrollSizes(MM_TEXT, totalSize);
 #endif
+#define LOGCC_WINUI_SCROLL_TO_END_ON_UPDATE
+#ifdef LOGCC_WINUI_SCROLL_TO_END_ON_UPDATE
+	ScrollToPosition(CPoint(0, 0xFFFF));
+#endif
 }
 
 void CLogMainView::onGeneralDataChanged() {
