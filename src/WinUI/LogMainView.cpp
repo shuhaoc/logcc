@@ -122,7 +122,7 @@ void CLogMainView::UpdateScroll()
 	CRect clientRect;
 	GetClientRect(clientRect);
 	CSize totalSize;
-	totalSize.cx = clientRect.Width();
+	totalSize.cx = 0; //clientRect.Width();
 	// 加1是为了最后一行一定可见
 	GetDocument()->length = totalSize.cy = (GetDocument()->logQuery->getCurQueryResult()->getCount() + 1) * LineHeight;
 #define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
