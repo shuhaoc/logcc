@@ -186,63 +186,14 @@ void LogQueryImpl::scrollTo(int y) {
 }
 
 void LogQueryImpl::startMonitor() {
-#define LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
-
 	monitorThread = new boost::thread(([this] () {
 		monitoring = true;
 		HANDLE file = ::CreateFile(filePath.c_str(), GENERIC_READ, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-
-#ifdef LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
-		tstring dir = filePath.substr(0, filePath.find_last_of(_T('\\')));
-		HANDLE directory = ::CreateFile(dir.c_str(), FILE_LIST_DIRECTORY, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
-			NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS |  FILE_FLAG_OVERLAPPED, NULL);
-		const DWORD bufferLen = 102400;
-		char notifyBuffer[bufferLen] = { 0 };
-		OVERLAPPED ovlp = { 0 };
-		ovlp.hEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);
-		DWORD bytesWritten = 0;
-		::ReadDirectoryChangesW(directory, notifyBuffer, bufferLen, FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE,
-			&bytesWritten, &ovlp, NULL);
 		while (monitoring) {
-			if (::WaitForSingleObject(reloadEvent, 0) == WAIT_OBJECT_0) goto file_changed;
-			if (::WaitForSingleObject(ovlp.hEvent, 100) == WAIT_OBJECT_0) {
-				FILE_NOTIFY_INFORMATION* notifyInfo = reinterpret_cast<FILE_NOTIFY_INFORMATION*>(notifyBuffer);
-wait_ovlp_event_success:
-				if (notifyInfo->Action == FILE_ACTION_MODIFIED) {
-					{
-						unsigned nameLen = notifyInfo->FileNameLength / sizeof(TCHAR);
-						tstring name(nameLen, '\0');
-						memcpy(const_cast<TCHAR*>(name.data()), notifyInfo->FileName, notifyInfo->FileNameLength);
-						tstring monitored = filePath.substr(filePath.find_last_of(_T('\\')) + 1, tstring::npos);
-						if (name != monitored) continue;
-					}
-file_changed:
-#elif defined LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
-		tstring dir = filePath.substr(0, filePath.find_last_of(_T('\\')));
-		HANDLE change = ::FindFirstChangeNotification(dir.c_str(), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE);
-		while (monitoring) {
-			DWORD waitResult = ::WaitForSingleObject(change, 100);
-			if (waitResult == WAIT_OBJECT_0) {
-				if (::FindNextChangeNotification(change)) {
-
-#elif defined LOGCC_MODEL_USE_GET_FILE_TIME_TO_MONITOR_FILE
-		FILETIME initialWriteTime;
-		::GetFileTime(file, NULL, NULL, &initialWriteTime);
-		while (monitoring) {
-			boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
-
-			FILETIME lastWriteTime;
-			if (::GetFileTime(file, NULL, NULL, &lastWriteTime)) {
-				// 文件存在
-				if (lastWriteTime.dwHighDateTime > initialWriteTime.dwHighDateTime
-					|| (lastWriteTime.dwHighDateTime == initialWriteTime.dwHighDateTime
-						&& lastWriteTime.dwLowDateTime > initialWriteTime.dwLowDateTime)) {
-					initialWriteTime = lastWriteTime;
-#else
-#error 请至少定义一种文件监控方案
-#endif
-					::OutputDebugStringA("监测到文件夹变化\n");
+			::Sleep(500);
+			if (1) {
+				if (1) {
 					// UNDONE: 文件读取代码复用
 					DWORD fileSize = ::GetFileSize(file, NULL);
 					char* buffer = new char[fileSize + 1];
@@ -268,10 +219,16 @@ file_changed:
 							item->selected = false;
 							logItems.push_back(item);
 						}
-						LogQueryImpl* that = this;
-						taskWnd->post(new SimpleTask([that, logItems] () {
-							that->reset(logItems);
-						}));
+						// UNDONE: 简单比较
+						if (this->logItems.size() != logItems.size()) {
+							DEBUG_INFO(_T("监测到文件变化"));
+							LogQueryImpl* that = this;
+							taskWnd->post(new SimpleTask([that, logItems] () {
+								that->reset(logItems);
+							}));
+						} else {
+							for_each(logItems.begin(), logItems.end(), [] (LogItem* p) { delete p; });
+						}
 					} else {
 						// 读文件失败
 						// UNDONE: 以下代码重复
@@ -282,26 +239,10 @@ file_changed:
 						}));
 					}
 				}
-				//if (notifyInfo->NextEntryOffset > 0) {
-				//	notifyInfo = reinterpret_cast<FILE_NOTIFY_INFORMATION*>(
-				//		reinterpret_cast<unsigned>(notifyInfo) + notifyInfo->NextEntryOffset);
-				//	goto wait_ovlp_event_success;
-				//}
-			} // signal
-#ifdef LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
-			::ReadDirectoryChangesW(directory, notifyBuffer, bufferLen, FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE,
-				&bytesWritten, &ovlp, NULL);
-#endif
+			}
 		} // while monitoring
-#ifdef LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
-		::CloseHandle(ovlp.hEvent);
-		::CloseHandle(directory);
-#endif
-#ifdef LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
-		::FindCloseChangeNotification(change);
-#endif
 		::CloseHandle(file);
-		::OutputDebugStringA("监控线程退出！\n");
+		DEBUG_INFO(_T("监控线程退出！"));
 	}));
 }
 

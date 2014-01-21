@@ -26,6 +26,7 @@ using namespace std;
 
 #include <boost/thread.hpp>
 
+#include <mrl/utility/DebugInfo.h>
 #include <mrl/common/tstring.h>
 using mrl::common::tstring;
 
