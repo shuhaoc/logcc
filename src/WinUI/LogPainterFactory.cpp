@@ -9,13 +9,16 @@ class LogSingleLinePainter : public ILogItemPainter {
 		int oldTextColor = ::GetTextColor(hdc);
 
 		// 背景
-		HBRUSH bkgdBrush = ::CreateSolidBrush(0x00FFFFFF);
+		HBRUSH bkgdBrush = NULL;
 		if (item.selected) {
 			bkgdBrush = ::CreateSolidBrush(0x00C36832);
+			::SetTextColor(hdc, 0x00FFFFFF);
 		} else if (item.text.find(_T("ERROR")) != tstring::npos) {
 			bkgdBrush = ::CreateSolidBrush(0x000000FF);
 		} else if (item.text.find(_T("WARN")) != tstring::npos) {
 			bkgdBrush = ::CreateSolidBrush(0x0000FFFF);
+		} else {
+			bkgdBrush = ::CreateSolidBrush(0x00FFFFFF);
 		}
 		HGDIOBJ oldBrush = ::SelectObject(hdc, bkgdBrush);
 		::FillRect(hdc, &rect, bkgdBrush);
