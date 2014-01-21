@@ -24,7 +24,7 @@ LogMainController::~LogMainController()
 
 BEGIN_MESSAGE_MAP(LogMainController, CWnd)
 	ON_WM_LBUTTONUP()
-	ON_WM_KEYUP()
+	ON_WM_KEYDOWN()
 	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
@@ -44,7 +44,7 @@ void LogMainController::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 }
 
-void LogMainController::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+void LogMainController::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// UNDONE: 下面一行复用
 	CLogCCDoc* viewData = static_cast<CLogCCDoc*>(getViewData());
@@ -82,17 +82,13 @@ void LogMainController::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == VK_PRIOR)
 	{
 		// 向上1页
-		CRect clientRect;
-		GetClientRect(clientRect);
-		viewData->yScrollPos -= clientRect.Height() / viewData->lineHeight * viewData->lineHeight;
+		viewData->yScrollPos -= viewData->clientRect.Height() / viewData->lineHeight * viewData->lineHeight;
 		viewData->yScrollPos = max(viewData->yScrollPos, 0);
 	}
 	else if (nChar == VK_NEXT)
 	{
 		// 向下1页
-		CRect clientRect;
-		GetClientRect(clientRect);
-		viewData->yScrollPos += clientRect.Height() / viewData->lineHeight * viewData->lineHeight;
+		viewData->yScrollPos += viewData->clientRect.Height() / viewData->lineHeight * viewData->lineHeight;
 	}
 	viewData->logQuery->scrollTo(viewData->yScrollPos);
 }
