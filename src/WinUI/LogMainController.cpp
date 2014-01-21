@@ -93,8 +93,6 @@ void LogMainController::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		CRect clientRect;
 		GetClientRect(clientRect);
 		viewData->yScrollPos += clientRect.Height() / viewData->lineHeight * viewData->lineHeight;
-	} else if (nChar == VK_F5) {
-		viewData->logQuery->asyncReload();
 	}
 	viewData->logQuery->scrollTo(viewData->yScrollPos);
 }

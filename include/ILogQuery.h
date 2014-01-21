@@ -72,13 +72,6 @@ public:
 	 */
 	virtual void scrollTo(int y) = 0; // UNDONE: 奇怪的接口方法
 
-	/**
-	 * 异步重加载
-	 * @author CaoShuhao
-	 * @date 2014-1-21
-	 */
-	virtual void asyncReload() = 0;
-
 protected:
 	void notifyGeneralDataChanged() const {
 		forEachObserver([] (ILogQueryObserver* p) { p->onGeneralDataChanged(); });

@@ -27,13 +27,13 @@ protected:
 
 	virtual void scrollTo(int y);
 
-	virtual void asyncReload();
-
 	void reset(const vector<LogItem*>& logItems);
 
-	void clear();
+	void reset();
 
 private:
+	void loadFile(vector<LogItem*>& logItems);
+
 	void setCurQueryResult(LogQueryResult* curQueryResult);
 
 	tstring filePath;
@@ -48,5 +48,4 @@ private:
 
 	bool monitoring;
 	boost::thread* monitorThread;
-	HANDLE reloadEvent;
 };
