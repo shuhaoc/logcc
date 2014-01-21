@@ -13,6 +13,7 @@ LogQueryImpl::LogQueryImpl()
 	, taskWnd(new SimpleTaskMessageWindow())
 	, monitorThread(NULL)
 	, monitoring(false) {
+	reloadEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);
 }
 
 LogQueryImpl::~LogQueryImpl() {
@@ -25,6 +26,8 @@ LogQueryImpl::~LogQueryImpl() {
 		monitorThread->join();
 		delete monitorThread;
 	}
+
+	::CloseHandle(reloadEvent);
 }
 
 bool LogQueryImpl::load(const tstring& filePath) {	
@@ -183,19 +186,46 @@ void LogQueryImpl::scrollTo(int y) {
 }
 
 void LogQueryImpl::startMonitor() {
-#define LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
+#define LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
+
 	monitorThread = new boost::thread(([this] () {
 		monitoring = true;
 		HANDLE file = ::CreateFile(filePath.c_str(), GENERIC_READ, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-#ifdef LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
+
+#ifdef LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
+		tstring dir = filePath.substr(0, filePath.find_last_of(_T('\\')));
+		HANDLE directory = ::CreateFile(dir.c_str(), FILE_LIST_DIRECTORY, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+			NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS |  FILE_FLAG_OVERLAPPED, NULL);
+		const DWORD bufferLen = 102400;
+		char notifyBuffer[bufferLen] = { 0 };
+		OVERLAPPED ovlp = { 0 };
+		ovlp.hEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);
+		DWORD bytesWritten = 0;
+		::ReadDirectoryChangesW(directory, notifyBuffer, bufferLen, FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE,
+			&bytesWritten, &ovlp, NULL);
+		while (monitoring) {
+			if (::WaitForSingleObject(reloadEvent, 0) == WAIT_OBJECT_0) goto file_changed;
+			if (::WaitForSingleObject(ovlp.hEvent, 100) == WAIT_OBJECT_0) {
+				FILE_NOTIFY_INFORMATION* notifyInfo = reinterpret_cast<FILE_NOTIFY_INFORMATION*>(notifyBuffer);
+wait_ovlp_event_success:
+				if (notifyInfo->Action == FILE_ACTION_MODIFIED) {
+					{
+						unsigned nameLen = notifyInfo->FileNameLength / sizeof(TCHAR);
+						tstring name(nameLen, '\0');
+						memcpy(const_cast<TCHAR*>(name.data()), notifyInfo->FileName, notifyInfo->FileNameLength);
+						tstring monitored = filePath.substr(filePath.find_last_of(_T('\\')) + 1, tstring::npos);
+						if (name != monitored) continue;
+					}
+file_changed:
+#elif defined LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
 		tstring dir = filePath.substr(0, filePath.find_last_of(_T('\\')));
 		HANDLE change = ::FindFirstChangeNotification(dir.c_str(), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE);
 		while (monitoring) {
 			DWORD waitResult = ::WaitForSingleObject(change, 100);
 			if (waitResult == WAIT_OBJECT_0) {
 				if (::FindNextChangeNotification(change)) {
-					::OutputDebugStringA("监测到文件夹变化\n");
+
 #elif defined LOGCC_MODEL_USE_GET_FILE_TIME_TO_MONITOR_FILE
 		FILETIME initialWriteTime;
 		::GetFileTime(file, NULL, NULL, &initialWriteTime);
@@ -205,7 +235,6 @@ void LogQueryImpl::startMonitor() {
 			FILETIME lastWriteTime;
 			if (::GetFileTime(file, NULL, NULL, &lastWriteTime)) {
 				// 文件存在
-				// UNDONE: 文件读取代码复用
 				if (lastWriteTime.dwHighDateTime > initialWriteTime.dwHighDateTime
 					|| (lastWriteTime.dwHighDateTime == initialWriteTime.dwHighDateTime
 						&& lastWriteTime.dwLowDateTime > initialWriteTime.dwLowDateTime)) {
@@ -213,6 +242,8 @@ void LogQueryImpl::startMonitor() {
 #else
 #error 请至少定义一种文件监控方案
 #endif
+					::OutputDebugStringA("监测到文件夹变化\n");
+					// UNDONE: 文件读取代码复用
 					DWORD fileSize = ::GetFileSize(file, NULL);
 					char* buffer = new char[fileSize + 1];
 					DWORD readSize = 0;
@@ -229,11 +260,11 @@ void LogQueryImpl::startMonitor() {
 							std::getline(iss, line);
 							LogItem* item = new LogItem();
 							item->line = ++lineNum;
-	#ifdef _UNICODE
+#ifdef _UNICODE
 							item->text = mrl::utility::codeconv::asciiToUnicode(line);
-	#else
+#else
 							item->text = line;
-	#endif
+#endif
 							item->selected = false;
 							logItems.push_back(item);
 						}
@@ -251,9 +282,21 @@ void LogQueryImpl::startMonitor() {
 						}));
 					}
 				}
-				// 没有更新，继续循环
-			}
-		}
+				if (notifyInfo->NextEntryOffset > 0) {
+					notifyInfo = reinterpret_cast<FILE_NOTIFY_INFORMATION*>(
+						reinterpret_cast<unsigned>(notifyInfo) + notifyInfo->NextEntryOffset);
+					goto wait_ovlp_event_success;
+				}
+			} // signal
+#ifdef LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
+			::ReadDirectoryChangesW(directory, notifyBuffer, bufferLen, FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE,
+				&bytesWritten, &ovlp, NULL);
+#endif
+		} // while monitoring
+#ifdef LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
+		::CloseHandle(ovlp.hEvent);
+		::CloseHandle(directory);
+#endif
 #ifdef LOGCC_MODEL_USE_FIND_FIRST_CHANGE_NOTIFICATION_TO_MONITOR_FILE
 		::FindCloseChangeNotification(change);
 #endif
@@ -270,4 +313,8 @@ void LogQueryImpl::reset(const vector<LogItem*>& logItems) {
 
 void LogQueryImpl::clear() {
 	logItems.clear();
+}
+
+void LogQueryImpl::asyncReload() {
+	::SetEvent(reloadEvent);
 }
