@@ -102,15 +102,15 @@ BOOL LogMainController::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	
 	if (viewData->clientRect.Height() >= viewData->length) return FALSE;
 
-	int delta = viewData->clientRect.Height() / viewData->lineHeight / 2 * viewData->lineHeight;
+	int delta = 3 * viewData->lineHeight;
 	if (zDelta < 0)
 	{
-		// 向下半页
+		// 向下3行
 		viewData->yScrollPos += delta;
 	}
 	else
 	{
-		// 向上半页
+		// 向上3行
 		viewData->yScrollPos -= delta;
 		viewData->yScrollPos = max(viewData->yScrollPos, 0);
 	}
