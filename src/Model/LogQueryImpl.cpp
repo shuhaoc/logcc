@@ -282,11 +282,11 @@ file_changed:
 						}));
 					}
 				}
-				if (notifyInfo->NextEntryOffset > 0) {
-					notifyInfo = reinterpret_cast<FILE_NOTIFY_INFORMATION*>(
-						reinterpret_cast<unsigned>(notifyInfo) + notifyInfo->NextEntryOffset);
-					goto wait_ovlp_event_success;
-				}
+				//if (notifyInfo->NextEntryOffset > 0) {
+				//	notifyInfo = reinterpret_cast<FILE_NOTIFY_INFORMATION*>(
+				//		reinterpret_cast<unsigned>(notifyInfo) + notifyInfo->NextEntryOffset);
+				//	goto wait_ovlp_event_success;
+				//}
 			} // signal
 #ifdef LOGCC_MODEL_USE_READ_DIRECTORY_CHANGES_TO_MONITOR_FILE
 			::ReadDirectoryChangesW(directory, notifyBuffer, bufferLen, FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE,
