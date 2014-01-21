@@ -8,18 +8,22 @@ class LogSingleLinePainter : public ILogItemPainter {
 		int oldBkMode = ::SetBkMode(hdc, TRANSPARENT);
 		int oldTextColor = ::GetTextColor(hdc);
 
+		// 背景
+		HBRUSH bkgdBrush = ::CreateSolidBrush(0x00FFFFFF);
 		if (item.selected) {
-			HBRUSH bkgdBrush = ::CreateSolidBrush(0x00C36832);
-			HGDIOBJ oldBrush = ::SelectObject(hdc, bkgdBrush);
-
-			::FillRect(hdc, &rect, bkgdBrush);
-
-			::SelectObject(hdc, oldBrush);
-			::DeleteObject(bkgdBrush);
-
-			::SetTextColor(hdc, 0x00FFFFFF);
+			bkgdBrush = ::CreateSolidBrush(0x00C36832);
+		} else if (item.text.find(_T("ERROR")) != tstring::npos) {
+			bkgdBrush = ::CreateSolidBrush(0x000000FF);
+		} else if (item.text.find(_T("WARN")) != tstring::npos) {
+			bkgdBrush = ::CreateSolidBrush(0x0000FFFF);
 		}
+		HGDIOBJ oldBrush = ::SelectObject(hdc, bkgdBrush);
+		::FillRect(hdc, &rect, bkgdBrush);
 
+		::SelectObject(hdc, oldBrush);
+		::DeleteObject(bkgdBrush);
+
+		// 文本
 		std::basic_ostringstream<TCHAR> oss;
 		oss << item.line << _T(" ") << item.text;
 		tstring line = oss.str();
