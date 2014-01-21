@@ -8,16 +8,19 @@ public:
 	
 	~SimpleTaskMessageWindow();
 
-	void post(SimpleTask* task) {
-		::PostMessage(internalWnd, InternalMessageId, reinterpret_cast<WPARAM>(task), 0);
-	}
+	void post(SimpleTask* task);
 
+	static void globalInit(HINSTANCE module);
+
+	static void globalUninit();
+
+private:
 	static LRESULT WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 
 	static WNDCLASS WndClass;
 
-private:
 	static UINT InternalMessageId;
 
+private:
 	HWND internalWnd;
 };
