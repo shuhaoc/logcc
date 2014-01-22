@@ -43,6 +43,9 @@
     <ClInclude Include="SimpleTaskMessageWindow.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -66,5 +69,8 @@
     <ClCompile Include="SimpleTaskMessageWindow.cpp">
       <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Model.rc" />
   </ItemGroup>
 </Project>
