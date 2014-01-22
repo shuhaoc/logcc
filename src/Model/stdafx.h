@@ -30,6 +30,8 @@ using namespace std;
 
 #include <mrl/utility/DebugInfo.h>
 #include <mrl/common/tstring.h>
+#include <mrl/utility/CodeConv.h>
+#include <mrl/utility/SimpleTaskMessageWindow.h>
 using mrl::common::tstring;
 
 #include "ModelExport.h"

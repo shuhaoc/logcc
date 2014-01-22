@@ -3,7 +3,7 @@
 #include "ILogQuery.h"
 
 class LogQueryResult;
-class SimpleTaskMessageWindow;
+namespace mrl { namespace utility { class SimpleTaskMessageWindow; } }
 namespace boost { class thread; }
 
 class LogQueryImpl : public ILogQuery {
@@ -42,7 +42,7 @@ private:
 	boost::basic_regex<TCHAR>* curQueryRegex;
 	LogQueryResult* curQueryResult;
 
-	SimpleTaskMessageWindow* taskWnd;
+	mrl::utility::SimpleTaskMessageWindow* taskWnd;
 
 	// UNDONE: 抽出复用
 	void startMonitor();

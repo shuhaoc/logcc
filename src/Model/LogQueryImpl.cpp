@@ -1,10 +1,9 @@
 ﻿#include "stdafx.h"
-#include <mrl/utility/CodeConv.h>
 #include "LogQueryImpl.h"
 #include "LogItem.h"
 #include "LogQueryResult.h"
-#include "SimpleTaskMessageWindow.h"
 
+using namespace mrl::utility;
 
 LogQueryImpl::LogQueryImpl()
 	: curQueryResult(new LogQueryResult())
