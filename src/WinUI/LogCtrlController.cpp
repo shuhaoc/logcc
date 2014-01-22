@@ -23,6 +23,7 @@ LogCtrlController::~LogCtrlController()
 
 BEGIN_MESSAGE_MAP(LogCtrlController, CWnd)
 	ON_EN_CHANGE(IDC_CRITERIA, &LogCtrlController::OnEnChangeCriteria)
+	ON_MESSAGE(WM_COMMIT, &LogCtrlController::OnCommit)
 END_MESSAGE_MAP()
 
 
@@ -32,6 +33,12 @@ END_MESSAGE_MAP()
 
 void LogCtrlController::OnEnChangeCriteria()
 {
+	OnCommit();
+}
+
+afx_msg LRESULT LogCtrlController::OnCommit(WPARAM wParam, LPARAM lParam)
+{
 	const CLogCCDoc* viewData = static_cast<const CLogCCDoc*>(getViewData());
 	viewData->logQuery->query(viewData->criteria);
+	return 0;
 }

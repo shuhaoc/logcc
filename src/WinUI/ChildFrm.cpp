@@ -23,6 +23,7 @@ IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWndEx)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWndEx)
 	ON_WM_SIZE()
+	ON_WM_MDIACTIVATE()
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
@@ -30,7 +31,6 @@ END_MESSAGE_MAP()
 CChildFrame::CChildFrame()
 	: m_bSplitterCreated(false)
 {
-	// TODO: 在此添加成员初始化代码
 }
 
 CChildFrame::~CChildFrame()
@@ -95,19 +95,6 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
-// CChildFrame 诊断
-
-#ifdef _DEBUG
-void CChildFrame::AssertValid() const
-{
-	CMDIChildWndEx::AssertValid();
-}
-
-void CChildFrame::Dump(CDumpContext& dc) const
-{
-	CMDIChildWndEx::Dump(dc);
-}
-#endif //_DEBUG
 
 // CChildFrame 消息处理程序
 
@@ -127,5 +114,14 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy)
 		m_wndSplitter.SetRowInfo(1, max(rect.Height() - ctrlViewHeight - textViewHeight, 10), 10); 
 		m_wndSplitter.SetRowInfo(2, textViewHeight, 10);
 		m_wndSplitter.RecalcLayout();
+	}
+}
+
+void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
+{
+	CMDIChildWndEx::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
+	if (bActivate && pActivateWnd == this) {
+		// UNDONE: 特殊代码，不好
+		GetActiveView()->SendMessage(LogCtrlController::WM_COMMIT);
 	}
 }

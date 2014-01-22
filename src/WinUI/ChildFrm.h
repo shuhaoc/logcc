@@ -26,10 +26,6 @@ public:
 // 实现
 public:
 	virtual ~CChildFrame();
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
 
 private:
 	bool m_bSplitterCreated;
@@ -39,4 +35,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
 };
