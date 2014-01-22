@@ -1,6 +1,21 @@
 ﻿#pragma once
 
-typedef std::function<void ()> SimpleTask;
+class SimpleTask : private boost::noncopyable {
+public:
+	SimpleTask(std::function<void ()> func);
+
+	~SimpleTask();
+
+	void execute();
+
+	void signal();
+
+	void wait(unsigned ms = INFINITE);
+
+private:
+	std::function<void ()> func;
+	HANDLE executed;
+};
 
 class SimpleTaskMessageWindow {
 public:
@@ -8,7 +23,7 @@ public:
 	
 	~SimpleTaskMessageWindow();
 
-	void post(SimpleTask* task);
+	SimpleTask* post(SimpleTask* task);
 
 	static void globalInit(HINSTANCE module);
 

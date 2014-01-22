@@ -24,6 +24,7 @@
 
 using namespace std;
 
+#include <boost/utility.hpp>
 #include <boost/thread.hpp>
 #include <boost/regex.hpp>
 

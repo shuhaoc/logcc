@@ -1,6 +1,26 @@
 ﻿#include "stdafx.h"
 #include "SimpleTaskMessageWindow.h"
 
+SimpleTask::SimpleTask(std::function<void ()> func) : func(func) {
+	executed = ::CreateEvent(NULL, FALSE, FALSE, NULL);
+}
+
+SimpleTask::~SimpleTask() {
+	::CloseHandle(executed);
+}
+
+void SimpleTask::execute() {
+	func();
+}
+
+void SimpleTask::signal() {
+	::SetEvent(executed);
+}
+
+void SimpleTask::wait(unsigned ms /*= INFINITE*/) {
+	::WaitForSingleObject(executed, ms);
+}
+
 UINT SimpleTaskMessageWindow::InternalMessageId = ::RegisterWindowMessage(_T("{B4DACDED-4AC4-4636-9BCC-EEFB76E24538}"));
 
 WNDCLASS SimpleTaskMessageWindow::WndClass;
@@ -27,7 +47,8 @@ void SimpleTaskMessageWindow::globalUninit() {
 LRESULT SimpleTaskMessageWindow::WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 	if (message == InternalMessageId) {
 		SimpleTask* task = reinterpret_cast<SimpleTask*>(wparam);
-		(*task)();
+		task->execute();
+		task->signal();
 		delete task;
 		return 0;
 	} else {
@@ -44,6 +65,7 @@ SimpleTaskMessageWindow::~SimpleTaskMessageWindow() {
 	::DestroyWindow(internalWnd);
 }
 
-void SimpleTaskMessageWindow::post(SimpleTask* task) {
+SimpleTask* SimpleTaskMessageWindow::post(SimpleTask* task) {
 	::PostMessage(internalWnd, InternalMessageId, reinterpret_cast<WPARAM>(task), 0);
+	return task;
 }

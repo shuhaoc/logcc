@@ -15,15 +15,15 @@ LogQueryImpl::LogQueryImpl()
 }
 
 LogQueryImpl::~LogQueryImpl() {
-	reset();
-
-	delete curQueryResult;
-	delete taskWnd;
 	if (monitoring && monitorThread) {
 		monitoring = false;
 		monitorThread->join();
 		delete monitorThread;
 	}
+	reset();
+
+	delete curQueryResult;
+	delete taskWnd;
 }
 
 bool LogQueryImpl::load(const tstring& filePath) {
@@ -100,7 +100,7 @@ void LogQueryImpl::startMonitor() {
 				LogQueryImpl* that = this;
 				taskWnd->post(new SimpleTask([that, logItems] () {
 					that->reset(logItems);
-				}));
+				}))->wait();
 			} else {
 				for_each(logItems.begin(), logItems.end(), [] (LogItem* p) { delete p; });
 			}
