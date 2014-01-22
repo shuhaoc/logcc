@@ -145,8 +145,8 @@ void LogQueryImpl::loadFile(vector<LogItem*>& logItems) {
 				item->selected = false;
 				logItems.push_back(item);
 			}
-			::CloseHandle(file);
 		}
 		delete[] buffer;
+		::CloseHandle(file);
 	}
 }
