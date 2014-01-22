@@ -1,1 +1,0 @@
-assoc .log=LogCC.Document
