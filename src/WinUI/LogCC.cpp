@@ -7,10 +7,11 @@
 #include "afxdialogex.h"
 #include "LogCC.h"
 #include "MainFrm.h"
-
+#include "ModulVer.h"
 #include "ChildFrm.h"
 #include "LogCCDoc.h"
 #include "LogMainView.h"
+#include "afxwin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -179,6 +180,10 @@ protected:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual BOOL OnInitDialog();
+private:
+	CStatic versionDesc;
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -188,6 +193,7 @@ CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_VERSION_DESC, versionDesc);
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
@@ -223,3 +229,29 @@ void CLogCCApp::SaveCustomState()
 
 
 
+
+
+BOOL CAboutDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	TCHAR exePath[MAX_PATH];
+	::GetModuleFileName(::AfxGetInstanceHandle(), exePath, MAX_PATH);
+
+	CModuleVersion versionReader;
+	versionReader.GetFileVersionInfo(exePath);
+
+	basic_ostringstream<TCHAR> oss;
+	oss << _T("LogCC ")
+		<< HIWORD(versionReader.dwProductVersionMS) << _T(".")
+		<< LOWORD(versionReader.dwProductVersionMS) << _T(".")
+		<< HIWORD(versionReader.dwProductVersionLS) << _T(".")
+		<< LOWORD(versionReader.dwProductVersionLS)
+		<< _T("");
+	versionDesc.SetWindowText(oss.str().c_str());
+
+	oss.str(_T(""));
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
+}

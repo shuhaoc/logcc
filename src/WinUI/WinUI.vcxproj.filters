@@ -24,6 +24,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="src\ThirdParty">
+      <UniqueIdentifier>{a1f0449c-49cb-458c-b205-b6ed6474b839}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -92,6 +95,9 @@
     <ClInclude Include="LogMainController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="ModulVer.h">
+      <Filter>src\ThirdParty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogPainterFactory.cpp">
@@ -126,6 +132,9 @@
     </ClCompile>
     <ClCompile Include="LogMainController.cpp">
       <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulVer.cpp">
+      <Filter>src\ThirdParty</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
