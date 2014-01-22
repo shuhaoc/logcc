@@ -1,6 +1,6 @@
-logcc
+ï»¿logcc
 =====
 
 An integrated log file viewer on Windows
 
-ÏÂÔØrelease°æÇëÒÆ²½"release"¡£
+ä¸‹è½½releaseç‰ˆè¯·ç§»æ­¥"release"ã€‚
