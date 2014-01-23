@@ -90,6 +90,30 @@ void LogMainController::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		// 向下1页
 		viewData->yScrollPos += viewData->clientRect.Height() / viewData->lineHeight * viewData->lineHeight;
 	}
+	if (nChar == VK_UP)
+	{
+		// 选中上一行
+		LogItem* item = viewData->logQuery->getSelected();
+		if (item) {
+			unsigned i = viewData->logQuery->getCurQueryResult()->findIndex(item);
+			if (i > 0 && i != 0xFFFFFFFF) {
+				i--;
+				viewData->logQuery->setSelected(viewData->logQuery->getCurQueryResult()->getIndex(i));
+			}
+		}
+	}
+	else if (nChar == VK_DOWN)
+	{
+		// 选中下一行
+		LogItem* item = viewData->logQuery->getSelected();
+		if (item) {
+			unsigned i = viewData->logQuery->getCurQueryResult()->findIndex(item);
+			if (i != 0xFFFFFFFF && i < viewData->logQuery->getCurQueryResult()->getCount() - 1) {
+				i++;
+				viewData->logQuery->setSelected(viewData->logQuery->getCurQueryResult()->getIndex(i));
+			}
+		}
+	}
 	viewData->logQuery->scrollTo(viewData->yScrollPos);
 }
 

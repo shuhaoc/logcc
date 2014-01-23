@@ -24,3 +24,13 @@ LogItem* LogQueryResult::getIndex(unsigned i) const {
 	assert(i < queryResult.size());
 	return queryResult[i];
 }
+
+unsigned LogQueryResult::findIndex(LogItem* item) const {
+	assert(item);
+	unsigned i = 0;
+	for (; i < queryResult.size(); i++) {
+		if (queryResult[i] == item) break;
+	}
+	if (i == queryResult.size()) i = 0xFFFFFFFF;
+	return i;
+}

@@ -122,6 +122,7 @@ void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 	CMDIChildWndEx::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
 	if (bActivate && pActivateWnd == this) {
 		// UNDONE: 特殊代码，不好
+		// FIXME: 第二次打开最近文件列表中不存在文件时会崩溃
 		GetActiveView()->SendMessage(LogCtrlController::WM_COMMIT);
 	}
 }

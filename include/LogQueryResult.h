@@ -40,6 +40,15 @@ public:
 	 */
 	MODEL_EXPORT LogItem* getIndex(unsigned i) const;
 
+	/**
+	 * 根据日志行查找索引，失败返回0xFFFFFFFF
+	 * @param item [in] 日志行
+	 * @return 索引
+	 * @author CaoShuhao
+	 * @date 2014-1-23
+	 */
+	MODEL_EXPORT unsigned findIndex(LogItem* item) const;
+
 private:
 	vector<LogItem*> queryResult;
 };
