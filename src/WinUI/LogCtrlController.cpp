@@ -5,13 +5,12 @@
 #include "LogCtrlController.h"
 #include "Resource.h"
 #include "LogCCDoc.h"
-#include "ILogQuery.h"
 
 // LogCtrlController
 
 IMPLEMENT_DYNAMIC(LogCtrlController, CWnd)
 
-LogCtrlController::LogCtrlController(CWnd* parent) : ControllerBase(parent)
+LogCtrlController::LogCtrlController(CWnd* parent) : ControllerBase<ILogQuery, CtrlViewData>(parent)
 {
 
 }
@@ -38,7 +37,8 @@ void LogCtrlController::OnEnChangeCriteria()
 
 afx_msg LRESULT LogCtrlController::OnCommit(WPARAM wParam, LPARAM lParam)
 {
-	const CLogCCDoc* viewData = static_cast<const CLogCCDoc*>(getViewData());
-	viewData->logQuery->query(viewData->criteria);
+	//const CLogCCDoc* viewData = static_cast<const CLogCCDoc*>(getViewData());
+	//viewData->logQuery->query(viewData->criteria);
+	//getModel()->query(
 	return 0;
 }

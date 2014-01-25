@@ -1,11 +1,13 @@
 ﻿#pragma once
 #include "afxwin.h"
+#include "IModelAware.h"
+#include "ILogQuery.h"
 
 class CLogCCDoc;
 
 // CLogCtrlView 窗体视图
 
-class CLogCtrlView : public CFormView
+class CLogCtrlView : public CFormView, public IModelAware<ILogQuery>
 {
 	DECLARE_DYNCREATE(CLogCtrlView)
 

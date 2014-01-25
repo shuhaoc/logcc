@@ -89,14 +89,35 @@
     <ClInclude Include="LogCtrlController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ControllerBase.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="LogMainController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
     <ClInclude Include="ModulVer.h">
       <Filter>src\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IModelAware.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ControllerRoute.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IModelFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ControllerBase.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IViewDataAware.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\MainViewData.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CtrlViewData.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IViewDataSubmitter.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

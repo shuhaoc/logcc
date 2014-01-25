@@ -1,11 +1,14 @@
 ﻿#pragma once
 
+#include "IModelAware.h"
+#include "ILogQuery.h"
 #include "ILogQueryObserver.h"
 #include "afxwin.h"
 
+
 // CLogTextView 窗体视图
 
-class CLogTextView : public CFormView, public ILogQueryObserver
+class CLogTextView : public CFormView, public IModelAware<ILogQuery>, public ILogQueryObserver
 {
 	DECLARE_DYNCREATE(CLogTextView)
 

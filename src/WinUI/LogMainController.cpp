@@ -5,14 +5,13 @@
 #include "LogMainController.h"
 #include "LogCCDoc.h"
 #include "LogItem.h"
-#include "ILogQuery.h"
 #include "LogQueryResult.h"
 
 // LogMainController
 
 IMPLEMENT_DYNAMIC(LogMainController, CWnd)
 
-LogMainController::LogMainController(CWnd* parent) : ControllerBase(parent)
+LogMainController::LogMainController(CWnd* parent) : ControllerBase<ILogQuery, MainViewData>(parent)
 {
 
 }
@@ -35,7 +34,7 @@ END_MESSAGE_MAP()
 
 void LogMainController::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	const CLogCCDoc* viewData = static_cast<const CLogCCDoc*>(getViewData());
+	const CLogCCDoc* viewData = nullptr;//static_cast<const CLogCCDoc*>(getViewData());
 	unsigned i = (viewData->yScrollPos + point.y) / viewData->lineHeight;
 	if (i < viewData->logQuery->getCurQueryResult()->getCount()) {
 		LogItem* item = viewData->logQuery->getCurQueryResult()->getIndex(i);
@@ -47,7 +46,7 @@ void LogMainController::OnLButtonUp(UINT nFlags, CPoint point)
 void LogMainController::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// UNDONE: 下面一行复用
-	CLogCCDoc* viewData = static_cast<CLogCCDoc*>(getViewData());
+	CLogCCDoc* viewData = nullptr;//static_cast<CLogCCDoc*>(getViewData());
 	DEBUG_INFO(_T("滚动位置：") << viewData->yScrollPos);
 
 	// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
@@ -121,7 +120,7 @@ BOOL LogMainController::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	DEBUG_INFO(_T("zDelta = ") << zDelta << _T(", x = ") << pt.x << _T(", y = ") << pt.y);
 	
-	CLogCCDoc* viewData = static_cast<CLogCCDoc*>(getViewData());
+	CLogCCDoc* viewData = nullptr;//static_cast<CLogCCDoc*>(getViewData());
 	DEBUG_INFO(_T("滚动位置：") << viewData->yScrollPos);
 	
 	if (viewData->clientRect.Height() >= viewData->length) return FALSE;
