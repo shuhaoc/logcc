@@ -204,3 +204,6 @@ void CLogMainView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	__super::OnMouseMove(nFlags, point);
 }
+
+void CLogMainView::onSubmit() {
+}

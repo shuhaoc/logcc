@@ -1,4 +1,5 @@
-#pragma once
+﻿#pragma once
 
 struct CtrlViewData {
+	tstring criteria;
 };

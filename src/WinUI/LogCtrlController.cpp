@@ -37,8 +37,8 @@ void LogCtrlController::OnEnChangeCriteria()
 
 afx_msg LRESULT LogCtrlController::OnCommit(WPARAM wParam, LPARAM lParam)
 {
-	//const CLogCCDoc* viewData = static_cast<const CLogCCDoc*>(getViewData());
-	//viewData->logQuery->query(viewData->criteria);
-	//getModel()->query(
+	updateViewData();
+	DEBUG_INFO(getViewData()->criteria);
+	getModel()->query(getViewData()->criteria);
 	return 0;
 }

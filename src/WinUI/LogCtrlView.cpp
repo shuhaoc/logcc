@@ -42,12 +42,18 @@ CLogCCDoc* CLogCtrlView::GetDocument() const // 非调试版本是内联的
 // CLogCtrlView 消息处理程序
 
 
-BOOL CLogCtrlView::OnCommand(WPARAM wParam, LPARAM lParam)
-{
+//BOOL CLogCtrlView::OnCommand(WPARAM wParam, LPARAM lParam)
+//{
+//	CString criteria;
+//	criteriaEdit.GetWindowText(criteria);
+//	GetDocument()->criteria = criteria.GetBuffer();
+//	DEBUG_INFO(GetDocument()->criteria);
+//
+//	return CFormView::OnCommand(wParam, lParam);
+//}
+
+void CLogCtrlView::onSubmit() {
 	CString criteria;
 	criteriaEdit.GetWindowText(criteria);
-	GetDocument()->criteria = criteria.GetBuffer();
-	DEBUG_INFO(GetDocument()->criteria);
-
-	return CFormView::OnCommand(wParam, lParam);
+	this->criteria = criteria.GetBuffer();
 }

@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include "IModelAware.h"
+#include "ViewBase.h"
 #include "ILogQuery.h"
 #include "ILogQueryObserver.h"
+#include "MainViewData.h"
 
-
-class CLogMainView : public CScrollView, public IModelAware<ILogQuery>, public ILogQueryObserver
+class CLogMainView : public CScrollView, public ViewBase<ILogQuery, MainViewData>, public ILogQueryObserver
 {
 protected: // 仅从序列化创建
 	CLogMainView();
@@ -24,6 +24,7 @@ public:
 
 // 重写
 public:
+	virtual void onSubmit();
 	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
 protected:
 	virtual void OnInitialUpdate(); // 构造后第一次调用
