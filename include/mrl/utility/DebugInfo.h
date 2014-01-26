@@ -123,14 +123,14 @@ static basic_debug_stream<wchar_t> wdebug;
 	using namespace mrl::utility;                                                            \
 	std::string t;					                                                                  \
 	get_cur_time_str(&t);			                                                                \
-	debug << "[" << t << "] (" << __FUNCTION__ << ":" << __LINE__ << ") " << s << std::endl;	\
+	debug << "[" << t << "] (" << __FUNCTION__ << ":" << __LINE__ << ") DEBUG_INFO " << s << std::endl;	\
 }
 
 #define DEBUG_INFOW(s) {				                                                                  \
 	using namespace mrl::utility;                                                                  \
 	std::wstring t;					                                                                        \
 	get_cur_time_str(&t);			                                                                      \
-	wdebug << L"[" << t << L"] (" << __FUNCTIONW__ << L":" << __LINE__ << L") " << s << std::endl;	\
+	wdebug << L"[" << t << L"] (" << __FUNCTIONW__ << L":" << __LINE__ << L") DEBUG_INFO " << s << std::endl;	\
 }
 
 #else
