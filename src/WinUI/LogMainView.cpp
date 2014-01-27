@@ -223,36 +223,7 @@ BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) {
 void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 	CRect clientRect;
 	GetClientRect(clientRect);
-
-	// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
-	//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
-	if (clientRect.Height() >= totalSize.cy) return;
-
-	int yScrollPos = GetScrollPosition().y;
-	if (::GetKeyState(VK_CONTROL) & 0x80000000) {
-		if (nChar == VK_HOME) {
-			// 跳到第一页
-			yScrollPos = 0;
-		} else if (nChar == VK_END) {
-			// 跳到最后一页，多出没事
-			yScrollPos = (getModel()->getCurQueryResult()->getCount()) * LineHeight;
-		} else if (nChar == VK_UP) {
-			// 向上1行
-			yScrollPos -= LineHeight;
-			yScrollPos = max(yScrollPos, 0);
-		} else if (nChar == VK_DOWN) {
-			// 向下1行
-			yScrollPos += LineHeight;
-		}
-	}
-	if (nChar == VK_PRIOR) {
-		// 向上1页
-		yScrollPos -= clientRect.Height() / LineHeight * LineHeight;
-		yScrollPos = max(yScrollPos, 0);
-	} else if (nChar == VK_NEXT) {
-		// 向下1页
-		yScrollPos += clientRect.Height() / LineHeight * LineHeight;
-	}
+	
 	if (nChar == VK_UP) {
 		// 选中上一行
 		LogItem* item = getModel()->getSelected();
@@ -273,9 +244,40 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 				getModel()->setSelected(getModel()->getCurQueryResult()->getIndex(i));
 			}
 		}
+	} else {
+		// 以下是滚动的情况
+		// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
+		//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
+		if (clientRect.Height() >= totalSize.cy) return;
+
+		int yScrollPos = GetScrollPosition().y;
+		if (::GetKeyState(VK_CONTROL) & 0x80000000) {
+			if (nChar == VK_HOME) {
+				// 跳到第一页
+				yScrollPos = 0;
+			} else if (nChar == VK_END) {
+				// 跳到最后一页，多出没事
+				yScrollPos = (getModel()->getCurQueryResult()->getCount()) * LineHeight;
+			} else if (nChar == VK_UP) {
+				// 向上1行
+				yScrollPos -= LineHeight;
+				yScrollPos = max(yScrollPos, 0);
+			} else if (nChar == VK_DOWN) {
+				// 向下1行
+				yScrollPos += LineHeight;
+			}
+		}
+		if (nChar == VK_PRIOR) {
+			// 向上1页
+			yScrollPos -= clientRect.Height() / LineHeight * LineHeight;
+			yScrollPos = max(yScrollPos, 0);
+		} else if (nChar == VK_NEXT) {
+			// 向下1页
+			yScrollPos += clientRect.Height() / LineHeight * LineHeight;
+		}
+		ScrollToPosition(CPoint(0, yScrollPos));
+		DEBUG_INFO(_T("滚动位置：") << yScrollPos);
 	}
-	ScrollToPosition(CPoint(0, yScrollPos));
-	DEBUG_INFO(_T("滚动位置：") << yScrollPos);
 	__super::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
