@@ -17,15 +17,7 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
-
 	ILogQuery* logQuery;
-	tstring criteria;
-
-	int yScrollPos;
-	int lineHeight;
-	CRect clientRect;
-
-	int length;
 
 // 操作
 public:
