@@ -115,7 +115,6 @@
     <ClInclude Include="..\..\include\IModelAware.h" />
     <ClInclude Include="..\..\include\IModelFactory.h" />
     <ClInclude Include="..\..\include\IViewDataAware.h" />
-    <ClInclude Include="..\..\include\IViewDataSubmitter.h" />
     <ClInclude Include="..\..\include\MainViewData.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ILogItemPainter.h" />

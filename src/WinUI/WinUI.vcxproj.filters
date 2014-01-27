@@ -27,6 +27,9 @@
     <Filter Include="src\ThirdParty">
       <UniqueIdentifier>{a1f0449c-49cb-458c-b205-b6ed6474b839}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ViewData">
+      <UniqueIdentifier>{9758a2f4-c4e4-4d30-af71-2eb866b1c6cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -111,13 +114,10 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\MainViewData.h">
-      <Filter>include</Filter>
+      <Filter>src\ViewData</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CtrlViewData.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\IViewDataSubmitter.h">
-      <Filter>include</Filter>
+      <Filter>src\ViewData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
