@@ -27,7 +27,7 @@
     <Filter Include="src\ThirdParty">
       <UniqueIdentifier>{a1f0449c-49cb-458c-b205-b6ed6474b839}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ViewData">
+    <Filter Include="src\View\ViewData">
       <UniqueIdentifier>{9758a2f4-c4e4-4d30-af71-2eb866b1c6cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -114,16 +114,16 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\MainViewData.h">
-      <Filter>src\ViewData</Filter>
+      <Filter>src\View\ViewData</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CtrlViewData.h">
-      <Filter>src\ViewData</Filter>
+      <Filter>src\View\ViewData</Filter>
     </ClInclude>
     <ClInclude Include="LogDetailController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
     <ClInclude Include="DetailViewData.h">
-      <Filter>src\ViewData</Filter>
+      <Filter>src\View\ViewData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
