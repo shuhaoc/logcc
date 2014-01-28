@@ -22,20 +22,17 @@ END_MESSAGE_MAP()
 
 // CLogCCDoc 构造/析构
 
-CLogCCDoc::CLogCCDoc()
-{
+CLogCCDoc::CLogCCDoc() {
 	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
 }
 
-CLogCCDoc::~CLogCCDoc()
-{
+CLogCCDoc::~CLogCCDoc() {
 	delete logQuery;
 }
 
 // CLogCCDoc 命令
 
-BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
-{
+BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 	m_strPathName = lpszPathName;
 #ifdef _DEBUG
 	clock_t begin = ::clock();
@@ -51,22 +48,19 @@ BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return TRUE;
 }
 
-BOOL CLogCCDoc::OnSaveDocument(LPCTSTR lpszPathName)
-{
+BOOL CLogCCDoc::OnSaveDocument(LPCTSTR lpszPathName) {
 	// UNDONE: 另存为会进入此函数
 	return TRUE;
 }
 
 
-BOOL CLogCCDoc::OnNewDocument()
-{
+BOOL CLogCCDoc::OnNewDocument() {
 	// 禁用新建文档
 	return FALSE;
 }
 
 
-void CLogCCDoc::OnUpdateFileSaveAs(CCmdUI *pCmdUI)
-{
+void CLogCCDoc::OnUpdateFileSaveAs(CCmdUI *pCmdUI) {
 	// UNDONE: 暂时禁用另存为，实现后去掉此函数
 	pCmdUI->Enable(FALSE);
 }

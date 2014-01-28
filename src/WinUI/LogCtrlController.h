@@ -6,8 +6,7 @@
 
 // LogCtrlController
 
-class LogCtrlController : public ControllerBase<ILogQuery, CtrlViewData>
-{
+class LogCtrlController : public ControllerBase<ILogQuery, CtrlViewData> {
 	DECLARE_DYNAMIC(LogCtrlController)
 
 public:

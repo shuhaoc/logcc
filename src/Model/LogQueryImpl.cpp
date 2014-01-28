@@ -44,7 +44,9 @@ void LogQueryImpl::setSelected(const LogItem* item) {
 }
 
 LogItem* LogQueryImpl::getSelected() const {
-	auto i = find_if(logItems.begin(), logItems.end(), [] (LogItem* p) { return p->selected; });
+	auto i = find_if(logItems.begin(), logItems.end(), [] (LogItem* p) {
+		return p->selected;
+	});
 	if (i != logItems.end()) {
 		return *i;
 	} else {
@@ -101,7 +103,9 @@ void LogQueryImpl::startMonitor() {
 					that->reset(logItems);
 				}))->wait();
 			} else {
-				for_each(logItems.begin(), logItems.end(), [] (LogItem* p) { delete p; });
+				for_each(logItems.begin(), logItems.end(), [] (LogItem* p) {
+					delete p;
+				});
 			}
 		} // while monitoring
 		DEBUG_INFO(_T("监控线程退出！"));
@@ -109,7 +113,9 @@ void LogQueryImpl::startMonitor() {
 }
 
 void LogQueryImpl::reset(const vector<LogItem*>& logItems) {
-	for_each(this->logItems.begin(), this->logItems.end(), [] (LogItem* p) { delete p; });
+	for_each(this->logItems.begin(), this->logItems.end(), [] (LogItem* p) {
+		delete p;
+	});
 	this->logItems = logItems;
 	query(curQueryCriteria);
 }
@@ -120,7 +126,7 @@ void LogQueryImpl::reset() {
 
 void LogQueryImpl::loadFile(vector<LogItem*>& logItems) {
 	HANDLE file = ::CreateFile(filePath.c_str(), GENERIC_READ, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
-		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	                           NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (file != INVALID_HANDLE_VALUE) {
 		DWORD fileSize = ::GetFileSize(file, NULL);
 		char* buffer = new char[fileSize + 1];

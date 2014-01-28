@@ -6,8 +6,7 @@
 
 // LogMainController
 
-class LogMainController : public ControllerBase<ILogQuery, MainViewData>
-{
+class LogMainController : public ControllerBase<ILogQuery, MainViewData> {
 	DECLARE_DYNAMIC(LogMainController)
 
 public:

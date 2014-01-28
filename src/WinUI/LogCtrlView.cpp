@@ -12,17 +12,14 @@
 IMPLEMENT_DYNCREATE(CLogCtrlView, CFormView)
 
 CLogCtrlView::CLogCtrlView()
-	: CFormView(CLogCtrlView::IDD)
-{
+	: CFormView(CLogCtrlView::IDD) {
 
 }
 
-CLogCtrlView::~CLogCtrlView()
-{
+CLogCtrlView::~CLogCtrlView() {
 }
 
-void CLogCtrlView::DoDataExchange(CDataExchange* pDX)
-{
+void CLogCtrlView::DoDataExchange(CDataExchange* pDX) {
 	CFormView::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_CRITERIA, criteriaEdit);
 }

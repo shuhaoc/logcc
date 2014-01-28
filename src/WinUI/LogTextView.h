@@ -8,8 +8,7 @@
 
 // CLogTextView 窗体视图
 
-class CLogTextView : public CFormView, public ViewBase<ILogQuery, DetailViewData>, public ILogQueryObserver
-{
+class CLogTextView : public CFormView, public ViewBase<ILogQuery, DetailViewData>, public ILogQueryObserver {
 	DECLARE_DYNCREATE(CLogTextView)
 
 protected:

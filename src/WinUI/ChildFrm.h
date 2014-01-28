@@ -4,8 +4,7 @@
 
 #pragma once
 
-class CChildFrame : public CMDIChildWndEx
-{
+class CChildFrame : public CMDIChildWndEx {
 	DECLARE_DYNCREATE(CChildFrame)
 public:
 	CChildFrame();
@@ -19,7 +18,7 @@ public:
 public:
 
 // 重写
-	public:
+public:
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 

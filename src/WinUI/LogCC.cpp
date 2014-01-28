@@ -29,8 +29,7 @@ END_MESSAGE_MAP()
 
 // CLogCCApp 构造
 
-CLogCCApp::CLogCCApp()
-{
+CLogCCApp::CLogCCApp() {
 	m_bHiColorIcons = TRUE;
 
 	// 支持重新启动管理器
@@ -57,8 +56,7 @@ CLogCCApp theApp;
 
 // CLogCCApp 初始化
 
-BOOL CLogCCApp::InitInstance()
-{
+BOOL CLogCCApp::InitInstance() {
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。否则，将无法创建窗口。
@@ -73,8 +71,7 @@ BOOL CLogCCApp::InitInstance()
 
 
 	// 初始化 OLE 库
-	if (!AfxOleInit())
-	{
+	if (!AfxOleInit()) {
 		AfxMessageBox(IDP_OLE_INIT_FAILED);
 		return FALSE;
 	}
@@ -83,7 +80,7 @@ BOOL CLogCCApp::InitInstance()
 
 	EnableTaskbarInteraction();
 
-	// 使用 RichEdit 控件需要  AfxInitRichEdit2()	
+	// 使用 RichEdit 控件需要  AfxInitRichEdit2()
 	// AfxInitRichEdit2();
 
 	// 标准初始化
@@ -105,23 +102,22 @@ BOOL CLogCCApp::InitInstance()
 	CMFCToolTipInfo ttParams;
 	ttParams.m_bVislManagerTheme = TRUE;
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
-		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
+	        RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
 
 	// 注册应用程序的文档模板。文档模板
 	// 将用作文档、框架窗口和视图之间的连接
 	CMultiDocTemplate* pDocTemplate;
 	pDocTemplate = new CMultiDocTemplate(IDR_LogCCTYPE,
-		RUNTIME_CLASS(CLogCCDoc),
-		RUNTIME_CLASS(CChildFrame), // 自定义 MDI 子框架
-		RUNTIME_CLASS(CLogMainView));
+	                                     RUNTIME_CLASS(CLogCCDoc),
+	                                     RUNTIME_CLASS(CChildFrame), // 自定义 MDI 子框架
+	                                     RUNTIME_CLASS(CLogMainView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
 
 	// 创建主 MDI 框架窗口
 	CMainFrame* pMainFrame = new CMainFrame;
-	if (!pMainFrame || !pMainFrame->LoadFrame(IDR_MAINFRAME))
-	{
+	if (!pMainFrame || !pMainFrame->LoadFrame(IDR_MAINFRAME)) {
 		delete pMainFrame;
 		return FALSE;
 	}
@@ -153,8 +149,7 @@ BOOL CLogCCApp::InitInstance()
 	return TRUE;
 }
 
-int CLogCCApp::ExitInstance()
-{
+int CLogCCApp::ExitInstance() {
 	//TODO: 处理可能已添加的附加资源
 	AfxOleTerm(FALSE);
 
@@ -166,8 +161,7 @@ int CLogCCApp::ExitInstance()
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
-class CAboutDlg : public CDialogEx
-{
+class CAboutDlg : public CDialogEx {
 public:
 	CAboutDlg();
 
@@ -186,12 +180,10 @@ private:
 	CStatic versionDesc;
 };
 
-CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
-{
+CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD) {
 }
 
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
+void CAboutDlg::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_VERSION_DESC, versionDesc);
 }
@@ -200,16 +192,14 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 // 用于运行对话框的应用程序命令
-void CLogCCApp::OnAppAbout()
-{
+void CLogCCApp::OnAppAbout() {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
 }
 
 // CLogCCApp 自定义加载/保存方法
 
-void CLogCCApp::PreLoadState()
-{
+void CLogCCApp::PreLoadState() {
 	BOOL bNameValid;
 	CString strName;
 	bNameValid = strName.LoadString(IDS_EDIT_MENU);
@@ -217,12 +207,10 @@ void CLogCCApp::PreLoadState()
 	GetContextMenuManager()->AddMenu(strName, IDR_POPUP_EDIT);
 }
 
-void CLogCCApp::LoadCustomState()
-{
+void CLogCCApp::LoadCustomState() {
 }
 
-void CLogCCApp::SaveCustomState()
-{
+void CLogCCApp::SaveCustomState() {
 }
 
 // CLogCCApp 消息处理程序
@@ -231,8 +219,7 @@ void CLogCCApp::SaveCustomState()
 
 
 
-BOOL CAboutDlg::OnInitDialog()
-{
+BOOL CAboutDlg::OnInitDialog() {
 	CDialogEx::OnInitDialog();
 
 	TCHAR exePath[MAX_PATH];
@@ -243,11 +230,11 @@ BOOL CAboutDlg::OnInitDialog()
 
 	basic_ostringstream<TCHAR> oss;
 	oss << _T("LogCC ")
-		<< HIWORD(versionReader.dwProductVersionMS) << _T(".")
-		<< LOWORD(versionReader.dwProductVersionMS) << _T(".")
-		<< HIWORD(versionReader.dwProductVersionLS) << _T(".")
-		<< LOWORD(versionReader.dwProductVersionLS)
-		<< _T("");
+	    << HIWORD(versionReader.dwProductVersionMS) << _T(".")
+	    << LOWORD(versionReader.dwProductVersionMS) << _T(".")
+	    << HIWORD(versionReader.dwProductVersionLS) << _T(".")
+	    << LOWORD(versionReader.dwProductVersionLS)
+	    << _T("");
 	versionDesc.SetWindowText(oss.str().c_str());
 
 	oss.str(_T(""));

@@ -9,16 +9,14 @@
 #include "StdAfx.h"
 #include "ModulVer.h"
 
-CModuleVersion::CModuleVersion()
-{
-	m_pVersionInfo = NULL;				// raw version info data 
+CModuleVersion::CModuleVersion() {
+	m_pVersionInfo = NULL;				// raw version info data
 }
 
 //////////////////
 // Destroy: delete version info
 //
-CModuleVersion::~CModuleVersion()
-{
+CModuleVersion::~CModuleVersion() {
 	delete [] m_pVersionInfo;
 }
 
@@ -27,8 +25,7 @@ CModuleVersion::~CModuleVersion()
 // Allocates storage for all info, fills "this" with
 // VS_FIXEDFILEINFO, and sets codepage.
 //
-BOOL CModuleVersion::GetFileVersionInfo(LPCTSTR modulename)
-{
+BOOL CModuleVersion::GetFileVersionInfo(LPCTSTR modulename) {
 	m_translation.charset = 1252;		// default = ANSI code page
 	memset((VS_FIXEDFILEINFO*)this, 0, sizeof(VS_FIXEDFILEINFO));
 
@@ -40,7 +37,7 @@ BOOL CModuleVersion::GetFileVersionInfo(LPCTSTR modulename)
 
 	// get module file name
 	DWORD len = GetModuleFileName(hModule, filename,
-		sizeof(filename)/sizeof(filename[0]));
+	                              sizeof(filename)/sizeof(filename[0]));
 	if (len <= 0)
 		return FALSE;
 
@@ -64,7 +61,7 @@ BOOL CModuleVersion::GetFileVersionInfo(LPCTSTR modulename)
 
 	// Get translation info
 	if (VerQueryValue(m_pVersionInfo,
-		_T("\\VarFileInfo\\Translation"), &lpvi, &iLen) && iLen >= 4) {
+	                  _T("\\VarFileInfo\\Translation"), &lpvi, &iLen) && iLen >= 4) {
 		m_translation = *(TRANSLATION*)lpvi;
 		TRACE("code page = %d\n", m_translation.charset);
 	}
@@ -77,8 +74,7 @@ BOOL CModuleVersion::GetFileVersionInfo(LPCTSTR modulename)
 // Key name is something like "CompanyName".
 // returns the value as a CString.
 //
-CString CModuleVersion::GetValue(LPCTSTR lpKeyName)
-{
+CString CModuleVersion::GetValue(LPCTSTR lpKeyName) {
 	CString sVal;
 	if (m_pVersionInfo) {
 
@@ -91,14 +87,14 @@ CString CModuleVersion::GetValue(LPCTSTR lpKeyName)
 		//
 		CString query;
 		query.Format(_T("\\StringFileInfo\\%04x%04x\\%s"),
-			m_translation.langID,
-			m_translation.charset,
-			lpKeyName);
+		             m_translation.langID,
+		             m_translation.charset,
+		             lpKeyName);
 
 		LPCTSTR pVal;
 		UINT iLenVal;
 		if (VerQueryValue(m_pVersionInfo, (LPTSTR)(LPCTSTR)query,
-				(LPVOID*)&pVal, &iLenVal)) {
+		                  (LPVOID*)&pVal, &iLenVal)) {
 
 			sVal = pVal;
 		}
@@ -112,18 +108,17 @@ typedef HRESULT (CALLBACK* DLLGETVERSIONPROC)(DLLVERSIONINFO *);
 /////////////////
 // Get DLL Version by calling DLL's DllGetVersion proc
 //
-BOOL CModuleVersion::DllGetVersion(LPCTSTR modulename, DLLVERSIONINFO& dvi)
-{
+BOOL CModuleVersion::DllGetVersion(LPCTSTR modulename, DLLVERSIONINFO& dvi) {
 	HINSTANCE hinst = LoadLibrary(modulename);
 	if (!hinst)
 		return FALSE;
 
-	// Must use GetProcAddress because the DLL might not implement 
-	// DllGetVersion. Depending upon the DLL, the lack of implementation of the 
+	// Must use GetProcAddress because the DLL might not implement
+	// DllGetVersion. Depending upon the DLL, the lack of implementation of the
 	// function may be a version marker in itself.
 	//
 	DLLGETVERSIONPROC pDllGetVersion =
-		(DLLGETVERSIONPROC)GetProcAddress(hinst, "DllGetVersion");
+	    (DLLGETVERSIONPROC)GetProcAddress(hinst, "DllGetVersion");
 
 	if (!pDllGetVersion)
 		return FALSE;

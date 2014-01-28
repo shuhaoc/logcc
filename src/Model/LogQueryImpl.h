@@ -3,8 +3,14 @@
 #include "ILogQuery.h"
 
 class LogQueryResult;
-namespace mrl { namespace utility { class SimpleTaskMessageWindow; } }
-namespace boost { class thread; }
+namespace mrl {
+namespace utility {
+class SimpleTaskMessageWindow;
+}
+}
+namespace boost {
+class thread;
+}
 
 class LogQueryImpl : public ILogQuery {
 public:

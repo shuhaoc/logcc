@@ -8,14 +8,13 @@ class CLogCCDoc;
 
 // CLogCtrlView 窗体视图
 
-class CLogCtrlView : public CFormView, public ViewBase<ILogQuery, CtrlViewData>
-{
+class CLogCtrlView : public CFormView, public ViewBase<ILogQuery, CtrlViewData> {
 	DECLARE_DYNCREATE(CLogCtrlView)
 
 protected:
 	CLogCtrlView();           // 动态创建所使用的受保护的构造函数
 	virtual ~CLogCtrlView();
-	
+
 	virtual void onSubmit();
 
 public:

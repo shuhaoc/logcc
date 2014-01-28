@@ -10,13 +10,11 @@
 
 IMPLEMENT_DYNAMIC(LogCtrlController, CWnd)
 
-LogCtrlController::LogCtrlController(CWnd* parent) : ControllerBase<ILogQuery, CtrlViewData>(parent)
-{
+LogCtrlController::LogCtrlController(CWnd* parent) : ControllerBase<ILogQuery, CtrlViewData>(parent) {
 
 }
 
-LogCtrlController::~LogCtrlController()
-{
+LogCtrlController::~LogCtrlController() {
 }
 
 
@@ -30,13 +28,11 @@ END_MESSAGE_MAP()
 // LogCtrlController 消息处理程序
 
 
-void LogCtrlController::OnEnChangeCriteria()
-{
+void LogCtrlController::OnEnChangeCriteria() {
 	OnCommit();
 }
 
-afx_msg LRESULT LogCtrlController::OnCommit(WPARAM wParam, LPARAM lParam)
-{
+afx_msg LRESULT LogCtrlController::OnCommit(WPARAM wParam, LPARAM lParam) {
 	updateViewData();
 	DEBUG_INFO(getViewData()->criteria);
 	getModel()->query(getViewData()->criteria);

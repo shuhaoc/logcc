@@ -38,22 +38,19 @@ END_MESSAGE_MAP()
 
 // CLogMainView 构造/析构
 
-CLogMainView::CLogMainView()
-{
+CLogMainView::CLogMainView() {
 }
 
-CLogMainView::~CLogMainView()
-{
+CLogMainView::~CLogMainView() {
 }
 
 // CLogMainView 绘制
 
-void CLogMainView::OnDraw(CDC* pDC)
-{
+void CLogMainView::OnDraw(CDC* pDC) {
 	CRect clientRect;
 	GetClientRect(clientRect);
 	DEBUG_INFO(_T("客户区区域：") << clientRect.left << ", " << clientRect.top << ", "
-		<< clientRect.right << ", " << clientRect.bottom);
+	           << clientRect.right << ", " << clientRect.bottom);
 
 	HDC memDC = ::CreateCompatibleDC(pDC->GetSafeHdc());
 
@@ -64,7 +61,7 @@ void CLogMainView::OnDraw(CDC* pDC)
 	::FillRect(memDC, clientRect, bkgdBrush);
 
 	HFONT font = ::CreateFont(LineHeight - 2, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-		DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
+	                          DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
 	DEBUG_INFO(_T("重绘"));
@@ -90,7 +87,7 @@ void CLogMainView::OnDraw(CDC* pDC)
 	}
 
 	::BitBlt(pDC->GetSafeHdc(), scrollPosition.x, scrollPosition.y, clientRect.Width(), clientRect.Height(),
-		memDC, 0, 0, SRCCOPY);
+	         memDC, 0, 0, SRCCOPY);
 
 	::SelectObject(memDC, oldFont);
 	::DeleteObject(font);
@@ -99,8 +96,7 @@ void CLogMainView::OnDraw(CDC* pDC)
 	::DeleteDC(memDC);
 }
 
-void CLogMainView::OnInitialUpdate()
-{
+void CLogMainView::OnInitialUpdate() {
 	CScrollView::OnInitialUpdate();
 
 	getModel()->registerObserver(this);
@@ -109,14 +105,12 @@ void CLogMainView::OnInitialUpdate()
 	SetFocus();
 }
 
-void CLogMainView::PostNcDestroy()
-{
+void CLogMainView::PostNcDestroy() {
 	getModel()->unregisterObserver(this);
 	__super::PostNcDestroy();
 }
 
-void CLogMainView::UpdateScroll()
-{
+void CLogMainView::UpdateScroll() {
 	CRect clientRect;
 	GetClientRect(clientRect);
 	totalSize.cx = 0;
@@ -154,8 +148,7 @@ void CLogMainView::onScrollPositionChanged(int yPosition) {
 
 // CLogMainView 消息处理程序
 
-BOOL CLogMainView::OnEraseBkgnd(CDC* pDC)
-{
+BOOL CLogMainView::OnEraseBkgnd(CDC* pDC) {
 #ifdef LOGCC_WINUI_USE_DEFAULT_ERASE_BACKGROUND
 	return CScrollView::OnEraseBkgnd(pDC);
 #else
@@ -163,17 +156,14 @@ BOOL CLogMainView::OnEraseBkgnd(CDC* pDC)
 #endif
 }
 
-void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
-{
-	if (nSBCode == SB_ENDSCROLL)
-	{
+void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
+	if (nSBCode == SB_ENDSCROLL) {
 		Invalidate();
 	}
 	CScrollView::OnVScroll(nSBCode, nPos, pScrollBar);
 }
 
-void CLogMainView::OnMouseMove(UINT nFlags, CPoint point)
-{
+void CLogMainView::OnMouseMove(UINT nFlags, CPoint point) {
 	if (GetForegroundWindow() == AfxGetMainWnd()) {
 		SetFocus();
 	}
@@ -194,8 +184,7 @@ BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) {
 	if (zDelta < 0) {
 		// 向下3行
 		yScrollPos += delta;
-	}
-	else {
+	} else {
 		// 向上3行
 		yScrollPos -= delta;
 		yScrollPos = max(yScrollPos, 0);
@@ -209,7 +198,7 @@ BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) {
 void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 	CRect clientRect;
 	GetClientRect(clientRect);
-	
+
 	if (nChar == VK_UP) {
 		// 选中上一行
 		LogItem* item = getModel()->getSelected();
@@ -268,8 +257,7 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 }
 
 
-void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point)
-{
+void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point) {
 	int yScrollPos = GetScrollPosition().y;
 	this->selectedLine = (yScrollPos + point.y) / LineHeight;
 	__super::OnLButtonUp(nFlags, point);

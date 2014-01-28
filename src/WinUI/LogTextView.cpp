@@ -14,17 +14,14 @@
 IMPLEMENT_DYNCREATE(CLogTextView, CFormView)
 
 CLogTextView::CLogTextView()
-	: CFormView(CLogTextView::IDD)
-{
+	: CFormView(CLogTextView::IDD) {
 
 }
 
-CLogTextView::~CLogTextView()
-{
+CLogTextView::~CLogTextView() {
 }
 
-void CLogTextView::DoDataExchange(CDataExchange* pDX)
-{
+void CLogTextView::DoDataExchange(CDataExchange* pDX) {
 	CFormView::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LOG_LINE_TEXT, textEdit);
 }
@@ -40,15 +37,13 @@ void CLogTextView::onSubmit() {
 // CLogTextView 消息处理程序
 
 
-void CLogTextView::OnInitialUpdate()
-{
+void CLogTextView::OnInitialUpdate() {
 	CFormView::OnInitialUpdate();
 	getModel()->registerObserver(this);
 }
 
 
-void CLogTextView::PostNcDestroy()
-{
+void CLogTextView::PostNcDestroy() {
 	getModel()->unregisterObserver(this);
 
 	CFormView::PostNcDestroy();
@@ -61,12 +56,10 @@ void CLogTextView::onGeneralDataChanged() {
 	}
 }
 
-void CLogTextView::OnSize(UINT nType, int cx, int cy)
-{
+void CLogTextView::OnSize(UINT nType, int cx, int cy) {
 	CFormView::OnSize(nType, cx, cy);
 
-	if (textEdit.GetSafeHwnd())
-	{
+	if (textEdit.GetSafeHwnd()) {
 		CRect clientRect;
 		GetClientRect(clientRect);
 		textEdit.MoveWindow(0, 0, clientRect.Width(), clientRect.Height());

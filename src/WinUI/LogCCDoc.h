@@ -9,8 +9,7 @@
 #include "ILogQuery.h"
 
 
-class CLogCCDoc : public CDocument, public IModelFactory<ILogQuery>
-{
+class CLogCCDoc : public CDocument, public IModelFactory<ILogQuery> {
 protected: // 仅从序列化创建
 	CLogCCDoc();
 	DECLARE_DYNCREATE(CLogCCDoc)
@@ -24,7 +23,9 @@ public:
 
 // 重写
 public:
-	virtual ILogQuery* getModel() { return logQuery; }
+	virtual ILogQuery* getModel() {
+		return logQuery;
+	}
 
 	virtual BOOL OnNewDocument();
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);

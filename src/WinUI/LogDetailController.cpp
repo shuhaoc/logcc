@@ -9,13 +9,11 @@
 
 IMPLEMENT_DYNAMIC(LogDetailController, CWnd)
 
-LogDetailController::LogDetailController(CWnd* parent) : ControllerBase<ILogQuery, DetailViewData>(parent)
-{
+LogDetailController::LogDetailController(CWnd* parent) : ControllerBase<ILogQuery, DetailViewData>(parent) {
 
 }
 
-LogDetailController::~LogDetailController()
-{
+LogDetailController::~LogDetailController() {
 }
 
 

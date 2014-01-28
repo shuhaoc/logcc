@@ -31,22 +31,19 @@ END_MESSAGE_MAP()
 // CChildFrame 构造/析构
 
 CChildFrame::CChildFrame()
-	: m_bSplitterCreated(false)
-{
+	: m_bSplitterCreated(false) {
 }
 
-CChildFrame::~CChildFrame()
-{
+CChildFrame::~CChildFrame() {
 }
 
-BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
-{
+BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext) {
 #define LOGCC_WINUI_USE_SPLIT_VIEW
 #ifndef LOGCC_WINUI_USE_SPLIT_VIEW
 	m_wndSplitter.Create(this,
-		2, 2,			// TODO: 调整行数和列数
-		CSize(10, 10),	// TODO: 调整最小窗格大小
-		pContext);
+	                     2, 2,			// TODO: 调整行数和列数
+	                     CSize(10, 10),	// TODO: 调整最小窗格大小
+	                     pContext);
 #else
 	m_wndSplitter.CreateStatic(this, 3, 1);
 	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CLogCtrlView), CSize(10, 10), pContext);
@@ -59,7 +56,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	CLogCtrlView* ctrlView = static_cast<CLogCtrlView*>(m_wndSplitter.GetPane(0, 0));
 	LogCtrlController* ctrlController = new LogCtrlController(this);
 	ControllerRoute<ILogQuery>::addRoute(ctrlView, ctrlController, logccDoc);
-	
+
 	CLogMainView* mainView = static_cast<CLogMainView*>(m_wndSplitter.GetPane(1, 0));
 	LogMainController* mainController = new LogMainController(this);
 	ControllerRoute<ILogQuery>::addRoute(mainView, mainController, logccDoc);
@@ -71,8 +68,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	return TRUE;
 }
 
-BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
-{
+BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs) {
 	// TODO: 在此处通过修改 CREATESTRUCT cs 来修改窗口类或样式
 	if( !CMDIChildWndEx::PreCreateWindow(cs) )
 		return FALSE;
@@ -83,27 +79,24 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 // CChildFrame 消息处理程序
 
-void CChildFrame::OnSize(UINT nType, int cx, int cy)
-{
+void CChildFrame::OnSize(UINT nType, int cx, int cy) {
 	CMDIChildWndEx::OnSize(nType, cx, cy);
 
 	// TODO: 在此处添加消息处理程序代码
 	CRect rect;
 	GetWindowRect(&rect);
-	if(m_bSplitterCreated)  // m_bSplitterCreated set in OnCreateClient
-	{
+	if(m_bSplitterCreated) { // m_bSplitterCreated set in OnCreateClient
 		m_wndSplitter.SetColumnInfo(0, rect.Width(), 10);
 		const int ctrlViewHeight = 32;
 		const int textViewHeight = 100;
 		m_wndSplitter.SetRowInfo(0, ctrlViewHeight, 10);
-		m_wndSplitter.SetRowInfo(1, max(rect.Height() - ctrlViewHeight - textViewHeight, 10), 10); 
+		m_wndSplitter.SetRowInfo(1, max(rect.Height() - ctrlViewHeight - textViewHeight, 10), 10);
 		m_wndSplitter.SetRowInfo(2, textViewHeight, 10);
 		m_wndSplitter.RecalcLayout();
 	}
 }
 
-void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
-{
+void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) {
 	CMDIChildWndEx::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
 	if (bActivate && pActivateWnd == this) {
 		// UNDONE: 特殊代码，不好

@@ -11,13 +11,11 @@
 
 IMPLEMENT_DYNAMIC(LogMainController, CWnd)
 
-LogMainController::LogMainController(CWnd* parent) : ControllerBase<ILogQuery, MainViewData>(parent)
-{
+LogMainController::LogMainController(CWnd* parent) : ControllerBase<ILogQuery, MainViewData>(parent) {
 
 }
 
-LogMainController::~LogMainController()
-{
+LogMainController::~LogMainController() {
 }
 
 
@@ -30,8 +28,7 @@ END_MESSAGE_MAP()
 // LogMainController 消息处理程序
 
 
-void LogMainController::OnLButtonUp(UINT nFlags, CPoint point)
-{
+void LogMainController::OnLButtonUp(UINT nFlags, CPoint point) {
 	if (getViewData()->selectedLine < getModel()->getCurQueryResult()->getCount()) {
 		LogItem* item = getModel()->getCurQueryResult()->getIndex(getViewData()->selectedLine);
 		getModel()->setSelected(item);

@@ -9,8 +9,7 @@
 #include "ILogQueryObserver.h"
 #include "MainViewData.h"
 
-class CLogMainView : public CScrollView, public ViewBase<ILogQuery, MainViewData>, public ILogQueryObserver
-{
+class CLogMainView : public CScrollView, public ViewBase<ILogQuery, MainViewData>, public ILogQueryObserver {
 protected: // 仅从序列化创建
 	CLogMainView();
 	DECLARE_DYNCREATE(CLogMainView)

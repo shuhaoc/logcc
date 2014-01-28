@@ -35,7 +35,7 @@ class LogSingleLinePainter : public ILogItemPainter {
 		textRect.top += 1;
 		textRect.bottom -= 1;
 		::DrawText(hdc, line.c_str(), line.size(), &textRect,
-			DT_NOCLIP | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX | DT_EXPANDTABS);
+		           DT_NOCLIP | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX | DT_EXPANDTABS);
 
 		::SetBkMode(hdc, oldBkMode);
 		::SetTextColor(hdc, oldTextColor);
@@ -52,8 +52,8 @@ class LogLineDetailPainter : public ILogItemPainter {
 SHLIB_COMMON_SINGLETON_SUPPORT_IMPLEMENT(LogPainterFactory)
 
 LogPainterFactory::LogPainterFactory()
-: singleLinePainter(new LogSingleLinePainter())
-, lineDetailPainter(new LogLineDetailPainter()) {
+	: singleLinePainter(new LogSingleLinePainter())
+	, lineDetailPainter(new LogLineDetailPainter()) {
 }
 
 LogPainterFactory::~LogPainterFactory() {
@@ -62,7 +62,7 @@ LogPainterFactory::~LogPainterFactory() {
 }
 
 ILogItemPainter* LogPainterFactory::GetSingleLinePainter() const {
-	return singleLinePainter;	
+	return singleLinePainter;
 }
 
 ILogItemPainter* LogPainterFactory::GetLineDetailPainter() const {

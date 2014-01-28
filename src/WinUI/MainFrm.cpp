@@ -28,8 +28,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 END_MESSAGE_MAP()
 
-static UINT indicators[] =
-{
+static UINT indicators[] = {
 	ID_SEPARATOR,           // 状态行指示器
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
@@ -38,18 +37,15 @@ static UINT indicators[] =
 
 // CMainFrame 构造/析构
 
-CMainFrame::CMainFrame()
-{
+CMainFrame::CMainFrame() {
 	// TODO: 在此添加成员初始化代码
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_VS_2008);
 }
 
-CMainFrame::~CMainFrame()
-{
+CMainFrame::~CMainFrame() {
 }
 
-int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
+int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 	if (CMDIFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
@@ -65,8 +61,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	mdiTabParams.m_bDocumentMenu = TRUE; // 在选项卡区域的右边缘启用文档菜单
 	EnableMDITabbedGroups(TRUE, mdiTabParams);
 
-	if (!m_wndMenuBar.Create(this))
-	{
+	if (!m_wndMenuBar.Create(this)) {
 		TRACE0("未能创建菜单栏\n");
 		return -1;      // 未能创建
 	}
@@ -77,8 +72,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CMFCPopupMenu::SetForceMenuFocus(FALSE);
 
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
-		!m_wndToolBar.LoadToolBar(theApp.m_bHiColorIcons ? IDR_MAINFRAME_256 : IDR_MAINFRAME))
-	{
+	        !m_wndToolBar.LoadToolBar(theApp.m_bHiColorIcons ? IDR_MAINFRAME_256 : IDR_MAINFRAME)) {
 		TRACE0("未能创建工具栏\n");
 		return -1;      // 未能创建
 	}
@@ -96,8 +90,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 允许用户定义的工具栏操作:
 	InitUserToolbars(NULL, uiFirstUserToolBarId, uiLastUserToolBarId);
 
-	if (!m_wndStatusBar.Create(this))
-	{
+	if (!m_wndStatusBar.Create(this)) {
 		TRACE0("未能创建状态栏\n");
 		return -1;      // 未能创建
 	}
@@ -125,11 +118,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 启用快速(按住 Alt 拖动)工具栏自定义
 	CMFCToolBar::EnableQuickCustomization();
 
-	if (CMFCToolBar::GetUserImages() == NULL)
-	{
+	if (CMFCToolBar::GetUserImages() == NULL) {
 		// 加载用户定义的工具栏图像
-		if (m_UserImages.Load(_T(".\\UserImages.bmp")))
-		{
+		if (m_UserImages.Load(_T(".\\UserImages.bmp"))) {
 			CMFCToolBar::SetUserImages(&m_UserImages);
 		}
 	}
@@ -166,8 +157,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
-{
+BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs) {
 	if( !CMDIFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
 	// TODO: 在此处通过修改
@@ -179,13 +169,11 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 // CMainFrame 诊断
 
 #ifdef _DEBUG
-void CMainFrame::AssertValid() const
-{
+void CMainFrame::AssertValid() const {
 	CMDIFrameWndEx::AssertValid();
 }
 
-void CMainFrame::Dump(CDumpContext& dc) const
-{
+void CMainFrame::Dump(CDumpContext& dc) const {
 	CMDIFrameWndEx::Dump(dc);
 }
 #endif //_DEBUG
@@ -193,23 +181,19 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 // CMainFrame 消息处理程序
 
-void CMainFrame::OnWindowManager()
-{
+void CMainFrame::OnWindowManager() {
 	ShowWindowsDialog();
 }
 
-void CMainFrame::OnViewCustomize()
-{
+void CMainFrame::OnViewCustomize() {
 	CMFCToolBarsCustomizeDialog* pDlgCust = new CMFCToolBarsCustomizeDialog(this, TRUE /* 扫描菜单*/);
 	pDlgCust->EnableUserDefinedToolbars();
 	pDlgCust->Create();
 }
 
-LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp,LPARAM lp)
-{
+LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp,LPARAM lp) {
 	LRESULT lres = CMDIFrameWndEx::OnToolbarCreateNew(wp,lp);
-	if (lres == 0)
-	{
+	if (lres == 0) {
 		return 0;
 	}
 
@@ -225,14 +209,12 @@ LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp,LPARAM lp)
 	return lres;
 }
 
-void CMainFrame::OnApplicationLook(UINT id)
-{
+void CMainFrame::OnApplicationLook(UINT id) {
 	CWaitCursor wait;
 
 	theApp.m_nAppLook = id;
 
-	switch (theApp.m_nAppLook)
-	{
+	switch (theApp.m_nAppLook) {
 	case ID_VIEW_APPLOOK_WIN_2000:
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManager));
 		break;
@@ -267,8 +249,7 @@ void CMainFrame::OnApplicationLook(UINT id)
 		break;
 
 	default:
-		switch (theApp.m_nAppLook)
-		{
+		switch (theApp.m_nAppLook) {
 		case ID_VIEW_APPLOOK_OFF_2007_BLUE:
 			CMFCVisualManagerOffice2007::SetStyle(CMFCVisualManagerOffice2007::Office2007_LunaBlue);
 			break;
@@ -295,17 +276,14 @@ void CMainFrame::OnApplicationLook(UINT id)
 	theApp.WriteInt(_T("ApplicationLook"), theApp.m_nAppLook);
 }
 
-void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
-{
+void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI) {
 	pCmdUI->SetRadio(theApp.m_nAppLook == pCmdUI->m_nID);
 }
 
-BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext) 
-{
+BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext) {
 	// 基类将执行真正的工作
 
-	if (!CMDIFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext))
-	{
+	if (!CMDIFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext)) {
 		return FALSE;
 	}
 
@@ -316,11 +294,9 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
 	ASSERT(bNameValid);
 
-	for (int i = 0; i < iMaxUserToolbars; i ++)
-	{
+	for (int i = 0; i < iMaxUserToolbars; i ++) {
 		CMFCToolBar* pUserToolbar = GetUserToolBarByIndex(i);
-		if (pUserToolbar != NULL)
-		{
+		if (pUserToolbar != NULL) {
 			pUserToolbar->EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
 		}
 	}
