@@ -26,5 +26,5 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-20
 	 */
-	virtual void onScrollPositionChanged(int yPosition) { };
+	virtual void onScrollPositionChanged(int /*yPosition*/) { };
 };

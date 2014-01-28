@@ -148,7 +148,7 @@ void CLogMainView::onScrollPositionChanged(int yPosition) {
 
 // CLogMainView 消息处理程序
 
-BOOL CLogMainView::OnEraseBkgnd(CDC* pDC) {
+BOOL CLogMainView::OnEraseBkgnd(CDC* /*pDC*/) {
 #ifdef LOGCC_WINUI_USE_DEFAULT_ERASE_BACKGROUND
 	return CScrollView::OnEraseBkgnd(pDC);
 #else
