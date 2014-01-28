@@ -34,7 +34,8 @@ public:
 
 protected:
 	virtual void onGeneralDataChanged();
-	virtual void onQueryResultChanged();
+	virtual void onQueryResultChanged(const tstring& criteria, LogQueryResult* queryResult);
+	virtual void onFileChanged();
 
 private:
 	void ResetScrollSize();

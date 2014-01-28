@@ -41,6 +41,7 @@ BOOL CLogCCDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 #ifdef _DEBUG
 	clock_t end = ::clock();
 #endif // _DEBUG
+	// UNDONE: 删除
 	DEBUG_INFO(end - begin);
 
 	logQuery->query(_T(""));

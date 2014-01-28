@@ -54,22 +54,18 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-18
 	 */
-	virtual LogQueryResult* query(const tstring& criteria) = 0;
-
-	/**
-	 * 获取当前查询结果
-	 * @return 查询结果集
-	 * @author CaoShuhao
-	 * @date 2014-1-19
-	 */
-	virtual LogQueryResult* getCurQueryResult() const = 0;
+	virtual LogQueryResult* query(const tstring& criteria, bool quiet = false) = 0;
 
 protected:
 	void notifyGeneralDataChanged() const {
 		forEachObserver([] (ILogQueryObserver* p) { p->onGeneralDataChanged(); });
 	}
 
-	void notifyQueryResultChanged() const {
-		forEachObserver([] (ILogQueryObserver* p) { p->onQueryResultChanged(); });
+	void notifyQueryResultChanged(const tstring& criteria, LogQueryResult* queryResult) const {
+		forEachObserver([=] (ILogQueryObserver* p) { p->onQueryResultChanged(criteria, queryResult); });
+	}
+
+	void notifyFileChanged() const {
+		forEachObserver([] (ILogQueryObserver* p) { p->onFileChanged(); });
 	}
 };

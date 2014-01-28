@@ -25,7 +25,6 @@ IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWndEx)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWndEx)
 	ON_WM_SIZE()
-	ON_WM_MDIACTIVATE()
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
@@ -93,14 +92,5 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy) {
 		m_wndSplitter.SetRowInfo(1, max(rect.Height() - ctrlViewHeight - textViewHeight, 10), 10);
 		m_wndSplitter.SetRowInfo(2, textViewHeight, 10);
 		m_wndSplitter.RecalcLayout();
-	}
-}
-
-void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) {
-	CMDIChildWndEx::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
-	if (bActivate && pActivateWnd == this) {
-		// UNDONE: 特殊代码，不好
-		// FIXME: 第二次打开最近文件列表中不存在文件时会崩溃
-		GetActiveView()->SendMessage(LogCtrlController::WM_COMMIT);
 	}
 }

@@ -29,8 +29,9 @@ END_MESSAGE_MAP()
 
 
 void LogMainController::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/) {
-	if (getViewData()->selectedLine < getModel()->getCurQueryResult()->getCount()) {
-		LogItem* item = getModel()->getCurQueryResult()->getIndex(getViewData()->selectedLine);
+	LogQueryResult* queryResult = getModel()->query(getViewData()->curCriteria);
+	if (getViewData()->selectedLine < queryResult->getCount()) {
+		LogItem* item = queryResult->getIndex(getViewData()->selectedLine);
 		getModel()->setSelected(item);
 		DEBUG_INFO(_T("选中行：") << getViewData()->selectedLine);
 	}

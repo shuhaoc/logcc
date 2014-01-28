@@ -6,11 +6,9 @@
 using namespace mrl::utility;
 
 LogQueryImpl::LogQueryImpl()
-	: curQueryResult(new LogQueryResult())
-	, taskWnd(new SimpleTaskMessageWindow())
+	: taskWnd(new SimpleTaskMessageWindow())
 	, monitorThread(NULL)
-	, monitoring(false)
-	, curQueryRegex(new boost::basic_regex<TCHAR>(_T(""))) {
+	, monitoring(false) {
 }
 
 LogQueryImpl::~LogQueryImpl() {
@@ -21,7 +19,6 @@ LogQueryImpl::~LogQueryImpl() {
 	}
 	reset();
 
-	delete curQueryResult;
 	delete taskWnd;
 }
 
@@ -54,40 +51,44 @@ LogItem* LogQueryImpl::getSelected() const {
 	}
 }
 
-LogQueryResult* LogQueryImpl::query(const tstring& criteria) {
-	curQueryCriteria = criteria;
-	try {
-		auto newRegex = new boost::basic_regex<TCHAR>(criteria);
-		delete this->curQueryRegex;
-		this->curQueryRegex = newRegex;
-
-		vector<LogItem*> queryResult;
-		for (auto i = logItems.begin(); i != logItems.end(); i++) {
-			LogItem* item = *i;
-			if (boost::regex_search(item->text, *curQueryRegex)) {
-				queryResult.push_back(item);
-			}
+LogQueryResult* LogQueryImpl::query(const tstring& criteria, bool quiet) {
+	LogQueryResult* cachedResult = queryCache[criteria];
+	if (!cachedResult) {
+		cachedResult = queryImpl(criteria);
+		if (cachedResult) {
+			queryCache[criteria] = cachedResult;
 		}
-		setCurQueryResult(new LogQueryResult(queryResult));
-	} catch (...) {
 	}
-	return curQueryResult;
+	if (!quiet) notifyQueryResultChanged(criteria, cachedResult);
+	return cachedResult;
 }
 
-void LogQueryImpl::setCurQueryResult(LogQueryResult* curQueryResult) {
-	delete this->curQueryResult;
-	this->curQueryResult = curQueryResult;
-	notifyQueryResultChanged();
-}
+LogQueryResult* LogQueryImpl::queryImpl(const tstring& criteria) {
+	if (criteria.empty()) {
+		return new LogQueryResult(logItems);
+	} else {
+		try {
+			auto newRegex = new boost::basic_regex<TCHAR>(criteria);
 
-LogQueryResult* LogQueryImpl::getCurQueryResult() const {
-	return curQueryResult;
+			vector<LogItem*> queryResult;
+			for (auto i = logItems.begin(); i != logItems.end(); i++) {
+				LogItem* item = *i;
+				if (boost::regex_search(item->text, *newRegex)) {
+					queryResult.push_back(item);
+				}
+			}
+			return new LogQueryResult(queryResult);
+		} catch (...) {
+			return nullptr;
+		}
+	}
 }
 
 void LogQueryImpl::startMonitor() {
 	monitorThread = new boost::thread(([this] () {
 		monitoring = true;
 		while (monitoring) {
+			// UNDONE: 优化
 			::Sleep(500);
 			vector<LogItem*> logItems;
 			loadFile(logItems);
@@ -113,7 +114,13 @@ void LogQueryImpl::reset(const vector<LogItem*>& logItems) {
 		delete p;
 	});
 	this->logItems = logItems;
-	query(curQueryCriteria);
+
+	for_each(this->queryCache.begin(), this->queryCache.end(), [] (const pair<tstring, LogQueryResult*>& p) {
+		delete p.second;
+	});
+	queryCache.clear();
+
+	notifyFileChanged();
 }
 
 void LogQueryImpl::reset() {

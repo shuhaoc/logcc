@@ -23,13 +23,11 @@ protected:
 
 	virtual const tstring& getFilePath() const;
 
-	virtual LogQueryResult* query(const tstring& criteria);
+	virtual LogQueryResult* query(const tstring& criteria, bool quiet);
 
 	virtual void setSelected(const LogItem* item);
 
 	virtual LogItem* getSelected() const;
-
-	virtual LogQueryResult* getCurQueryResult() const;
 
 	void reset(const vector<LogItem*>& logItems);
 
@@ -38,13 +36,11 @@ protected:
 private:
 	void loadFile(vector<LogItem*>& logItems);
 
-	void setCurQueryResult(LogQueryResult* curQueryResult);
+	LogQueryResult* queryImpl(const tstring& criteria);
 
 	tstring filePath;
 	vector<LogItem*> logItems;
-	tstring curQueryCriteria;
-	boost::basic_regex<TCHAR>* curQueryRegex;
-	LogQueryResult* curQueryResult;
+	hash_map<tstring, LogQueryResult*> queryCache;
 
 	mrl::utility::SimpleTaskMessageWindow* taskWnd;
 

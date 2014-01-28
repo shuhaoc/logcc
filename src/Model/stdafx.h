@@ -21,6 +21,7 @@
 #include <fstream>
 #include <functional>
 #include <algorithm>
+#include <hash_map>
 
 using namespace std;
 

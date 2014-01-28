@@ -16,6 +16,7 @@
 #include "LogItem.h"
 #include "ILogItemPainter.h"
 #include "LogPainterFactory.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,6 +48,8 @@ CLogMainView::~CLogMainView() {
 // CLogMainView 绘制
 
 void CLogMainView::OnDraw(CDC* pDC) {
+	if (!queryResult) return;
+
 	CRect clientRect;
 	GetClientRect(clientRect);
 	DEBUG_INFO(_T("客户区区域：") << clientRect.left << ", " << clientRect.top << ", "
@@ -74,10 +77,10 @@ void CLogMainView::OnDraw(CDC* pDC) {
 	unsigned beginLine = scrollPosition.y / LineHeight;
 	// +1是为了底部能显示半行
 	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
-	endLine = min(endLine, getModel()->getCurQueryResult()->getCount());
+	endLine = min(endLine, queryResult->getCount());
 	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
 
-	vector<LogItem*> vecLines = getModel()->getCurQueryResult()->getRange(beginLine, endLine);
+	vector<LogItem*> vecLines = queryResult->getRange(beginLine, endLine);
 	for (unsigned i = 0; i < vecLines.size(); i++) {
 		LogItem* item = vecLines[i];
 		CRect rect = clientRect;
@@ -115,7 +118,7 @@ void CLogMainView::ResetScrollSize() {
 	GetClientRect(clientRect);
 	totalSize.cx = 0;
 	// 加1是为了最后一行一定可见
-	totalSize.cy = (getModel()->getCurQueryResult()->getCount() + 1) * LineHeight;
+	totalSize.cy = (queryResult ? queryResult->getCount() + 1 : 0) * LineHeight;
 #define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 #ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
 	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
@@ -135,7 +138,18 @@ void CLogMainView::onGeneralDataChanged() {
 	Invalidate();
 }
 
-void CLogMainView::onQueryResultChanged() {
+void CLogMainView::onQueryResultChanged(const tstring& criteria, LogQueryResult* queryResult) {
+	CFrameWnd* activeFrame = static_cast<CMainFrame*>(::AfxGetMainWnd())->GetActiveFrame();
+	if (activeFrame == GetParentFrame()) {
+		this->curCriteria = criteria;
+		this->queryResult = queryResult;
+		ResetScrollSize();
+		Invalidate();
+	}
+}
+
+void CLogMainView::onFileChanged() {
+	this->queryResult = getModel()->query(this->curCriteria, true);
 	ResetScrollSize();
 	Invalidate();
 }
@@ -197,20 +211,20 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 		// 选中上一行
 		LogItem* item = getModel()->getSelected();
 		if (item) {
-			unsigned i = getModel()->getCurQueryResult()->findIndex(item);
+			unsigned i = queryResult->findIndex(item);
 			if (i > 0 && i != 0xFFFFFFFF) {
 				i--;
-				getModel()->setSelected(getModel()->getCurQueryResult()->getIndex(i));
+				getModel()->setSelected(queryResult->getIndex(i));
 			}
 		}
 	} else if (nChar == VK_DOWN) {
 		// 选中下一行
 		LogItem* item = getModel()->getSelected();
 		if (item) {
-			unsigned i = getModel()->getCurQueryResult()->findIndex(item);
-			if (i != 0xFFFFFFFF && i < getModel()->getCurQueryResult()->getCount() - 1) {
+			unsigned i = queryResult->findIndex(item);
+			if (i != 0xFFFFFFFF && i < queryResult->getCount() - 1) {
 				i++;
-				getModel()->setSelected(getModel()->getCurQueryResult()->getIndex(i));
+				getModel()->setSelected(queryResult->getIndex(i));
 			}
 		}
 	} else {
@@ -226,7 +240,7 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 				yScrollPos = 0;
 			} else if (nChar == VK_END) {
 				// 跳到最后一页，多出没事
-				yScrollPos = (getModel()->getCurQueryResult()->getCount()) * LineHeight;
+				yScrollPos = (queryResult->getCount()) * LineHeight;
 			} else if (nChar == VK_UP) {
 				// 向上1行
 				yScrollPos -= LineHeight;
