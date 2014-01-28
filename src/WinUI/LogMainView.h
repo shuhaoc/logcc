@@ -17,7 +17,6 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
-	CLogCCDoc* GetDocument() const;
 
 // 操作
 public:
@@ -56,8 +55,4 @@ public:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 };
 
-#ifndef _DEBUG  // LogMainView.cpp 中的调试版本
-inline CLogCCDoc* CLogMainView::GetDocument() const
-   { return reinterpret_cast<CLogCCDoc*>(m_pDocument); }
-#endif
 

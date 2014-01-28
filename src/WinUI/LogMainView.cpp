@@ -50,11 +50,6 @@ CLogMainView::~CLogMainView()
 
 void CLogMainView::OnDraw(CDC* pDC)
 {
-	CLogCCDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
-
 	CRect clientRect;
 	GetClientRect(clientRect);
 	DEBUG_INFO(_T("客户区区域：") << clientRect.left << ", " << clientRect.top << ", "
@@ -82,10 +77,10 @@ void CLogMainView::OnDraw(CDC* pDC)
 	unsigned beginLine = scrollPosition.y / LineHeight;
 	// +1是为了底部能显示半行
 	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
-	endLine = min(endLine, GetDocument()->getModel()->getCurQueryResult()->getCount());
+	endLine = min(endLine, getModel()->getCurQueryResult()->getCount());
 	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
 
-	vector<LogItem*> vecLines = GetDocument()->getModel()->getCurQueryResult()->getRange(beginLine, endLine);
+	vector<LogItem*> vecLines = getModel()->getCurQueryResult()->getRange(beginLine, endLine);
 	for (unsigned i = 0; i < vecLines.size(); i++) {
 		LogItem* item = vecLines[i];
 		CRect rect = clientRect;
@@ -156,15 +151,6 @@ void CLogMainView::onScrollPositionChanged(int yPosition) {
 	position.y = yPosition;
 	ScrollToPosition(position);
 }
-
-#ifdef _DEBUG
-CLogCCDoc* CLogMainView::GetDocument() const // 非调试版本是内联的
-{
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CLogCCDoc)));
-	return (CLogCCDoc*)m_pDocument;
-}
-#endif //_DEBUG
-
 
 // CLogMainView 消息处理程序
 
