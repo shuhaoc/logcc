@@ -35,10 +35,9 @@ public:
 protected:
 	virtual void onGeneralDataChanged();
 	virtual void onQueryResultChanged();
-	virtual void onScrollPositionChanged(int yPosition);
 
 private:
-	void UpdateScroll();
+	void ResetScrollSize();
 
 	CSize totalSize;
 

@@ -64,14 +64,6 @@ public:
 	 */
 	virtual LogQueryResult* getCurQueryResult() const = 0;
 
-	/**
-	 * 滚动视图
-	 * @param y [in] y轴坐标
-	 * @author CaoShuhao
-	 * @date 2014-1-20
-	 */
-	virtual void scrollTo(int y) = 0; // UNDONE: 奇怪的接口方法
-
 protected:
 	void notifyGeneralDataChanged() const {
 		forEachObserver([] (ILogQueryObserver* p) { p->onGeneralDataChanged(); });
@@ -79,9 +71,5 @@ protected:
 
 	void notifyQueryResultChanged() const {
 		forEachObserver([] (ILogQueryObserver* p) { p->onQueryResultChanged(); });
-	}
-
-	void notifyScrollPositionChanged(int y) const {
-		forEachObserver([y] (ILogQueryObserver* p) { p->onScrollPositionChanged(y); });
 	}
 };

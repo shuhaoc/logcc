@@ -31,8 +31,6 @@ protected:
 
 	virtual LogQueryResult* getCurQueryResult() const;
 
-	virtual void scrollTo(int y);
-
 	void reset(const vector<LogItem*>& logItems);
 
 	void reset();

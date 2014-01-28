@@ -32,7 +32,7 @@ void LogCtrlController::OnEnChangeCriteria() {
 	OnCommit();
 }
 
-afx_msg LRESULT LogCtrlController::OnCommit(WPARAM wParam, LPARAM lParam) {
+afx_msg LRESULT LogCtrlController::OnCommit(WPARAM /*wParam*/, LPARAM /*lParam*/) {
 	updateViewData();
 	DEBUG_INFO(getViewData()->criteria);
 	getModel()->query(getViewData()->criteria);

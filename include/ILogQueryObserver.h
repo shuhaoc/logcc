@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+class LogQueryResult;
+
 /**
  * 日志查询功能观察者
  * @author CaoShuhao
@@ -16,15 +18,9 @@ public:
 
 	/**
 	 * 查询结果变更
+	 * @param queryResult 查询结果
 	 * @author CaoShuhao
 	 * @date 2014-1-19
 	 */
-	virtual void onQueryResultChanged() { };
-
-	/**
-	 * 滚动位置变更
-	 * @author CaoShuhao
-	 * @date 2014-1-20
-	 */
-	virtual void onScrollPositionChanged(int /*yPosition*/) { };
+	virtual void onQueryResultChanged(LogQueryResult* /*queryResult*/) { };
 };

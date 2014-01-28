@@ -101,7 +101,7 @@ void CLogMainView::OnInitialUpdate() {
 
 	getModel()->registerObserver(this);
 
-	UpdateScroll();
+	ResetScrollSize();
 	SetFocus();
 }
 
@@ -110,7 +110,7 @@ void CLogMainView::PostNcDestroy() {
 	__super::PostNcDestroy();
 }
 
-void CLogMainView::UpdateScroll() {
+void CLogMainView::ResetScrollSize() {
 	CRect clientRect;
 	GetClientRect(clientRect);
 	totalSize.cx = 0;
@@ -136,14 +136,8 @@ void CLogMainView::onGeneralDataChanged() {
 }
 
 void CLogMainView::onQueryResultChanged() {
-	UpdateScroll();
+	ResetScrollSize();
 	Invalidate();
-}
-
-void CLogMainView::onScrollPositionChanged(int yPosition) {
-	CPoint position = GetScrollPosition();
-	position.y = yPosition;
-	ScrollToPosition(position);
 }
 
 // CLogMainView 消息处理程序
@@ -189,7 +183,7 @@ BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) {
 		yScrollPos -= delta;
 		yScrollPos = max(yScrollPos, 0);
 	}
-	getModel()->scrollTo(yScrollPos);
+	ScrollToPosition(CPoint(0, yScrollPos));
 	DEBUG_INFO(_T("滚动位置：") << yScrollPos);
 	return __super::OnMouseWheel(nFlags, zDelta, pt);
 }

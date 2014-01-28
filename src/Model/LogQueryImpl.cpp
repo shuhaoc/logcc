@@ -84,10 +84,6 @@ LogQueryResult* LogQueryImpl::getCurQueryResult() const {
 	return curQueryResult;
 }
 
-void LogQueryImpl::scrollTo(int y) {
-	notifyScrollPositionChanged(y);
-}
-
 void LogQueryImpl::startMonitor() {
 	monitorThread = new boost::thread(([this] () {
 		monitoring = true;
