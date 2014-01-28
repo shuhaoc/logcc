@@ -1,14 +1,14 @@
 ﻿#pragma once
 
-#include "IModelAware.h"
+#include "afxwin.h"
+#include "ViewBase.h"
 #include "ILogQuery.h"
 #include "ILogQueryObserver.h"
-#include "afxwin.h"
-
+#include "DetailViewData.h"
 
 // CLogTextView 窗体视图
 
-class CLogTextView : public CFormView, public IModelAware<ILogQuery>, public ILogQueryObserver
+class CLogTextView : public CFormView, public ViewBase<ILogQuery, DetailViewData>, public ILogQueryObserver
 {
 	DECLARE_DYNCREATE(CLogTextView)
 
@@ -17,7 +17,6 @@ protected:
 	virtual ~CLogTextView();
 
 public:
-	CLogCCDoc* GetDocument() const;
 	enum { IDD = IDD_LOGTEXTVIEW };
 #ifdef _DEBUG
 //	virtual void AssertValid() const;
@@ -25,6 +24,7 @@ public:
 //	virtual void Dump(CDumpContext& dc) const;
 #endif
 #endif
+	virtual void onSubmit();
 	virtual void onGeneralDataChanged();
 
 protected:
@@ -38,10 +38,4 @@ public:
 private:
 	CEdit textEdit;
 };
-
-
-#ifndef _DEBUG  // LogMainView.cpp 中的调试版本
-inline CLogCCDoc* CLogTextView::GetDocument() const
-   { return reinterpret_cast<CLogCCDoc*>(m_pDocument); }
-#endif
 

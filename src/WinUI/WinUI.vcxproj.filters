@@ -119,6 +119,12 @@
     <ClInclude Include="..\..\include\CtrlViewData.h">
       <Filter>src\ViewData</Filter>
     </ClInclude>
+    <ClInclude Include="LogDetailController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="DetailViewData.h">
+      <Filter>src\ViewData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogPainterFactory.cpp">
@@ -156,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="ModulVer.cpp">
       <Filter>src\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="LogDetailController.cpp">
+      <Filter>src\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@
 #include "LogTextView.h"
 #include "LogCtrlController.h"
 #include "LogMainController.h"
+#include "LogDetailController.h"
 #include "ControllerRoute.h"
 
 #ifdef _DEBUG
@@ -62,6 +63,10 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	CLogMainView* mainView = static_cast<CLogMainView*>(m_wndSplitter.GetPane(1, 0));
 	LogMainController* mainController = new LogMainController(this);
 	ControllerRoute<ILogQuery>::addRoute(mainView, mainController, logccDoc);
+
+	CLogTextView* detailView = static_cast<CLogTextView*>(m_wndSplitter.GetPane(2, 0));
+	LogDetailController* detailController = new LogDetailController(this);
+	ControllerRoute<ILogQuery>::addRoute(detailView, detailController, logccDoc);
 #endif
 	return TRUE;
 }

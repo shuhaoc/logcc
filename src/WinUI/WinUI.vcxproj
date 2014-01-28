@@ -117,11 +117,13 @@
     <ClInclude Include="..\..\include\IViewDataAware.h" />
     <ClInclude Include="..\..\include\MainViewData.h" />
     <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="DetailViewData.h" />
     <ClInclude Include="ILogItemPainter.h" />
     <ClInclude Include="LogCC.h" />
     <ClInclude Include="LogCCDoc.h" />
     <ClInclude Include="LogCtrlController.h" />
     <ClInclude Include="LogCtrlView.h" />
+    <ClInclude Include="LogDetailController.h" />
     <ClInclude Include="LogMainView.h" />
     <ClInclude Include="LogMainController.h" />
     <ClInclude Include="LogPainterFactory.h" />
@@ -133,6 +135,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LogDetailController.cpp" />
     <ClCompile Include="ModulVer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
