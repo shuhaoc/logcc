@@ -27,6 +27,9 @@
     <Filter Include="src\ThirdParty">
       <UniqueIdentifier>{a1f0449c-49cb-458c-b205-b6ed6474b839}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ViewData">
+      <UniqueIdentifier>{9758a2f4-c4e4-4d30-af71-2eb866b1c6cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -89,14 +92,38 @@
     <ClInclude Include="LogCtrlController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ControllerBase.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="LogMainController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
     <ClInclude Include="ModulVer.h">
       <Filter>src\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IModelAware.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ControllerRoute.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IModelFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ControllerBase.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IViewDataAware.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\MainViewData.h">
+      <Filter>src\ViewData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CtrlViewData.h">
+      <Filter>src\ViewData</Filter>
+    </ClInclude>
+    <ClInclude Include="LogDetailController.h">
+      <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="DetailViewData.h">
+      <Filter>src\ViewData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="ModulVer.cpp">
       <Filter>src\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="LogDetailController.cpp">
+      <Filter>src\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -34,28 +34,8 @@ BEGIN_MESSAGE_MAP(CLogTextView, CFormView)
 END_MESSAGE_MAP()
 
 
-// CLogTextView 诊断
-
-#ifdef _DEBUG
-//void CLogTextView::AssertValid() const
-//{
-//	CFormView::AssertValid();
-//}
-
-#ifndef _WIN32_WCE
-//void CLogTextView::Dump(CDumpContext& dc) const
-//{
-//	CFormView::Dump(dc);
-//}
-#endif
-
-CLogCCDoc* CLogTextView::GetDocument() const // 非调试版本是内联的
-{
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CLogCCDoc)));
-	return (CLogCCDoc*)m_pDocument;
+void CLogTextView::onSubmit() {
 }
-#endif //_DEBUG
-
 
 // CLogTextView 消息处理程序
 
@@ -63,22 +43,19 @@ CLogCCDoc* CLogTextView::GetDocument() const // 非调试版本是内联的
 void CLogTextView::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
-
-	// TODO: 在此添加专用代码和/或调用基类
-	GetDocument()->logQuery->registerObserver(this);
+	getModel()->registerObserver(this);
 }
 
 
 void CLogTextView::PostNcDestroy()
 {
-	// TODO: 在此添加专用代码和/或调用基类
-	GetDocument()->logQuery->unregisterObserver(this);
+	getModel()->unregisterObserver(this);
 
 	CFormView::PostNcDestroy();
 }
 
 void CLogTextView::onGeneralDataChanged() {
-	LogItem* item = GetDocument()->logQuery->getSelected();
+	LogItem* item = getModel()->getSelected();
 	if (item) {
 		textEdit.SetWindowText(item->text.c_str());
 	}
@@ -88,7 +65,6 @@ void CLogTextView::OnSize(UINT nType, int cx, int cy)
 {
 	CFormView::OnSize(nType, cx, cy);
 
-	// TODO: 在此处添加消息处理程序代码
 	if (textEdit.GetSafeHwnd())
 	{
 		CRect clientRect;

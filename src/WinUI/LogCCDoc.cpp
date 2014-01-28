@@ -5,7 +5,6 @@
 #include "stdafx.h"
 #include "LogCCDoc.h"
 #include "ModelFactory.h"
-#include "ILogQuery.h"
 #include "LogQueryResult.h"
 
 #ifdef _DEBUG
@@ -23,7 +22,7 @@ END_MESSAGE_MAP()
 
 // CLogCCDoc 构造/析构
 
-CLogCCDoc::CLogCCDoc() : yScrollPos(0), lineHeight(0), length(0)
+CLogCCDoc::CLogCCDoc()
 {
 	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
 }

@@ -1,19 +1,19 @@
 ﻿#pragma once
 
-typedef CDocument BasicViewData;
+#include "IModelAware.h"
+#include "IViewDataAware.h"
+#include "ViewBase.h"
 
-class ControllerBase : public CWnd {
+template <typename ModelT, typename ViewDataT>
+class ControllerBase : public CWnd, public IModelAware<ModelT>, public IViewDataAware<ViewDataT> {
 public:
 	ControllerBase(CWnd* parent) {
 		Create(::AfxRegisterWndClass(0), NULL, 0, CRect(), parent, 0);
 	}
 
 	virtual void PostNcDestroy() { delete this; }
-
-	BasicViewData* getViewData() const { return viewData; }
-
-	void setViewData(BasicViewData* viewData) { this->viewData = viewData; }
-
-private:
-	BasicViewData* viewData;
+	
+	void updateViewData() {
+		static_cast<ViewBase<ModelT, ViewDataT>*>(getViewData())->onSubmit();
+	}
 };

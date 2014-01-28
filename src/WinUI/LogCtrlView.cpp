@@ -30,24 +30,11 @@ void CLogCtrlView::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CLogCtrlView, CFormView)
 END_MESSAGE_MAP()
 
-#ifdef _DEBUG
-CLogCCDoc* CLogCtrlView::GetDocument() const // 非调试版本是内联的
-{
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CLogCCDoc)));
-	return (CLogCCDoc*)m_pDocument;
-}
-#endif //_DEBUG
-
 
 // CLogCtrlView 消息处理程序
 
-
-BOOL CLogCtrlView::OnCommand(WPARAM wParam, LPARAM lParam)
-{
+void CLogCtrlView::onSubmit() {
 	CString criteria;
 	criteriaEdit.GetWindowText(criteria);
-	GetDocument()->criteria = criteria.GetBuffer();
-	DEBUG_INFO(GetDocument()->criteria);
-
-	return CFormView::OnCommand(wParam, lParam);
+	this->criteria = criteria.GetBuffer();
 }

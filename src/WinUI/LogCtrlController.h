@@ -1,10 +1,12 @@
 ﻿#pragma once
 
 #include "ControllerBase.h"
+#include "ILogQuery.h"
+#include "CtrlViewData.h"
 
 // LogCtrlController
 
-class LogCtrlController : public ControllerBase
+class LogCtrlController : public ControllerBase<ILogQuery, CtrlViewData>
 {
 	DECLARE_DYNAMIC(LogCtrlController)
 
