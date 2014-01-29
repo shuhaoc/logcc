@@ -1,62 +1,62 @@
-﻿// LogTextView.cpp : 实现文件
+﻿// LogDetailView.cpp : 实现文件
 //
 
 #include "stdafx.h"
 #include "LogCC.h"
 #include "LogCCDoc.h"
-#include "LogTextView.h"
+#include "LogDetailView.h"
 #include "ILogQuery.h"
 #include "LogItem.h"
 
 
-// CLogTextView
+// CLogDetailView
 
-IMPLEMENT_DYNCREATE(CLogTextView, CFormView)
+IMPLEMENT_DYNCREATE(CLogDetailView, CFormView)
 
-CLogTextView::CLogTextView()
-	: CFormView(CLogTextView::IDD) {
+CLogDetailView::CLogDetailView()
+	: CFormView(CLogDetailView::IDD) {
 
 }
 
-CLogTextView::~CLogTextView() {
+CLogDetailView::~CLogDetailView() {
 }
 
-void CLogTextView::DoDataExchange(CDataExchange* pDX) {
+void CLogDetailView::DoDataExchange(CDataExchange* pDX) {
 	CFormView::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LOG_LINE_TEXT, textEdit);
 }
 
-BEGIN_MESSAGE_MAP(CLogTextView, CFormView)
+BEGIN_MESSAGE_MAP(CLogDetailView, CFormView)
 	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
-void CLogTextView::onSubmit() {
+void CLogDetailView::onSubmit() {
 }
 
-// CLogTextView 消息处理程序
+// CLogDetailView 消息处理程序
 
 
-void CLogTextView::OnInitialUpdate() {
+void CLogDetailView::OnInitialUpdate() {
 	CFormView::OnInitialUpdate();
 	getModel()->registerObserver(this);
 }
 
 
-void CLogTextView::PostNcDestroy() {
+void CLogDetailView::PostNcDestroy() {
 	getModel()->unregisterObserver(this);
 
 	CFormView::PostNcDestroy();
 }
 
-void CLogTextView::onGeneralDataChanged() {
+void CLogDetailView::onGeneralDataChanged() {
 	LogItem* item = getModel()->getSelected();
 	if (item) {
 		textEdit.SetWindowText(item->text.c_str());
 	}
 }
 
-void CLogTextView::OnSize(UINT nType, int cx, int cy) {
+void CLogDetailView::OnSize(UINT nType, int cx, int cy) {
 	CFormView::OnSize(nType, cx, cy);
 
 	if (textEdit.GetSafeHwnd()) {

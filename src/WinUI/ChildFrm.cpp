@@ -9,7 +9,7 @@
 #include "LogCCDoc.h"
 #include "LogCtrlView.h"
 #include "LogMainView.h"
-#include "LogTextView.h"
+#include "LogDetailView.h"
 #include "LogCtrlController.h"
 #include "LogMainController.h"
 #include "LogDetailController.h"
@@ -47,7 +47,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	m_wndSplitter.CreateStatic(this, 3, 1);
 	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CLogCtrlView), CSize(10, 10), pContext);
 	m_wndSplitter.CreateView(1, 0, RUNTIME_CLASS(CLogMainView), CSize(10, 10), pContext);
-	m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(CLogTextView), CSize(10, 10), pContext);
+	m_wndSplitter.CreateView(2, 0, RUNTIME_CLASS(CLogDetailView), CSize(10, 10), pContext);
 	m_bSplitterCreated = true;
 
 	CLogCCDoc* logccDoc = static_cast<CLogCCDoc*>(pContext->m_pCurrentDoc);
@@ -60,7 +60,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	LogMainController* mainController = new LogMainController(this);
 	ControllerRoute<ILogQuery>::addRoute(mainView, mainController, logccDoc);
 
-	CLogTextView* detailView = static_cast<CLogTextView*>(m_wndSplitter.GetPane(2, 0));
+	CLogDetailView* detailView = static_cast<CLogDetailView*>(m_wndSplitter.GetPane(2, 0));
 	LogDetailController* detailController = new LogDetailController(this);
 	ControllerRoute<ILogQuery>::addRoute(detailView, detailController, logccDoc);
 #endif

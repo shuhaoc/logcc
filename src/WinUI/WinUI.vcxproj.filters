@@ -80,9 +80,6 @@
     <ClInclude Include="targetver.h">
       <Filter>src\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="LogTextView.h">
-      <Filter>src\View</Filter>
-    </ClInclude>
     <ClInclude Include="LogCtrlView.h">
       <Filter>src\View</Filter>
     </ClInclude>
@@ -125,6 +122,9 @@
     <ClInclude Include="DetailViewData.h">
       <Filter>src\View\ViewData</Filter>
     </ClInclude>
+    <ClInclude Include="LogDetailView.h">
+      <Filter>src\View</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogPainterFactory.cpp">
@@ -151,9 +151,6 @@
     <ClCompile Include="LogMainView.cpp">
       <Filter>src\View</Filter>
     </ClCompile>
-    <ClCompile Include="LogTextView.cpp">
-      <Filter>src\View</Filter>
-    </ClCompile>
     <ClCompile Include="LogCtrlController.cpp">
       <Filter>src\Controller</Filter>
     </ClCompile>
@@ -165,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="LogDetailController.cpp">
       <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="LogDetailView.cpp">
+      <Filter>src\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

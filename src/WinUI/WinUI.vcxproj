@@ -126,7 +126,7 @@
     <ClInclude Include="LogMainView.h" />
     <ClInclude Include="LogMainController.h" />
     <ClInclude Include="LogPainterFactory.h" />
-    <ClInclude Include="LogTextView.h" />
+    <ClInclude Include="LogDetailView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="ModulVer.h" />
     <ClInclude Include="Resource.h" />
@@ -148,7 +148,7 @@
     <ClCompile Include="LogMainView.cpp" />
     <ClCompile Include="LogMainController.cpp" />
     <ClCompile Include="LogPainterFactory.cpp" />
-    <ClCompile Include="LogTextView.cpp" />
+    <ClCompile Include="LogDetailView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
   </ItemGroup>
   <ItemGroup>

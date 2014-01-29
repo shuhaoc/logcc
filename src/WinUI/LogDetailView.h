@@ -6,23 +6,18 @@
 #include "ILogQueryObserver.h"
 #include "DetailViewData.h"
 
-// CLogTextView 窗体视图
+// CLogDetailView 窗体视图
 
-class CLogTextView : public CFormView, public ViewBase<ILogQuery, DetailViewData>, public ILogQueryObserver {
-	DECLARE_DYNCREATE(CLogTextView)
+class CLogDetailView : public CFormView, public ViewBase<ILogQuery, DetailViewData>, public ILogQueryObserver {
+	DECLARE_DYNCREATE(CLogDetailView)
 
 protected:
-	CLogTextView();           // 动态创建所使用的受保护的构造函数
-	virtual ~CLogTextView();
+	CLogDetailView();           // 动态创建所使用的受保护的构造函数
+	virtual ~CLogDetailView();
 
 public:
 	enum { IDD = IDD_LOGTEXTVIEW };
-#ifdef _DEBUG
-//	virtual void AssertValid() const;
-#ifndef _WIN32_WCE
-//	virtual void Dump(CDumpContext& dc) const;
-#endif
-#endif
+
 	virtual void onSubmit();
 	virtual void onGeneralDataChanged();
 
