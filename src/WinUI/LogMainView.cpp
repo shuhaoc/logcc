@@ -62,7 +62,7 @@ void CLogMainView::OnDraw(CDC* pDC) {
 	::FillRect(memDC, clientRect, bkgdBrush);
 
 	HFONT font = ::CreateFont(LineHeight - 2, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-								DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
+	                          DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
 	DEBUG_INFO(_T("重绘"));
@@ -90,7 +90,7 @@ void CLogMainView::OnDraw(CDC* pDC) {
 	}
 
 	::BitBlt(pDC->GetSafeHdc(), scrollPosition.x, scrollPosition.y, clientRect.Width(), clientRect.Height(),
-				memDC, 0, 0, SRCCOPY);
+	         memDC, 0, 0, SRCCOPY);
 
 	::SelectObject(memDC, oldFont);
 	::DeleteObject(font);
@@ -164,11 +164,45 @@ BOOL CLogMainView::OnEraseBkgnd(CDC* /*pDC*/) {
 #endif
 }
 
-void CLogMainView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
-	if (nSBCode == SB_ENDSCROLL) {
-		Invalidate();
+void CLogMainView::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*/) {
+	// 以下代码源自：http://blog.csdn.net/xiaji2007/article/details/5744111
+	// 并予以修改
+	SCROLLINFO si = { 0 };
+	si.cbSize = sizeof(SCROLLINFO);
+	si.fMask = SIF_ALL;
+	GetScrollInfo(SB_VERT, &si);
+	int lastPos = si.nPos;
+	switch (nSBCode) {
+	case SB_TOP:
+		si.nPos = si.nMin;
+		break;
+	case SB_BOTTOM:
+		si.nPos = si.nMax;
+		break;
+	case SB_LINEUP:
+		si.nPos -= LineHeight;
+		break;
+	case SB_LINEDOWN:
+		si.nPos += LineHeight;
+		break;
+	case SB_PAGEUP:
+		si.nPos -= si.nPage;
+		break;
+	case SB_PAGEDOWN:
+		si.nPos += si.nPage;
+		break;
+	case SB_THUMBTRACK:
+		si.nPos = si.nTrackPos;
+		break;
+	default:
+		break;
 	}
-	CScrollView::OnVScroll(nSBCode, nPos, pScrollBar);
+	si.fMask = SIF_POS;
+	SetScrollInfo(SB_VERT, &si);
+	if (lastPos!=si.nPos) {
+		::ScrollWindow(m_hWnd, 0, lastPos - si.nPos, NULL, NULL);
+	}
+	Invalidate();
 }
 
 void CLogMainView::OnMouseMove(UINT nFlags, CPoint point) {
