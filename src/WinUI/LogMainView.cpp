@@ -216,31 +216,19 @@ void CLogMainView::onSubmit() {
 }
 
 BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) {
-	CRect clientRect;
-	GetClientRect(clientRect);
-
-	int yScrollPos = GetScrollPosition().y;
-	if (clientRect.Height() >= totalSize.cy) return FALSE;
-
-	int delta = 3 * LineHeight;
 	if (zDelta < 0) {
 		// 向下3行
-		yScrollPos += delta;
+		scrollLines(3);
 	} else {
 		// 向上3行
-		yScrollPos -= delta;
-		yScrollPos = max(yScrollPos, 0);
+		scrollLines(-3);
 	}
-	ScrollToPosition(CPoint(0, yScrollPos));
-	DEBUG_INFO(_T("滚动位置：") << yScrollPos);
 	return __super::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 
 void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
-	CRect clientRect;
-	GetClientRect(clientRect);
-
+	// 以下是切换选中的情况
 	if (nChar == VK_UP) {
 		// 选中上一行
 		LogItem* item = getModel()->getSelected();
@@ -263,37 +251,28 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 		}
 	} else {
 		// 以下是滚动的情况
-		// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
-		//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
-		if (clientRect.Height() >= totalSize.cy) return;
-
-		int yScrollPos = GetScrollPosition().y;
 		if (::GetKeyState(VK_CONTROL) & 0x80000000) {
 			if (nChar == VK_HOME) {
 				// 跳到第一页
-				yScrollPos = 0;
+				scrollTo(0);
 			} else if (nChar == VK_END) {
 				// 跳到最后一页，多出没事
-				yScrollPos = (queryResult->getCount()) * LineHeight;
+				scrollTo(queryResult->getCount() * LineHeight);
 			} else if (nChar == VK_UP) {
 				// 向上1行
-				yScrollPos -= LineHeight;
-				yScrollPos = max(yScrollPos, 0);
+				scrollLines(-1);
 			} else if (nChar == VK_DOWN) {
 				// 向下1行
-				yScrollPos += LineHeight;
+				scrollLines(1);
 			}
 		}
 		if (nChar == VK_PRIOR) {
 			// 向上1页
-			yScrollPos -= clientRect.Height() / LineHeight * LineHeight;
-			yScrollPos = max(yScrollPos, 0);
+			scrollPages(-1);
 		} else if (nChar == VK_NEXT) {
 			// 向下1页
-			yScrollPos += clientRect.Height() / LineHeight * LineHeight;
+			scrollPages(1);
 		}
-		ScrollToPosition(CPoint(0, yScrollPos));
-		DEBUG_INFO(_T("滚动位置：") << yScrollPos);
 	}
 	__super::OnKeyDown(nChar, nRepCnt, nFlags);
 }
@@ -304,4 +283,33 @@ void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point) {
 	DEBUG_INFO(yScrollPos);
 	this->selectedLine = (yScrollPos + point.y) / LineHeight;
 	__super::OnLButtonUp(nFlags, point);
+}
+
+void CLogMainView::scrollTo(int yScrollPos) {
+	CRect clientRect;
+	GetClientRect(clientRect);
+
+	// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
+	//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
+	if (clientRect.Height() >= totalSize.cy) return;
+
+	ScrollToPosition(CPoint(0, yScrollPos));
+	DEBUG_INFO(_T("滚动位置：") << yScrollPos);
+}
+
+void CLogMainView::scrollDelta(int delta) {
+	int yScrollPos = GetScrollPosition().y;
+	yScrollPos += delta;
+	scrollTo(max(yScrollPos, 0));
+}
+
+void CLogMainView::scrollLines(int count) {
+	scrollDelta(LineHeight * count);
+}
+
+void CLogMainView::scrollPages(int count) {
+	CRect clientRect;
+	GetClientRect(clientRect);
+
+	scrollLines(clientRect.Height() / LineHeight * count);
 }

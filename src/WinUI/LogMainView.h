@@ -40,6 +40,14 @@ protected:
 private:
 	void resetScrollSize();
 
+	void scrollTo(int yScrollPos);
+	
+	void scrollDelta(int delta);
+	
+	void scrollLines(int count);
+	
+	void scrollPages(int count);
+
 	CSize totalSize;
 
 // 生成的消息映射函数
