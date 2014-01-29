@@ -60,8 +60,6 @@ void CLogDetailView::OnSize(UINT nType, int cx, int cy) {
 	CFormView::OnSize(nType, cx, cy);
 
 	if (textEdit.GetSafeHwnd()) {
-		CRect clientRect;
-		GetClientRect(clientRect);
-		textEdit.MoveWindow(0, 0, clientRect.Width(), clientRect.Height());
+		textEdit.MoveWindow(0, 0, cx, cy);
 	}
 }
