@@ -38,7 +38,7 @@ protected:
 	virtual void onFileChanged();
 
 private:
-	void ResetScrollSize();
+	void resetScrollSize();
 
 	CSize totalSize;
 

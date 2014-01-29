@@ -104,7 +104,7 @@ void CLogMainView::OnInitialUpdate() {
 
 	getModel()->registerObserver(this);
 
-	ResetScrollSize();
+	resetScrollSize();
 	SetFocus();
 }
 
@@ -113,7 +113,7 @@ void CLogMainView::PostNcDestroy() {
 	__super::PostNcDestroy();
 }
 
-void CLogMainView::ResetScrollSize() {
+void CLogMainView::resetScrollSize() {
 	CRect clientRect;
 	GetClientRect(clientRect);
 	totalSize.cx = 0;
@@ -143,14 +143,14 @@ void CLogMainView::onQueryResultChanged(const tstring& criteria, LogQueryResult*
 	if (activeFrame == GetParentFrame()) {
 		this->curCriteria = criteria;
 		this->queryResult = queryResult;
-		ResetScrollSize();
+		resetScrollSize();
 		Invalidate();
 	}
 }
 
 void CLogMainView::onFileChanged() {
 	this->queryResult = getModel()->query(this->curCriteria, true);
-	ResetScrollSize();
+	resetScrollSize();
 	Invalidate();
 }
 
