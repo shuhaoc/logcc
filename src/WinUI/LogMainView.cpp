@@ -237,6 +237,11 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 			if (i > 0 && i != 0xFFFFFFFF) {
 				i--;
 				getModel()->setSelected(queryResult->getIndex(i));
+
+				// UNDONE: 可视判断应该抽出
+				if (static_cast<int>(i * LineHeight) < GetScrollPosition().y) {
+					scrollLines(-1);
+				}
 			}
 		}
 	} else if (nChar == VK_DOWN) {
@@ -247,6 +252,13 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 			if (i != 0xFFFFFFFF && i < queryResult->getCount() - 1) {
 				i++;
 				getModel()->setSelected(queryResult->getIndex(i));
+				
+				// UNDONE: 可视判断应该抽出
+				CRect rect;
+				GetClientRect(rect);
+				if (static_cast<int>((i + 1) * LineHeight) > GetScrollPosition().y + rect.Height()) {
+					scrollLines(1);
+				}
 			}
 		}
 	} else {
