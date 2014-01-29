@@ -72,7 +72,7 @@ void CLogMainView::OnDraw(CDC* pDC) {
 
 	if (queryResult) {
 		// 顶部可以显示半行
-		int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : scrollPosition.y % LineHeight - LineHeight;
+		int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : (scrollPosition.y % LineHeight) * -1;
 		unsigned beginLine = scrollPosition.y / LineHeight;
 		// +1是为了底部能显示半行
 		unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
@@ -267,6 +267,7 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 
 void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point) {
 	int yScrollPos = GetScrollPosition().y;
+	DEBUG_INFO(yScrollPos);
 	this->selectedLine = (yScrollPos + point.y) / LineHeight;
 	__super::OnLButtonUp(nFlags, point);
 }
