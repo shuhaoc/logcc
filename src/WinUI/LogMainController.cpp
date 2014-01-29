@@ -29,7 +29,7 @@ END_MESSAGE_MAP()
 
 
 void LogMainController::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/) {
-	if (getViewData()->selectedLine < getViewData()->queryResult->getCount()) {
+	if (getViewData()->queryResult && getViewData()->selectedLine < getViewData()->queryResult->getCount()) {
 		LogItem* item = getViewData()->queryResult->getIndex(getViewData()->selectedLine);
 		getModel()->setSelected(item);
 		DEBUG_INFO(_T("选中行：") << getViewData()->selectedLine);
