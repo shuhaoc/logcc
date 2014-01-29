@@ -145,7 +145,7 @@ void LogQueryImpl::loadFile(vector<LogItem*>& logItems) {
 			while (iss.good()) {
 				std::getline(iss, line);
 				LogItem* item = new LogItem();
-				item->line = ++lineNum;
+				item->line = lineNum++;
 #ifdef _UNICODE
 				item->text = mrl::utility::codeconv::asciiToUnicode(line);
 #else
