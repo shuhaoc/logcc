@@ -48,8 +48,6 @@ CLogMainView::~CLogMainView() {
 // CLogMainView 绘制
 
 void CLogMainView::OnDraw(CDC* pDC) {
-	if (!queryResult) return;
-
 	CRect clientRect;
 	GetClientRect(clientRect);
 	DEBUG_INFO(_T("客户区区域：") << clientRect.left << ", " << clientRect.top << ", "
@@ -64,7 +62,7 @@ void CLogMainView::OnDraw(CDC* pDC) {
 	::FillRect(memDC, clientRect, bkgdBrush);
 
 	HFONT font = ::CreateFont(LineHeight - 2, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-	                          DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
+								DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
 	HGDIOBJ oldFont = ::SelectObject(memDC, font);
 
 	DEBUG_INFO(_T("重绘"));
@@ -72,25 +70,27 @@ void CLogMainView::OnDraw(CDC* pDC) {
 	CPoint scrollPosition = GetScrollPosition();
 	DEBUG_INFO(_T("滚动条位置：") << scrollPosition.x << ", " << scrollPosition.y);
 
-	// 顶部可以显示半行
-	int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : scrollPosition.y % LineHeight - LineHeight;
-	unsigned beginLine = scrollPosition.y / LineHeight;
-	// +1是为了底部能显示半行
-	unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
-	endLine = min(endLine, queryResult->getCount());
-	DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
+	if (queryResult) {
+		// 顶部可以显示半行
+		int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : scrollPosition.y % LineHeight - LineHeight;
+		unsigned beginLine = scrollPosition.y / LineHeight;
+		// +1是为了底部能显示半行
+		unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
+		endLine = min(endLine, queryResult->getCount());
+		DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
 
-	vector<LogItem*> vecLines = queryResult->getRange(beginLine, endLine);
-	for (unsigned i = 0; i < vecLines.size(); i++) {
-		LogItem* item = vecLines[i];
-		CRect rect = clientRect;
-		rect.top = yLogLineStart + i * LineHeight;
-		rect.bottom = rect.top + LineHeight;
-		LogPainterFactory::GetInstance()->GetSingleLinePainter()->Draw(memDC, rect, *item);
+		vector<LogItem*> vecLines = queryResult->getRange(beginLine, endLine);
+		for (unsigned i = 0; i < vecLines.size(); i++) {
+			LogItem* item = vecLines[i];
+			CRect rect = clientRect;
+			rect.top = yLogLineStart + i * LineHeight;
+			rect.bottom = rect.top + LineHeight;
+			LogPainterFactory::GetInstance()->GetSingleLinePainter()->Draw(memDC, rect, *item);
+		}
 	}
 
 	::BitBlt(pDC->GetSafeHdc(), scrollPosition.x, scrollPosition.y, clientRect.Width(), clientRect.Height(),
-	         memDC, 0, 0, SRCCOPY);
+				memDC, 0, 0, SRCCOPY);
 
 	::SelectObject(memDC, oldFont);
 	::DeleteObject(font);
