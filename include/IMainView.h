@@ -2,10 +2,10 @@
 
 class LogQueryResult;
 
-struct MainViewData {
+struct IMainView {
 	LogQueryResult* queryResult;
 	tstring curCriteria;
 	unsigned selectedLine;
 
-	MainViewData() : queryResult(nullptr) { }
+	IMainView() : queryResult(nullptr) { }
 };

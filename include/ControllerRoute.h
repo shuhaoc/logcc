@@ -7,8 +7,8 @@
 
 template <typename ModelT> class ControllerRoute {
 public:
-	template <typename ViewDataT> static void addRoute(
-		ViewBase<ModelT, ViewDataT>* view, ControllerBase<ModelT, ViewDataT>* controller, IModelFactory<ModelT>* factory);
+	template <typename IView> static void addRoute(
+		ViewBase<ModelT, IView>* view, ControllerBase<ModelT, IView>* controller, IModelFactory<ModelT>* factory);
 	
 private:
 	static std::hash_map<HWND, InternalControllerBase<ModelT>*> routeMap;
@@ -22,8 +22,8 @@ template <typename ModelT> std::hash_map<HWND, InternalControllerBase<ModelT>*> 
 
 template <typename ModelT> std::hash_map<HWND, WNDPROC> ControllerRoute<ModelT>::originWndProcMap;
 
-template <typename ModelT> template<typename ViewDataT> void ControllerRoute<ModelT>::addRoute(
-		ViewBase<ModelT, ViewDataT>* view, ControllerBase<ModelT, ViewDataT>* controller, IModelFactory<ModelT>* factory) {
+template <typename ModelT> template<typename IView> void ControllerRoute<ModelT>::addRoute(
+		ViewBase<ModelT, IView>* view, ControllerBase<ModelT, IView>* controller, IModelFactory<ModelT>* factory) {
 	CWnd* viewWnd = dynamic_cast<CWnd*>(view);
 	
 	assert(viewWnd && controller);

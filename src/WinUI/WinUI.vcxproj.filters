@@ -17,9 +17,6 @@
     <Filter Include="src\View\Painter">
       <UniqueIdentifier>{40c62f65-4540-4214-bf99-3546130b0aa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{c1cce785-a070-424c-b735-561d4c6462dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="resouce">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -27,8 +24,11 @@
     <Filter Include="src\ThirdParty">
       <UniqueIdentifier>{a1f0449c-49cb-458c-b205-b6ed6474b839}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\View\ViewData">
+    <Filter Include="src\Interface">
       <UniqueIdentifier>{9758a2f4-c4e4-4d30-af71-2eb866b1c6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{c1cce785-a070-424c-b735-561d4c6462dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,23 +107,26 @@
     <ClInclude Include="..\..\include\ControllerBase.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\IViewDataAware.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\MainViewData.h">
-      <Filter>src\View\ViewData</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\CtrlViewData.h">
-      <Filter>src\View\ViewData</Filter>
-    </ClInclude>
     <ClInclude Include="LogDetailController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="DetailViewData.h">
-      <Filter>src\View\ViewData</Filter>
-    </ClInclude>
     <ClInclude Include="LogDetailView.h">
       <Filter>src\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ICtrlView.h">
+      <Filter>src\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IMainView.h">
+      <Filter>src\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IDetailView.h">
+      <Filter>src\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IViewAware.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ViewBase.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

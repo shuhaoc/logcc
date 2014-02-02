@@ -10,7 +10,7 @@
 
 IMPLEMENT_DYNAMIC(LogCtrlController, CWnd)
 
-LogCtrlController::LogCtrlController(CWnd* parent) : ControllerBase<ILogQuery, CtrlViewData>(parent) {
+LogCtrlController::LogCtrlController(CWnd* parent) : ControllerBase<ILogQuery, ICtrlView>(parent) {
 
 }
 
@@ -28,7 +28,6 @@ END_MESSAGE_MAP()
 
 
 void LogCtrlController::OnEnChangeCriteria() {
-	updateViewData();
-	DEBUG_INFO(getViewData()->criteria);
-	getModel()->query(getViewData()->criteria);
+	DEBUG_INFO(getView()->getCriteria());
+	getModel()->query(getView()->getCriteria());
 }

@@ -2,11 +2,11 @@
 
 #include "ControllerBase.h"
 #include "ILogQuery.h"
-#include "CtrlViewData.h"
+#include "ICtrlView.h"
 
 // LogCtrlController
 
-class LogCtrlController : public ControllerBase<ILogQuery, CtrlViewData> {
+class LogCtrlController : public ControllerBase<ILogQuery, ICtrlView> {
 	DECLARE_DYNAMIC(LogCtrlController)
 
 public:

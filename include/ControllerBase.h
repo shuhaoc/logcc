@@ -1,14 +1,16 @@
 ﻿#pragma once
 
 #include "IModelAware.h"
-#include "IViewDataAware.h"
+#include "IViewAware.h"
 #include "ViewBase.h"
 
-template <typename ModelT>
-class InternalControllerBase : public CWnd, public IModelAware<ModelT> {
+template <typename ModelT> class InternalControllerBase : public CWnd, public IModelAware<ModelT> {
 public:
 	InternalControllerBase(CWnd* parent) {
 		Create(::AfxRegisterWndClass(0), NULL, 0, CRect(), parent, 0);
+	}
+
+	virtual ~InternalControllerBase() {
 	}
 
 	virtual void PostNcDestroy() { delete this; }
@@ -24,14 +26,12 @@ public:
 	}
 };
 
-
-template <typename ModelT, typename ViewDataT>
-class ControllerBase : public InternalControllerBase<ModelT>, public IViewDataAware<ViewDataT> {
+template <typename ModelT, typename IViewT>
+	class ControllerBase : public InternalControllerBase<ModelT>, public IViewAware<IViewT> {
 public:
 	ControllerBase(CWnd* parent) : InternalControllerBase(parent) {
 	}
 
-	void updateViewData() {
-		static_cast<ViewBase<ModelT, ViewDataT>*>(getViewData())->onSubmit();
+	virtual ~ControllerBase() {
 	}
 };

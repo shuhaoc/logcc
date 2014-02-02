@@ -2,11 +2,11 @@
 
 #include "ControllerBase.h"
 #include "ILogQuery.h"
-#include "MainViewData.h"
+#include "IMainView.h"
 
 // LogMainController
 
-class LogMainController : public ControllerBase<ILogQuery, MainViewData> {
+class LogMainController : public ControllerBase<ILogQuery, IMainView> {
 	DECLARE_DYNAMIC(LogMainController)
 
 public:

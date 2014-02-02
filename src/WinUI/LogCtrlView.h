@@ -2,20 +2,20 @@
 #include "afxwin.h"
 #include "ViewBase.h"
 #include "ILogQuery.h"
-#include "CtrlViewData.h"
+#include "ICtrlView.h"
 
 class CLogCCDoc;
 
 // CLogCtrlView 窗体视图
 
-class CLogCtrlView : public CFormView, public ViewBase<ILogQuery, CtrlViewData> {
+class CLogCtrlView : public CFormView, public ViewBase<ILogQuery, ICtrlView> {
 	DECLARE_DYNCREATE(CLogCtrlView)
 
 protected:
 	CLogCtrlView();           // 动态创建所使用的受保护的构造函数
 	virtual ~CLogCtrlView();
 
-	virtual void onSubmit();
+	virtual tstring getCriteria();
 
 public:
 	enum { IDD = IDD_LOGCTRLVIEW };

@@ -2,10 +2,8 @@
 
 #include "IModelAware.h"
 
-template <typename ModelT, typename ViewDataT> class ViewBase
-	: public IModelAware<ModelT>, public ViewDataT {
+template <typename ModelT, typename IView> class ViewBase
+	: public IModelAware<ModelT>, public IView {
 public:
 	virtual ~ViewBase() { }
-	
-	virtual void onSubmit() = 0;
 };

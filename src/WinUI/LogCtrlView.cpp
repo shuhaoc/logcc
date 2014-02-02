@@ -24,14 +24,14 @@ void CLogCtrlView::DoDataExchange(CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_CRITERIA, criteriaEdit);
 }
 
+tstring CLogCtrlView::getCriteria() {
+	CString criteria;
+	criteriaEdit.GetWindowText(criteria);
+	return criteria.GetBuffer();
+}
+
 BEGIN_MESSAGE_MAP(CLogCtrlView, CFormView)
 END_MESSAGE_MAP()
 
 
 // CLogCtrlView 消息处理程序
-
-void CLogCtrlView::onSubmit() {
-	CString criteria;
-	criteriaEdit.GetWindowText(criteria);
-	this->criteria = criteria.GetBuffer();
-}

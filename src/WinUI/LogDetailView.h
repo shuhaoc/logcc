@@ -4,11 +4,11 @@
 #include "ViewBase.h"
 #include "ILogQuery.h"
 #include "ILogQueryObserver.h"
-#include "DetailViewData.h"
+#include "IDetailView.h"
 
 // CLogDetailView 窗体视图
 
-class CLogDetailView : public CFormView, public ViewBase<ILogQuery, DetailViewData>, public ILogQueryObserver {
+class CLogDetailView : public CFormView, public ViewBase<ILogQuery, IDetailView>, public ILogQueryObserver {
 	DECLARE_DYNCREATE(CLogDetailView)
 
 protected:
