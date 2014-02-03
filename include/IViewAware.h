@@ -1,15 +1,15 @@
 ﻿#pragma once
 
-template <typename IView> class IViewAware {
+template <typename IViewT> class IViewAware {
 public:
-	IViewAware() : viewData(nullptr) { }
+	IViewAware() : view(nullptr) { }
 
 	virtual ~IViewAware() { }
 
-	void setViewData(IView* viewData) { this->viewData = viewData; }
+	void setView(IViewT* view) { this->view = view; }
 
-	IView* getView() const { return viewData; }
+	IViewT* getView() const { return view; }
 
 private:
-	IView* viewData;
+	IViewT* view;
 };

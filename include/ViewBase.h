@@ -2,8 +2,8 @@
 
 #include "IModelAware.h"
 
-template <typename ModelT, typename IView> class ViewBase
-	: public IModelAware<ModelT>, public IView {
+template <typename ModelT, typename IViewT> class ViewBase
+	: public IModelAware<ModelT>, public IViewT {
 public:
 	virtual ~ViewBase() { }
 };
