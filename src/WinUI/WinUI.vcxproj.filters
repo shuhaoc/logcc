@@ -62,16 +62,10 @@
     <ClInclude Include="ILogItemPainter.h">
       <Filter>src\View\Painter</Filter>
     </ClInclude>
-    <ClInclude Include="ChildFrm.h">
-      <Filter>src\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="LogCC.h">
       <Filter>src\Framework</Filter>
     </ClInclude>
     <ClInclude Include="LogCCDoc.h">
-      <Filter>src\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="MainFrm.h">
       <Filter>src\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -134,21 +128,28 @@
     <ClInclude Include="ColorSelect.h">
       <Filter>src\View\Control</Filter>
     </ClInclude>
+    <ClInclude Include="ConfigDlg.h">
+      <Filter>src\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IConfigView.h">
+      <Filter>src\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="HighLightPropPage.h" />
+    <ClInclude Include="ChildFrm.h">
+      <Filter>src\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>src\Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogPainterFactory.cpp">
       <Filter>src\View\Painter</Filter>
     </ClCompile>
-    <ClCompile Include="ChildFrm.cpp">
-      <Filter>src\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="LogCC.cpp">
       <Filter>src\Framework</Filter>
     </ClCompile>
     <ClCompile Include="LogCCDoc.cpp">
-      <Filter>src\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="MainFrm.cpp">
       <Filter>src\Framework</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -177,6 +178,18 @@
     </ClCompile>
     <ClCompile Include="ColorSelect.cpp">
       <Filter>src\View\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigDlg.cpp">
+      <Filter>src\View</Filter>
+    </ClCompile>
+    <ClCompile Include="HighLightPropPage.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>src\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>src\Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

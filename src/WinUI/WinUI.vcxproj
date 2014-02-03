@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\ControllerBase.h" />
     <ClInclude Include="..\..\include\ControllerRoute.h" />
+    <ClInclude Include="..\..\include\IConfigView.h" />
     <ClInclude Include="..\..\include\ICtrlView.h" />
     <ClInclude Include="..\..\include\IDetailView.h" />
     <ClInclude Include="..\..\include\IModelAware.h" />
@@ -126,6 +127,8 @@
     <ClInclude Include="..\..\include\ViewBase.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ColorSelect.h" />
+    <ClInclude Include="ConfigDlg.h" />
+    <ClInclude Include="HighLightPropPage.h" />
     <ClInclude Include="ILogItemPainter.h" />
     <ClInclude Include="LogCC.h" />
     <ClInclude Include="LogCCDoc.h" />
@@ -144,6 +147,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColorSelect.cpp" />
+    <ClCompile Include="ConfigDlg.cpp" />
+    <ClCompile Include="HighLightPropPage.cpp" />
     <ClCompile Include="LogDetailController.cpp" />
     <ClCompile Include="ModulVer.cpp" />
     <ClCompile Include="stdafx.cpp">
