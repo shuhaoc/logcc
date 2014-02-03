@@ -252,7 +252,7 @@ void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 			if (i != 0xFFFFFFFF && i < queryResult->getCount() - 1) {
 				i++;
 				getModel()->setSelected(queryResult->getIndex(i));
-				
+
 				// UNDONE: 可视判断应该抽出
 				CRect rect;
 				GetClientRect(rect);

@@ -41,11 +41,11 @@ private:
 	void resetScrollSize();
 
 	void scrollTo(int yScrollPos);
-	
+
 	void scrollDelta(int delta);
-	
+
 	void scrollLines(int count);
-	
+
 	void scrollPages(int count);
 
 	CSize totalSize;

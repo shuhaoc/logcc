@@ -6,9 +6,13 @@ public:
 
 	virtual ~IViewAware() { }
 
-	void setView(IViewT* view) { this->view = view; }
+	void setView(IViewT* view) {
+		this->view = view;
+	}
 
-	IViewT* getView() const { return view; }
+	IViewT* getView() const {
+		return view;
+	}
 
 private:
 	IViewT* view;

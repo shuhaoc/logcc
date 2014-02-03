@@ -6,9 +6,13 @@ public:
 
 	virtual ~IModelAware() { }
 
-	void setModel(ModelT* model) { this->model = model; }
+	void setModel(ModelT* model) {
+		this->model = model;
+	}
 
-	ModelT* getModel() const { return model; }
+	ModelT* getModel() const {
+		return model;
+	}
 
 private:
 	ModelT* model;

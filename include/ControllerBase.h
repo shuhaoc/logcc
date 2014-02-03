@@ -13,7 +13,9 @@ public:
 	virtual ~InternalControllerBase() {
 	}
 
-	virtual void PostNcDestroy() { delete this; }
+	virtual void PostNcDestroy() {
+		delete this;
+	}
 
 	void accept(UINT msg, WPARAM wparam, LPARAM lparam) {
 		const AFX_MSGMAP_ENTRY* entry = GetMessageMap()->lpEntries;
@@ -27,7 +29,7 @@ public:
 };
 
 template <typename ModelT, typename IViewT>
-	class ControllerBase : public InternalControllerBase<ModelT>, public IViewAware<IViewT> {
+class ControllerBase : public InternalControllerBase<ModelT>, public IViewAware<IViewT> {
 public:
 	ControllerBase(CWnd* parent) : InternalControllerBase(parent) {
 	}

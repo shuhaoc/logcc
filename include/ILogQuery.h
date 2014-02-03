@@ -58,14 +58,20 @@ public:
 
 protected:
 	void notifyGeneralDataChanged() const {
-		forEachObserver([] (ILogQueryObserver* p) { p->onGeneralDataChanged(); });
+		forEachObserver([] (ILogQueryObserver* p) {
+			p->onGeneralDataChanged();
+		});
 	}
 
 	void notifyQueryResultChanged(const tstring& criteria, LogQueryResult* queryResult) const {
-		forEachObserver([=] (ILogQueryObserver* p) { p->onQueryResultChanged(criteria, queryResult); });
+		forEachObserver([=] (ILogQueryObserver* p) {
+			p->onQueryResultChanged(criteria, queryResult);
+		});
 	}
 
 	void notifyFileChanged() const {
-		forEachObserver([] (ILogQueryObserver* p) { p->onFileChanged(); });
+		forEachObserver([] (ILogQueryObserver* p) {
+			p->onFileChanged();
+		});
 	}
 };
