@@ -125,6 +125,7 @@
     <ClInclude Include="..\..\include\IMainView.h" />
     <ClInclude Include="..\..\include\ViewBase.h" />
     <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="ColorSelect.h" />
     <ClInclude Include="ILogItemPainter.h" />
     <ClInclude Include="LogCC.h" />
     <ClInclude Include="LogCCDoc.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ColorSelect.cpp" />
     <ClCompile Include="LogDetailController.cpp" />
     <ClCompile Include="ModulVer.cpp" />
     <ClCompile Include="stdafx.cpp">

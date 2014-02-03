@@ -30,6 +30,9 @@
     <Filter Include="include">
       <UniqueIdentifier>{c1cce785-a070-424c-b735-561d4c6462dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\View\Control">
+      <UniqueIdentifier>{e2a86a2a-3529-47bc-a6ad-98cc2c8a626d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -128,6 +131,9 @@
     <ClInclude Include="..\..\include\ViewBase.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="ColorSelect.h">
+      <Filter>src\View\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogPainterFactory.cpp">
@@ -168,6 +174,9 @@
     </ClCompile>
     <ClCompile Include="LogDetailView.cpp">
       <Filter>src\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorSelect.cpp">
+      <Filter>src\View\Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
