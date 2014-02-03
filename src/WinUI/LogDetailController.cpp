@@ -1,4 +1,4 @@
-// LogDetailController.cpp : ÊµÏÖÎÄ¼ş
+ï»¿// LogDetailController.cpp : å®ç°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -22,6 +22,6 @@ END_MESSAGE_MAP()
 
 
 
-// LogDetailController ÏûÏ¢´¦Àí³ÌĞò
+// LogDetailController æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 
