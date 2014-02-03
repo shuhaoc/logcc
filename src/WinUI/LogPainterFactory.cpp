@@ -11,8 +11,8 @@ class LogSingleLinePainter : public ILogItemPainter {
 		// 背景
 		HBRUSH bkgdBrush = NULL;
 		if (item.selected) {
-			bkgdBrush = ::CreateSolidBrush(0x00C36832);
-			::SetTextColor(hdc, 0x00FFFFFF);
+			bkgdBrush = ::CreateSolidBrush(::GetSysColor(COLOR_HIGHLIGHT));
+			::SetTextColor(hdc, ::GetSysColor(COLOR_HIGHLIGHTTEXT));
 		} else if (item.text.find(_T("ERROR")) != tstring::npos) {
 			bkgdBrush = ::CreateSolidBrush(0x000000FF);
 		} else if (item.text.find(_T("WARN")) != tstring::npos) {
