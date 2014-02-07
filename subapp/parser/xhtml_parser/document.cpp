@@ -40,6 +40,7 @@ Node* GrammarTree::filter() {
 		Remain* r = remain();
 		if (r) {
 			ret = trans(e, r);
+			delete r;
 		} else {
 			ret = e;
 		}
@@ -56,10 +57,13 @@ GrammarTree::Remain* GrammarTree::remain() {
 	Remain* ret = nullptr;
 	string first = _lexer.peek();
 	if (_file.good() && !first.empty()) {
-		ret = new Remain();
-		ret->op = op();
-		ret->expr = expr();
-		ret->remain = remain();
+		// 针对括号内的特殊处理，没有反应在文法里
+		if (first != ")") {
+			ret = new Remain();
+			ret->op = op();
+			ret->expr = expr();
+			ret->remain = remain();
+		}
 	}
 	return ret;
 }
@@ -68,9 +72,11 @@ Node* GrammarTree::expr() {
 	Node* ret = nullptr;
 	string first = _lexer.peek();
 	if (first != "(") {
-		TextNode* textNode = new TextNode();
-		textNode->word = _lexer.read();
-		ret = textNode;
+		if (first != ")") {
+			TextNode* textNode = new TextNode();
+			textNode->word = _lexer.read();
+			ret = textNode;
+		}
 	} else {
 		match("(");
 		ret = filter();
@@ -103,7 +109,6 @@ OpNode* GrammarTree::trans(Node* left, Remain* remain) {
 	}
 
 	remain->expr = nullptr;
-	delete remain;
 
 	return ret;
 }

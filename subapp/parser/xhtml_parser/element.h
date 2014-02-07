@@ -21,7 +21,9 @@ struct Node {
 
 	int id;
 
-	virtual void print() const = 0;
+	virtual void print() const {
+		std::cout << id << "\t";
+}
 };
 
 struct OpNode : public Node {
@@ -42,6 +44,7 @@ struct OpNode : public Node {
 		else std::cout << "<null>" << std::endl;
 		if (right) right->print();
 		else std::cout << "<null>" << std::endl;
+		Node::print();
 		std::cout << op << std::endl;
 	}
 };
@@ -50,6 +53,7 @@ struct TextNode : public Node {
 	std::string word;
 
 	virtual void print() const {
+		Node::print();
 		std::cout << word << std::endl;
 	}
 };
