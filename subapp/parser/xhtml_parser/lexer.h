@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include <fstream>
+#include <iostream>
 
-namespace mylib {
-namespace xhtml_parser {
+namespace logcc {
+namespace filter_parser {
 
 class Lexer {
 public:
@@ -28,5 +28,5 @@ private:
 	Lexer& operator = (const Lexer&);
 };
 
-} // namespace xhtml_parser
-} // namespace mylib
+} // namespace filter_parser
+} // namespace logcc

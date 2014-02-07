@@ -1,9 +1,9 @@
 #pragma once
-#include "lexer.h"
-#include "element.h"
+#include "Lexer.h"
+#include "Node.h"
 
-namespace mylib {
-namespace xhtml_parser {
+namespace logcc {
+namespace filter_parser {
 
 
 /**
@@ -21,7 +21,7 @@ public:
 
 	~GrammarTree();
 
-	void load(const char* file);
+	void compile(const std::string& stmt);
 
 	const Node* rootNode() const { return _rootNode; }
 
@@ -40,7 +40,7 @@ private:
 		}
 	};
 
-	std::ifstream _file;
+	std::istringstream _file;
 	Lexer _lexer;
 	Node* _rootNode;
 
@@ -54,5 +54,5 @@ private:
 	OpNode* trans(Node* left, Remain* remain);
 };
 
-} // namespace xhtml_parser
-} // namespace mylib
+} // namespace filter_parser
+} // namespace logcc

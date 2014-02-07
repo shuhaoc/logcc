@@ -15,24 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="document.cpp">
+    <ClCompile Include="Lexer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="lexer.cpp">
+    <ClCompile Include="GrammarTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="document.h">
+    <ClInclude Include="GrammarTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="element.h">
+    <ClInclude Include="Node.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="lexer.h">
+    <ClInclude Include="Lexer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

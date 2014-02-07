@@ -1,12 +1,17 @@
-#include <Windows.h>
-#include <Urlmon.h>
 #include <exception>
 #include <sstream>
 #include <cassert>
-#include "document.h"
+#include "GrammarTree.h"
 
 using namespace std;
-using namespace mylib::xhtml_parser;
+
+namespace logcc {
+namespace filter_parser {
+
+void GrammarTree::compile(const string& stmt) {
+	_file.str(stmt);
+	build();
+}
 
 void GrammarTree::reportError(const string& wanted) {
 	stringstream msg;
@@ -14,13 +19,7 @@ void GrammarTree::reportError(const string& wanted) {
 	throw exception(msg.str().c_str());
 }
 
-void GrammarTree::load(const char* file) {
-	_file.open(file);
-	if (_file.good()) build();
-}
-
 GrammarTree::~GrammarTree() {
-	if (_file.is_open()) _file.close();
 }
 
 void GrammarTree::match(const std::string& t) {
@@ -56,7 +55,7 @@ Node* GrammarTree::filter() {
 GrammarTree::Remain* GrammarTree::remain() {
 	Remain* ret = nullptr;
 	string first = _lexer.peek();
-	if (_file.good() && !first.empty()) {
+	if (!first.empty()) {
 		// 针对括号内的特殊处理，没有反应在文法里
 		if (first != ")") {
 			ret = new Remain();
@@ -112,3 +111,7 @@ OpNode* GrammarTree::trans(Node* left, Remain* remain) {
 
 	return ret;
 }
+
+
+} // namespace filter_parser
+} // namespace logcc

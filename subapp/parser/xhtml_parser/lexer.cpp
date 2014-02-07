@@ -1,8 +1,10 @@
 #include <cassert>
-#include "lexer.h"
+#include "Lexer.h"
 
 using namespace std;
-using namespace mylib::xhtml_parser;
+
+namespace logcc {
+namespace filter_parser {
 
 inline bool isSpaceChar(char c) {
 	static string spaces = " \t\r\n";
@@ -32,7 +34,6 @@ string Lexer::read() {
 	istream::traits_type::int_type first;
 	while (_is.good() && (first = _is.peek()) != istream::traits_type::eof()) {
 		char c = istream::traits_type::to_char_type(first);
-		// FIXME: !!!
 		if (isSpaceChar(c) || isOperator(c)) {
 			if (ret.empty()) {
 				_is.get();
@@ -68,3 +69,6 @@ string Lexer::peek() {
 	if (_peek.empty()) _peek = read();
 	return _peek;
 }
+
+} // namespace filter_parser
+} // namespace logcc

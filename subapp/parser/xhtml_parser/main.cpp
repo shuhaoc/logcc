@@ -2,20 +2,36 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "document.h"
+#include <list>
+#include "GrammarTree.h"
 
 using namespace std;
-using namespace mylib::xhtml_parser;
+using namespace logcc::filter_parser;
 
 void main() {
-	GrammarTree doc;
 	try {
-		doc.load("1.txt");
-		if (doc.rootNode()) {
-			doc.rootNode()->print();
-		} else {
-			cout << "<null>" << endl;
+		ifstream stmtFile("stmt.txt");
+		ifstream logFile("log.txt");
+		string stmt;
+		getline(stmtFile, stmt);
+
+		list<string> logLines;
+		string line;
+		while (logFile.good()) {
+			getline(logFile, line);
+			logLines.push_back(line);
 		}
+
+		GrammarTree tree;
+		tree.compile(stmt);
+		tree.rootNode()->print();
+
+		for (auto i = logLines.begin(); i != logLines.end(); i++) {
+			if (tree.rootNode()->match(*i)) {
+				cout << *i << endl;
+			}
+		}
+
 	} catch (exception& ex) {
 		cout << ex.what() << endl;
 	}
