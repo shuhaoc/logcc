@@ -2,6 +2,7 @@
 #include "LogQueryImpl.h"
 #include "LogItem.h"
 #include "LogQueryResult.h"
+#include "FilterParser.h"
 
 using namespace mrl::utility;
 
@@ -64,23 +65,31 @@ LogQueryResult* LogQueryImpl::query(const tstring& criteria, bool quiet) {
 }
 
 LogQueryResult* LogQueryImpl::queryImpl(const tstring& criteria) {
-	if (criteria.empty()) {
-		return new LogQueryResult(logItems);
-	} else {
-		try {
-			auto newRegex = new boost::basic_regex<TCHAR>(criteria);
+// UNDONE: 把parser改为tstring兼容
+#ifdef _UNICODE
+	string filter = mrl::utility::codeconv::unicodeToAscii(criteria);
+#else
+	string filter& = criteria;
+#endif
+	try {
+		FilterParser parser;
+		parser.compile(filter);
 
-			vector<LogItem*> queryResult;
-			for (auto i = logItems.begin(); i != logItems.end(); i++) {
-				LogItem* item = *i;
-				if (boost::regex_search(item->text, *newRegex)) {
-					queryResult.push_back(item);
-				}
+		vector<LogItem*> queryResult;
+		for (auto i = logItems.begin(); i != logItems.end(); i++) {
+			LogItem* item = *i;
+#ifdef _UNICODE
+			string line = mrl::utility::codeconv::unicodeToAscii(item->text);
+#else
+			string line& = item->text;
+#endif
+			if (parser.rootNode()->match(line)) {
+				queryResult.push_back(item);
 			}
-			return new LogQueryResult(queryResult);
-		} catch (...) {
-			return nullptr;
 		}
+		return new LogQueryResult(queryResult);
+	} catch (...) {
+		return nullptr;
 	}
 }
 

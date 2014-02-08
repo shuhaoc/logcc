@@ -13,3 +13,5 @@ pdb/
 *.exp
 !mrl.lib
 !mrl.dll
+!sqlite3.lib
+!sqlitidy.lib

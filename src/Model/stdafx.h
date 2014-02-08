@@ -22,11 +22,15 @@
 #include <functional>
 #include <algorithm>
 #include <hash_map>
+#include <exception>
+#include <sstream>
+#include <cassert>
 
 using namespace std;
 
 #include <boost/utility.hpp>
 #include <boost/thread.hpp>
+// UNDONE: 删除
 #include <boost/regex.hpp>
 
 #include <mrl/utility/DebugInfo.h>

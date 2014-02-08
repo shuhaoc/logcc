@@ -8,6 +8,9 @@
     <Filter Include="include">
       <UniqueIdentifier>{e6b7f940-3ab3-4092-9821-310729a14a64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\filter">
+      <UniqueIdentifier>{9ba24525-264f-4022-aa32-75906c17cc99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -43,6 +46,18 @@
     <ClInclude Include="resource.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\Pattern.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterLexer.h">
+      <Filter>src\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterNode.h">
+      <Filter>src\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterParser.h">
+      <Filter>src\filter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -59,6 +74,18 @@
     </ClCompile>
     <ClCompile Include="LogQueryResult.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Pattern.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="FilterLexer.cpp">
+      <Filter>src\filter</Filter>
+    </ClCompile>
+    <ClCompile Include="FilterNode.cpp">
+      <Filter>src\filter</Filter>
+    </ClCompile>
+    <ClCompile Include="FilterParser.cpp">
+      <Filter>src\filter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
