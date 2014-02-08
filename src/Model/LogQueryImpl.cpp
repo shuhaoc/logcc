@@ -10,8 +10,7 @@ using namespace mrl::utility;
 LogQueryImpl::LogQueryImpl()
 	: taskWnd(new SimpleTaskMessageWindow())
 	, monitorThread(NULL)
-	, monitoring(false)
-	, patternService(new PatternServiceImpl()) {
+	, monitoring(false) {
 }
 
 LogQueryImpl::~LogQueryImpl() {
@@ -23,7 +22,6 @@ LogQueryImpl::~LogQueryImpl() {
 	reset();
 
 	delete taskWnd;
-	delete patternService;
 }
 
 bool LogQueryImpl::load(const tstring& filePath) {
@@ -170,8 +168,4 @@ void LogQueryImpl::loadFile(vector<LogItem*>& logItems) {
 		delete[] buffer;
 		::CloseHandle(file);
 	}
-}
-
-IPatternService* LogQueryImpl::getPatternService() const {
-	return patternService;
 }

@@ -1,15 +1,17 @@
-#pragma once
+ï»¿#pragma once
 
 #include <vector>
+#include <mrl/common/ObserverContainer.h>
+#include "IPatternServiceObserver.h"
 
 struct Pattern;
 
 /**
- * ¸ßÁÁÑùÊ½¹ÜÀí½Ó¿Ú
+ * é«˜äº®æ ·å¼ç®¡ç†æ¥å£
  * @author CaoShuhao
  * @date 2014-2-8
  */
-class IPatternService {
+class IPatternService : public mrl::common::ObserverContainer<IPatternServiceObserver> {
 public:
 	virtual ~IPatternService() {
 	}
@@ -19,4 +21,7 @@ public:
 	virtual void save(Pattern* pattern) = 0;
 
 	virtual void remove(Pattern* pattern) = 0;
+
+protected:
+
 };

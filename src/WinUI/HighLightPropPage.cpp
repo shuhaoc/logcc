@@ -4,7 +4,8 @@
 #include "stdafx.h"
 #include "HighLightPropPage.h"
 #include "afxdialogex.h"
-
+#include "ModelFactory.h"
+#include "IPatternService.h"
 
 // HighLightPropPage 对话框
 
@@ -30,3 +31,14 @@ END_MESSAGE_MAP()
 
 
 // HighLightPropPage 消息处理程序
+
+
+BOOL HighLightPropPage::OnInitDialog()
+{
+	CPropertyPage::OnInitDialog();
+
+	ModelFactory::GetInstance()->CreatePatternService()->all();
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
+}

@@ -1,8 +1,13 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "PatternServiceImpl.h"
 #include "Pattern.h"
 
+SHLIB_COMMON_SINGLETON_SUPPORT_IMPLEMENT(PatternServiceImpl)
+
 PatternServiceImpl::PatternServiceImpl() : _db("config.db") {
+	if (!_db.isTableExist<Pattern>()) {
+		_db.createTable<Pattern>();
+	}
 }
 
 vector<Pattern*> PatternServiceImpl::all() {

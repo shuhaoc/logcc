@@ -30,8 +30,6 @@ using namespace std;
 
 #include <boost/utility.hpp>
 #include <boost/thread.hpp>
-// UNDONE: 删除
-#include <boost/regex.hpp>
 
 #include <mrl/utility/DebugInfo.h>
 #include <mrl/common/tstring.h>

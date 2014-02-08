@@ -23,4 +23,6 @@ protected:
 private:
 	CColorSelect textColorBtn;
 	CColorSelect backColorBtn;
+public:
+	virtual BOOL OnInitDialog();
 };

@@ -64,6 +64,9 @@
     <ClInclude Include="PatternServiceImpl.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\IPatternServiceObserver.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -30,8 +30,6 @@ protected:
 
 	virtual LogItem* getSelected() const;
 
-	virtual IPatternService* getPatternService() const;
-
 private:
 	void loadFile(vector<LogItem*>& logItems);
 
@@ -52,6 +50,4 @@ private:
 
 	bool monitoring;
 	boost::thread* monitorThread;
-
-	IPatternService* patternService;
 };
