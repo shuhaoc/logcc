@@ -92,6 +92,9 @@
     <ClInclude Include="..\..\include\ModelExport.h" />
     <ClInclude Include="..\..\include\ModelFactory.h" />
     <ClInclude Include="..\..\include\Pattern.h" />
+    <ClInclude Include="FilterLexer.h" />
+    <ClInclude Include="FilterNode.h" />
+    <ClInclude Include="FilterParser.h" />
     <ClInclude Include="LogQueryImpl.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -106,6 +109,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="FilterLexer.cpp" />
+    <ClCompile Include="FilterNode.cpp" />
+    <ClCompile Include="FilterParser.cpp" />
     <ClCompile Include="LogQueryImpl.cpp" />
     <ClCompile Include="LogQueryResult.cpp" />
     <ClCompile Include="ModelFactory.cpp" />
