@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "resource.h"
+#include "afxwin.h"
+#include "ColorSelect.h"
 
 // HighLightPropPage 对话框
 
@@ -18,4 +20,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+private:
+	CColorSelect textColorBtn;
+	CColorSelect backColorBtn;
 };

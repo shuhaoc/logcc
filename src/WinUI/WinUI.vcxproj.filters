@@ -134,12 +134,14 @@
     <ClInclude Include="..\..\include\IConfigView.h">
       <Filter>src\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="HighLightPropPage.h" />
     <ClInclude Include="ChildFrm.h">
       <Filter>src\Framework</Filter>
     </ClInclude>
     <ClInclude Include="MainFrm.h">
       <Filter>src\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="HighLightPropPage.h">
+      <Filter>src\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,14 +184,14 @@
     <ClCompile Include="ConfigDlg.cpp">
       <Filter>src\View</Filter>
     </ClCompile>
-    <ClCompile Include="HighLightPropPage.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="ChildFrm.cpp">
       <Filter>src\Framework</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
       <Filter>src\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="HighLightPropPage.cpp">
+      <Filter>src\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

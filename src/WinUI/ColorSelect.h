@@ -1,8 +1,7 @@
 ﻿#pragma once
 #include "afxwin.h"
 
-class CColorSelect :
-	public CButton {
+class CColorSelect : public CButton {
 public:
 	CColorSelect(void);
 	~CColorSelect(void);

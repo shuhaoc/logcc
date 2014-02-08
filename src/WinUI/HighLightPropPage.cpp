@@ -20,6 +20,8 @@ HighLightPropPage::~HighLightPropPage() {
 
 void HighLightPropPage::DoDataExchange(CDataExchange* pDX) {
 	CPropertyPage::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_TEXT_COLOR, textColorBtn);
+	DDX_Control(pDX, IDC_BACK_COLOR, backColorBtn);
 }
 
 

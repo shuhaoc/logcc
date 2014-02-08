@@ -5,6 +5,7 @@
 
 struct LogItem;
 class LogQueryResult;
+class IPatternService;
 
 /**
  * 日志查询，每个对象对应一个日志文件
@@ -55,6 +56,8 @@ public:
 	 * @date 2014-1-18
 	 */
 	virtual LogQueryResult* query(const tstring& criteria, bool quiet = false) = 0;
+
+	//virtual IPatternService
 
 protected:
 	void notifyGeneralDataChanged() const {

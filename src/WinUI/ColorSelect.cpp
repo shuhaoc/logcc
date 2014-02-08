@@ -2,11 +2,12 @@
 #include "ColorSelect.h"
 
 CColorSelect::CColorSelect(void) {
+	m_Color = 0x00FFFFFF;
 }
 
 CColorSelect::~CColorSelect(void) {
 }
-BEGIN_MESSAGE_MAP(CColorSelect, CWnd)
+BEGIN_MESSAGE_MAP(CColorSelect, CButton)
 	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
