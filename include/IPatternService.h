@@ -14,9 +14,9 @@ public:
 	virtual ~IPatternService() {
 	}
 
-	std::vector<Pattern*> all();
+	virtual std::vector<Pattern*> all() = 0;
 
-	void save(Pattern* pattern);
+	virtual void save(Pattern* pattern) = 0;
 
-	void remove(Pattern* pattern);
+	virtual void remove(Pattern* pattern) = 0;
 };

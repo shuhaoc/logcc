@@ -3,13 +3,15 @@
 #include "LogItem.h"
 #include "LogQueryResult.h"
 #include "FilterParser.h"
+#include "PatternServiceImpl.h"
 
 using namespace mrl::utility;
 
 LogQueryImpl::LogQueryImpl()
 	: taskWnd(new SimpleTaskMessageWindow())
 	, monitorThread(NULL)
-	, monitoring(false) {
+	, monitoring(false)
+	, patternService(new PatternServiceImpl()) {
 }
 
 LogQueryImpl::~LogQueryImpl() {
@@ -21,6 +23,7 @@ LogQueryImpl::~LogQueryImpl() {
 	reset();
 
 	delete taskWnd;
+	delete patternService;
 }
 
 bool LogQueryImpl::load(const tstring& filePath) {
@@ -167,4 +170,8 @@ void LogQueryImpl::loadFile(vector<LogItem*>& logItems) {
 		delete[] buffer;
 		::CloseHandle(file);
 	}
+}
+
+IPatternService* LogQueryImpl::getPatternService() const {
+	return patternService;
 }

@@ -57,7 +57,13 @@ public:
 	 */
 	virtual LogQueryResult* query(const tstring& criteria, bool quiet = false) = 0;
 
-	//virtual IPatternService
+	/**
+	 * 高亮样式访问接口
+	 * @return IPatternService
+	 * @author CaoShuhao
+	 * @date 2014-2-8
+	 */
+	virtual IPatternService* getPatternService() const = 0;
 
 protected:
 	void notifyGeneralDataChanged() const {

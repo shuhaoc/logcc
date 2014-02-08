@@ -3,6 +3,7 @@
 #include "ILogQuery.h"
 
 class LogQueryResult;
+class PatternServiceImpl;
 namespace mrl {
 namespace utility {
 class SimpleTaskMessageWindow;
@@ -29,12 +30,14 @@ protected:
 
 	virtual LogItem* getSelected() const;
 
-	void reset(const vector<LogItem*>& logItems);
-
-	void reset();
+	virtual IPatternService* getPatternService() const;
 
 private:
 	void loadFile(vector<LogItem*>& logItems);
+
+	void reset(const vector<LogItem*>& logItems);
+
+	void reset();
 
 	LogQueryResult* queryImpl(const tstring& criteria);
 
@@ -49,4 +52,6 @@ private:
 
 	bool monitoring;
 	boost::thread* monitorThread;
+
+	IPatternService* patternService;
 };
