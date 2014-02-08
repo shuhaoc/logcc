@@ -9,6 +9,9 @@
 
 namespace sqlitidy {
 
+#pragma warning(push)
+#pragma warning(disable: 4127)
+
 struct DbValue {
 	int type;
 	union {
@@ -27,6 +30,8 @@ struct DbValue {
 	DbValue() : type(SQLITE_NULL), nullValue(nullptr) { }
 
 	DbValue(int intValue) : type(SQLITE_INTEGER), intValue(intValue) { }
+
+	DbValue(double doubleValue) : type(SQLITE_FLOAT), doubleValue(doubleValue) { }
 
 	DbValue(const std::string& stringValue);
 
@@ -49,6 +54,8 @@ public:
 	template <typename ObjectT> void save(ObjectT& object);
 
 	template <typename ObjectT> bool load(const DbValue& id, ObjectT& object);
+
+	template <typename ObjectT> void remove(ObjectT& object);
 
 	template <typename ObjectT> void all(std::vector<ObjectT*>& list);
 
@@ -79,6 +86,11 @@ private:
 #define SQLITIDY_INT_VALUE_SETTER(field) if (name == #field) { \
 	assert(value.type == SQLITE_INTEGER); \
 	this->field = value.intValue; \
+	return; \
+}
+#define SQLITIDY_DOUBLE_VALUE_SETTER(field) if (name == #field) { \
+	assert(value.type == SQLITE_FLOAT); \
+	this->field = value.doubleValue; \
 	return; \
 }
 #define SQLITIDY_STRING_VALUE_SETTER(field) if (name == #field) { \
@@ -173,6 +185,20 @@ template <typename ObjectT> bool DbContext::load(const DbValue& id, ObjectT& obj
 	return isExist;
 }
 
+template <typename ObjectT> void DbContext::remove(ObjectT& object) {
+	assert(db);
+
+	std::ostringstream sql;
+	sql << "delete from " << ObjectT::tableName
+	    << " where " << ObjectT::keyName << " = ?;";
+
+	sqlite3_stmt* stmt = compile(sql.str());
+	bind(stmt, 1, object.getValue(ObjectT::keyName));
+
+	assert(step(stmt) == SQLITE_DONE);
+	::sqlite3_finalize(stmt);
+}
+
 template <typename ObjectT> void DbContext::extractList(sqlite3_stmt* stmt, std::vector<ObjectT*>& list) {
 	while (step(stmt) == SQLITE_ROW) {
 		ObjectT* object = new ObjectT();
@@ -229,17 +255,18 @@ template <typename ObjectT> void DbContext::createTable() {
 		DbValue value = placeholder.getValue(ObjectT::fieldNames[i]);
 		switch (value.type) {
 		case SQLITE_INTEGER: sql << " integer"; break;
+		case SQLITE_FLOAT: sql << " float"; break;
 		case SQLITE_TEXT: sql << " text"; break;
+		default:
+			assert(false && "column type not supported");
 		}
 		if (ObjectT::fieldNames[i] == ObjectT::keyName) {
 			sql << " primary key";
-#pragma warning(push)
-#pragma warning(disable: 4127)
 			if (ObjectT::pkAutoInc && value.type == SQLITE_INTEGER) {
 				sql << " autoincrement";
 			}
-#pragma warning(pop)
 		}
+		sql << " not null";
 		if (i != ObjectT::fieldNames.size() - 1) {
 			sql << ", ";
 		}
@@ -267,5 +294,7 @@ template <typename ObjectT> bool DbContext::isTableExist() {
 	::sqlite3_finalize(stmt);
 	return count == 1;
 }
+
+#pragma warning(pop)
 
 } // namespace sqlitidy
