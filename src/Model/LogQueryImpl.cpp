@@ -79,9 +79,9 @@ LogQueryResult* LogQueryImpl::queryImpl(const tstring& criteria) {
 		for (auto i = logItems.begin(); i != logItems.end(); i++) {
 			LogItem* item = *i;
 #ifdef _UNICODE
-	string line = mrl::utility::codeconv::unicodeToAscii(item->text);
+			string line = mrl::utility::codeconv::unicodeToAscii(item->text);
 #else
-	string line& = item->text;
+			string line& = item->text;
 #endif
 			if (parser.rootNode()->match(line)) {
 				queryResult.push_back(item);

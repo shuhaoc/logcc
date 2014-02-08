@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 class FilterLexer {
 public:
@@ -9,7 +9,9 @@ public:
 
 	std::string peek();
 
-	int curLineNum() const { return _line; }
+	int curLineNum() const {
+		return _line;
+	}
 
 private:
 	std::istream& _is;

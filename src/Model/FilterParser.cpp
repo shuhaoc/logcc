@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "FilterParser.h"
 
 
@@ -50,7 +50,7 @@ FilterParser::Remain* FilterParser::remain() {
 	Remain* ret = nullptr;
 	string first = _lexer.peek();
 	if (!first.empty()) {
-		// Õë¶ÔÀ¨ºÅÄÚµÄÌØÊâ´¦Àí£¬Ã»ÓÐ·´Ó¦ÔÚÎÄ·¨Àï
+		// é’ˆå¯¹æ‹¬å·å†…çš„ç‰¹æ®Šå¤„ç†ï¼Œæ²¡æœ‰ååº”åœ¨æ–‡æ³•é‡Œ
 		if (first != ")") {
 			ret = new Remain();
 			ret->op = op();

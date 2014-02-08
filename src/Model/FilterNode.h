@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 struct FilterNode {
@@ -27,7 +27,7 @@ struct OpNode : public FilterNode {
 	}
 
 	virtual void print() const;
-	
+
 	virtual bool match(const std::string& data) const;
 };
 
@@ -35,7 +35,7 @@ struct TextNode : public FilterNode {
 	std::string word;
 
 	virtual void print() const;
-	
+
 	virtual bool match(const std::string& data) const;
 };
 

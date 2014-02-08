@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "FilterLexer.h"
 #include "FilterNode.h"
@@ -6,7 +6,7 @@
 
 /**
  * filter -> expr remain OR - filter
- * remain -> op expr remain OR ¦Å
+ * remain -> op expr remain OR Îµ
  * expr -> WORD OR ( filter )
  * op -> & OR | OR -
  *
@@ -21,14 +21,16 @@ public:
 
 	void compile(const std::string& stmt);
 
-	const FilterNode* rootNode() const { return _rootNode; }
+	const FilterNode* rootNode() const {
+		return _rootNode;
+	}
 
 private:
 	struct Remain {
 		std::string op;
 		FilterNode* expr;
 		Remain* remain;
-		
+
 		Remain() : expr(nullptr), remain(nullptr) {
 		}
 

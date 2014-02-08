@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "FilterLexer.h"
 
 using namespace std;
@@ -48,8 +48,12 @@ string FilterLexer::read() {
 					_is.get();
 					c = istream::traits_type::to_char_type(first);
 					switch (c) {
-					case 's': ret += ' '; break;
-					case 't': ret += '\t'; break;
+					case 's':
+						ret += ' ';
+						break;
+					case 't':
+						ret += '\t';
+						break;
 					case '&':
 					case '|':
 					case '-':
