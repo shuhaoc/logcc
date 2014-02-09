@@ -11,6 +11,7 @@ pdb/
 *.dll
 *.lib
 *.exp
+*.db
 !mrl.lib
 !mrl.dll
 !sqlite3.lib
