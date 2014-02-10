@@ -79,7 +79,8 @@
       <AdditionalDependencies>mrl.lib;sqlite3.lib;sqlitidy.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>verinc $(ProjectDir)$(ProjectName).rc</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
