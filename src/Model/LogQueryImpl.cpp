@@ -94,12 +94,25 @@ LogQueryResult* LogQueryImpl::queryImpl(const tstring& criteria) {
 	}
 }
 
+unsigned getFileSize(const tstring& filePath) {
+	HANDLE file = ::CreateFile(filePath.c_str(), GENERIC_READ, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	DWORD ret = ::GetFileSize(file, NULL);
+	::CloseHandle(file);
+	return ret;
+}
+
 void LogQueryImpl::startMonitor() {
 	monitorThread = new boost::thread(([this] () {
 		monitoring = true;
+		unsigned lastSize = 0;
 		while (monitoring) {
 			// UNDONE: 优化
 			::Sleep(500);
+			unsigned size = getFileSize(filePath);
+			if (size == lastSize) continue;
+			lastSize = size;
+
 			vector<LogItem*> logItems;
 			loadFile(logItems);
 			// UNDONE: 简单比较
