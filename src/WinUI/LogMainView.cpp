@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
 	ON_WM_MOUSEWHEEL()
 	ON_WM_KEYDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 // CLogMainView 构造/析构
@@ -103,6 +104,7 @@ void CLogMainView::OnInitialUpdate() {
 	CScrollView::OnInitialUpdate();
 
 	getModel()->registerObserver(this);
+	SetTimer(0, 500, NULL);
 
 	resetScrollSize();
 	SetFocus();
@@ -324,4 +326,12 @@ void CLogMainView::scrollPages(int count) {
 	GetClientRect(clientRect);
 
 	scrollLines(clientRect.Height() / LineHeight * count);
+}
+
+void CLogMainView::OnTimer(UINT_PTR nIDEvent)
+{
+	getModel()->query(_T(""));
+	KillTimer(0);
+
+	__super::OnTimer(nIDEvent);
 }
