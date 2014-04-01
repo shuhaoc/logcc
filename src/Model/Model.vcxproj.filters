@@ -31,12 +31,6 @@
     <ClInclude Include="targetver.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ModelExport.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ModelFactory.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -65,6 +59,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\IPatternServiceObserver.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ModelFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ModelExport.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
