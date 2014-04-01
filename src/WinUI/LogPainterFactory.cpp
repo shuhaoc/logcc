@@ -49,7 +49,7 @@ class LogLineDetailPainter : public ILogItemPainter {
 	}
 };
 
-SHLIB_COMMON_SINGLETON_SUPPORT_IMPLEMENT(LogPainterFactory)
+COMMON_SINGLETON_SUPPORT_IMPLEMENT(LogPainterFactory)
 
 LogPainterFactory::LogPainterFactory()
 	: singleLinePainter(new LogSingleLinePainter())

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <Windows.h>
 
-namespace mrl {
+namespace common {
 namespace utility {
 
 template <typename Elem>
@@ -115,19 +115,19 @@ static basic_debug_stream<char> debug;
 static basic_debug_stream<wchar_t> wdebug;
 
 } // namespace utility
-} // namespace mrl
+} // namespace common
 
 #ifdef _DEBUG
 
 #define DEBUG_INFOA(s) {				                                                              \
-	using namespace mrl::utility;                                                            \
+	using namespace common::utility;                                                            \
 	std::string t;					                                                                  \
 	get_cur_time_str(&t);			                                                                \
 	debug << "[" << t << "] (" << __FUNCTION__ << ":" << __LINE__ << ") DEBUG_INFO " << s << std::endl;	\
 }
 
 #define DEBUG_INFOW(s) {				                                                                  \
-	using namespace mrl::utility;                                                                  \
+	using namespace common::utility;                                                                  \
 	std::wstring t;					                                                                        \
 	get_cur_time_str(&t);			                                                                      \
 	wdebug << L"[" << t << L"] (" << __FUNCTIONW__ << L":" << __LINE__ << L") DEBUG_INFO " << s << std::endl;	\

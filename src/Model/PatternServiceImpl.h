@@ -1,13 +1,13 @@
 ﻿#pragma once
 
-#include <mrl/common/SingletonSupport.h>
+#include <common/singleton_support.h>
 #include <sqlitidy.h>
 #include "IPatternService.h"
 
 
-class PatternServiceImpl : public IPatternService, public mrl::common::SingletonSupport<PatternServiceImpl> {
+class PatternServiceImpl : public IPatternService, public common::singleton_support<PatternServiceImpl> {
 private:
-	SHLIB_COMMON_SINGLETON_SUPPORT_DECLARE(PatternServiceImpl);
+	COMMON_SINGLETON_SUPPORT_DECLARE(PatternServiceImpl);
 	
 	PatternServiceImpl();
 

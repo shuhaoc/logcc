@@ -4,7 +4,6 @@
 #include <functional>
 #include <algorithm>
 
-namespace mrl {
 namespace common {
 
 /**
@@ -12,7 +11,7 @@ namespace common {
  * @author CaoShuhao
  * @date 2014-1-15
  */
-template <typename ObserverT> class ObserverContainer {
+template <typename ObserverT> class observer_list {
 public:
 	/**
 	 * 注册观察者
@@ -20,8 +19,8 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-15
 	 */
-	void registerObserver(ObserverT* observer) {
-		observerList.push_back(observer);
+	void regist(ObserverT* observer) {
+		_list.push_back(observer);
 	}
 
 	/**
@@ -30,8 +29,8 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-15
 	 */
-	void unregisterObserver(ObserverT* observer) {
-		observerList.erase(std::remove(observerList.begin(), observerList.end(), observer), observerList.end());
+	void unregister(ObserverT* observer) {
+		_list.erase(std::remove(_list.begin(), _list.end(), observer), _list.end());
 	}
 
 	/**
@@ -40,14 +39,13 @@ public:
 	 * @author CaoShuhao
 	 * @date 2014-1-15
 	 */
-	void forEachObserver(std::function<void (ObserverT*)> f) const {
-		std::for_each(observerList.begin(), observerList.end(), [f] (ObserverT* p) { f(p); });
+	void each_observer(std::function<void (ObserverT*)> f) const {
+		std::for_each(_list.begin(), _list.end(), [f] (ObserverT* p) { f(p); });
 	}
 
 private:
 	/** 观察者列表 */
-	std::list<ObserverT*> observerList;
+	std::list<ObserverT*> _list;
 };
 
 } // namespace common
-} // namespace mrl

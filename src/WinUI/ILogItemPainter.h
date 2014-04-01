@@ -4,8 +4,6 @@ struct LogItem;
 
 /**
  * 日志行描画器接口
- * @author CaoShuhao
- * @date 2014-1-15
  */
 class ILogItemPainter {
 public:

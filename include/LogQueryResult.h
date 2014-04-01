@@ -6,8 +6,6 @@ struct LogItem;
 
 /**
  * 日志查询结果集
- * @author CaoShuhao
- * @date 2014-1-19
  */
 class LogQueryResult {
 public:
@@ -17,8 +15,6 @@ public:
 
 	/**
 	 * 查询行数
-	 * @author CaoShuhao
-	 * @date 2014-1-18
 	 */
 	MODEL_EXPORT unsigned getCount() const;
 
@@ -26,8 +22,6 @@ public:
 	 * 获取索引在[begin, end)区间内的日志行
 	 * @param begin [in] 起始行
 	 * @param end [in] 最后一行的下一行
-	 * @author CaoShuhao
-	 * @date 2014-1-18
 	 */
 	MODEL_EXPORT vector<LogItem*> getRange(unsigned begin, unsigned end) const;
 
@@ -35,8 +29,6 @@ public:
 	 * 根据索引获取日志行
 	 * @param i [in] 索引
 	 * @return 日志行
-	 * @author CaoShuhao
-	 * @date 2014-1-18
 	 */
 	MODEL_EXPORT LogItem* getIndex(unsigned i) const;
 
@@ -44,8 +36,6 @@ public:
 	 * 根据日志行查找索引，失败返回0xFFFFFFFF
 	 * @param item [in] 日志行
 	 * @return 索引
-	 * @author CaoShuhao
-	 * @date 2014-1-23
 	 */
 	MODEL_EXPORT unsigned findIndex(LogItem* item) const;
 

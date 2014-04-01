@@ -31,10 +31,11 @@ using namespace std;
 #include <boost/utility.hpp>
 #include <boost/thread.hpp>
 
-#include <mrl/utility/DebugInfo.h>
-#include <mrl/common/tstring.h>
-#include <mrl/utility/CodeConv.h>
-#include <mrl/utility/SimpleTaskMessageWindow.h>
-using mrl::common::tstring;
+#include <common/tstring.h>
+#include <common/singleton_support.h>
+#include <common/observer_list.h>
+#include <common/utility/debug_info.h>
+#include <common/utility/code_conv.h>
+#include <common/utility/wm_task_handler.h>
 
-#include "ModelExport.h"
+using common::tstring;

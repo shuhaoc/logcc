@@ -11,6 +11,12 @@
     <Filter Include="src\filter">
       <UniqueIdentifier>{9ba24525-264f-4022-aa32-75906c17cc99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{a10bd22f-7fdf-4dd4-b158-948bb52310b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\utility">
+      <UniqueIdentifier>{f33d1df0-ec7e-4694-8af6-82fd0b1c9ce5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -67,6 +73,15 @@
     <ClInclude Include="..\..\include\ModelExport.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\common\utility\code_conv.h">
+      <Filter>src\common\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\common\utility\debug_info.h">
+      <Filter>src\common\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\common\utility\wm_task_handler.h">
+      <Filter>src\common\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -98,6 +113,12 @@
     </ClCompile>
     <ClCompile Include="PatternServiceImpl.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="code_conv.cpp">
+      <Filter>src\common\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="wm_task_handler.cpp">
+      <Filter>src\common\utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

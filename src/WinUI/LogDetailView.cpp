@@ -39,12 +39,12 @@ void CLogDetailView::onSubmit() {
 
 void CLogDetailView::OnInitialUpdate() {
 	CFormView::OnInitialUpdate();
-	getModel()->registerObserver(this);
+	getModel()->regist(this);
 }
 
 
 void CLogDetailView::PostNcDestroy() {
-	getModel()->unregisterObserver(this);
+	getModel()->unregister(this);
 
 	CFormView::PostNcDestroy();
 }

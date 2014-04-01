@@ -2,7 +2,7 @@
 #include "PatternServiceImpl.h"
 #include "Pattern.h"
 
-SHLIB_COMMON_SINGLETON_SUPPORT_IMPLEMENT(PatternServiceImpl)
+COMMON_SINGLETON_SUPPORT_IMPLEMENT(PatternServiceImpl)
 
 PatternServiceImpl::PatternServiceImpl() : _db("config.db") {
 	if (!_db.isTableExist<Pattern>()) {

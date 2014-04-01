@@ -1,15 +1,13 @@
 ﻿#pragma once
 
-#include <mrl/common/SingletonSupport.h>
+#include <common/singleton_support.h>
 
 class ILogItemPainter;
 
 /**
  * 日志描画器工厂
- * @author CaoShuhao
- * @date 2014-1-15
  */
-class LogPainterFactory : public mrl::common::SingletonSupport<LogPainterFactory> {
+class LogPainterFactory : public common::singleton_support<LogPainterFactory> {
 public:
 	LogPainterFactory();
 
@@ -18,16 +16,12 @@ public:
 	/**
 	 * 主视图中单行描画器
 	 * @return 描画器
-	 * @author CaoShuhao
-	 * @date 2014-1-15
 	 */
 	ILogItemPainter* GetSingleLinePainter() const;
 
 	/**
 	 * 详细视图中文本描画
 	 * @return 描画器
-	 * @author CaoShuhao
-	 * @date 2014-1-15
 	 */
 	ILogItemPainter* GetLineDetailPainter() const;
 

@@ -2,8 +2,6 @@
 
 /**
  * 日志行
- * @author CaoShuhao
- * @date 2014-1-12
  */
 struct LogItem {
 	/* 行号 */

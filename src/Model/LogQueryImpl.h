@@ -4,10 +4,10 @@
 
 class LogQueryResult;
 class PatternServiceImpl;
-namespace mrl {
-namespace utility {
-class SimpleTaskMessageWindow;
-}
+namespace common {
+	namespace utility {
+		class wm_task_handler;
+	}
 }
 namespace boost {
 class thread;
@@ -43,7 +43,7 @@ private:
 	vector<LogItem*> logItems;
 	hash_map<tstring, LogQueryResult*> queryCache;
 
-	mrl::utility::SimpleTaskMessageWindow* taskWnd;
+	common::utility::wm_task_handler* taskWnd;
 
 	// UNDONE: 抽出复用
 	void startMonitor();

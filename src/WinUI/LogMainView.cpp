@@ -103,7 +103,7 @@ void CLogMainView::OnDraw(CDC* pDC) {
 void CLogMainView::OnInitialUpdate() {
 	CScrollView::OnInitialUpdate();
 
-	getModel()->registerObserver(this);
+	getModel()->regist(this);
 	SetTimer(0, 500, NULL);
 
 	resetScrollSize();
@@ -111,7 +111,7 @@ void CLogMainView::OnInitialUpdate() {
 }
 
 void CLogMainView::PostNcDestroy() {
-	getModel()->unregisterObserver(this);
+	getModel()->unregister(this);
 	__super::PostNcDestroy();
 }
 

@@ -5,10 +5,10 @@
 #include "FilterParser.h"
 #include "PatternServiceImpl.h"
 
-using namespace mrl::utility;
+using namespace common::utility;
 
 LogQueryImpl::LogQueryImpl()
-	: taskWnd(new SimpleTaskMessageWindow())
+	: taskWnd(new wm_task_handler())
 	, monitorThread(NULL)
 	, monitoring(false) {
 }
@@ -68,7 +68,7 @@ LogQueryResult* LogQueryImpl::query(const tstring& criteria, bool quiet) {
 LogQueryResult* LogQueryImpl::queryImpl(const tstring& criteria) {
 // UNDONE: 把parser改为tstring兼容
 #ifdef _UNICODE
-	string filter = mrl::utility::codeconv::unicodeToAscii(criteria);
+	string filter = common::utility::code_conv::utf16_to_ascii(criteria);
 #else
 	string filter& = criteria;
 #endif
@@ -80,7 +80,7 @@ LogQueryResult* LogQueryImpl::queryImpl(const tstring& criteria) {
 		for (auto i = logItems.begin(); i != logItems.end(); i++) {
 			LogItem* item = *i;
 #ifdef _UNICODE
-			string line = mrl::utility::codeconv::unicodeToAscii(item->text);
+			string line = common::utility::code_conv::utf16_to_ascii(item->text);
 #else
 			string line& = item->text;
 #endif
@@ -119,7 +119,7 @@ void LogQueryImpl::startMonitor() {
 			if (this->logItems.size() != logItems.size()) {
 				DEBUG_INFO(_T("监测到文件变化"));
 				LogQueryImpl* that = this;
-				taskWnd->post(new SimpleTask([that, logItems] () {
+				taskWnd->post(new wm_task([that, logItems] () {
 					that->reset(logItems);
 				}))->wait();
 			} else {
@@ -170,7 +170,7 @@ void LogQueryImpl::loadFile(vector<LogItem*>& logItems) {
 				LogItem* item = new LogItem();
 				item->line = lineNum++;
 #ifdef _UNICODE
-				item->text = mrl::utility::codeconv::asciiToUnicode(line);
+				item->text = common::utility::code_conv::ascii_to_utf16(line);
 #else
 				item->text = line;
 #endif
