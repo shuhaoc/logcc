@@ -16,3 +16,4 @@ pdb/
 !mrl.dll
 !sqlite3.lib
 !sqlitidy.lib
+memory_leak_report.txt
