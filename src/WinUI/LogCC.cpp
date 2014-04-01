@@ -12,6 +12,12 @@
 #include "LogCCDoc.h"
 #include "LogMainView.h"
 #include "afxwin.h"
+#include "LogPainterFactory.h"
+#include "ModelFactory.h"
+
+#ifdef _DEBUG
+#include <vld.h>
+#endif // _DEBUG
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -151,6 +157,9 @@ BOOL CLogCCApp::InitInstance() {
 
 int CLogCCApp::ExitInstance() {
 	//TODO: 处理可能已添加的附加资源
+	LogPainterFactory::Release();
+	ModelFactory::Release();
+
 	AfxOleTerm(FALSE);
 
 	return CWinAppEx::ExitInstance();
