@@ -4,7 +4,8 @@
 
 #include "stdafx.h"
 #include "LogCCDoc.h"
-#include "ModelFactory.h"
+#include "LogCC.h"
+#include "IModelFactory.h"
 #include "LogQueryResult.h"
 
 #ifdef _DEBUG
@@ -23,7 +24,8 @@ END_MESSAGE_MAP()
 // CLogCCDoc 构造/析构
 
 CLogCCDoc::CLogCCDoc() {
-	logQuery = ModelFactory::GetInstance()->CreateLogQuery();
+	logcc::model::IModelFactory* pModelFactory = static_cast<CLogCCApp*>(::AfxGetApp())->m_pModelFactory;
+	logQuery = pModelFactory->CreateLogQuery();
 }
 
 CLogCCDoc::~CLogCCDoc() {

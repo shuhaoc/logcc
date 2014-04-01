@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "IModelFactory.h"
+#include "IModelFactory.hpp"
 #include "ILogQuery.h"
 
 

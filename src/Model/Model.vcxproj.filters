@@ -20,17 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="Model.def">
+      <Filter>src</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\ILogQuery.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ILogQueryObserver.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\LogItem.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="LogQueryImpl.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -40,14 +34,8 @@
     <ClInclude Include="stdafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\LogQueryResult.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\Pattern.h">
-      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="FilterLexer.h">
       <Filter>src\filter</Filter>
@@ -58,20 +46,8 @@
     <ClInclude Include="FilterParser.h">
       <Filter>src\filter</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\IPatternService.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="PatternServiceImpl.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\IPatternServiceObserver.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ModelFactory.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ModelExport.h">
-      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\common\utility\code_conv.h">
       <Filter>src\common\utility</Filter>
@@ -81,6 +57,39 @@
     </ClInclude>
     <ClInclude Include="..\..\include\common\utility\wm_task_handler.h">
       <Filter>src\common\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\logcc\ModelFactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ILogQuery.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ILogQueryObserver.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IModelFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IPatternService.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IPatternServiceObserver.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LogItem.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LogQueryResult.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Model.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ModelFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Pattern.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +103,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="ModelFactory.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="LogQueryResult.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Pattern.cpp">
@@ -119,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="wm_task_handler.cpp">
       <Filter>src\common\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

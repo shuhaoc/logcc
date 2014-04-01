@@ -54,7 +54,6 @@ using namespace std;
 
 using common::tstring;
 
-#include "ModelExport.h"
 
 #ifdef _UNICODE
 #if defined _M_IX86

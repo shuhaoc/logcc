@@ -59,7 +59,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Model.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -90,7 +91,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Model.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -123,7 +125,7 @@
     <ClInclude Include="..\..\include\ICtrlView.h" />
     <ClInclude Include="..\..\include\IDetailView.h" />
     <ClInclude Include="..\..\include\IModelAware.h" />
-    <ClInclude Include="..\..\include\IModelFactory.h" />
+    <ClInclude Include="..\..\include\IModelFactory.hpp" />
     <ClInclude Include="..\..\include\IViewAware.h" />
     <ClInclude Include="..\..\include\IMainView.h" />
     <ClInclude Include="..\..\include\ViewBase.h" />

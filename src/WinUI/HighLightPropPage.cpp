@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include "HighLightPropPage.h"
-#include "afxdialogex.h"
-#include "ModelFactory.h"
+#include "LogCC.h"
+#include "IModelFactory.h"
 #include "IPatternService.h"
 
 // HighLightPropPage 对话框
@@ -37,7 +37,8 @@ BOOL HighLightPropPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
-	ModelFactory::GetInstance()->CreatePatternService()->all();
+	logcc::model::IModelFactory* pModelFactory = static_cast<CLogCCApp*>(::AfxGetApp())->m_pModelFactory;
+	pModelFactory->CreatePatternService()->all();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE

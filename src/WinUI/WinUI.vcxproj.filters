@@ -98,9 +98,6 @@
     <ClInclude Include="..\..\include\ControllerRoute.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\IModelFactory.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\ControllerBase.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -142,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="HighLightPropPage.h">
       <Filter>src\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IModelFactory.hpp">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

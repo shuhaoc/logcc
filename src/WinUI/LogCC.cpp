@@ -13,7 +13,7 @@
 #include "LogMainView.h"
 #include "afxwin.h"
 #include "LogPainterFactory.h"
-#include "ModelFactory.h"
+#include "Model.h"
 
 #ifdef _DEBUG
 #include <vld.h>
@@ -35,7 +35,7 @@ END_MESSAGE_MAP()
 
 // CLogCCApp 构造
 
-CLogCCApp::CLogCCApp() {
+CLogCCApp::CLogCCApp() : m_pModelFactory(nullptr) {
 	m_bHiColorIcons = TRUE;
 
 	// 支持重新启动管理器
@@ -63,6 +63,15 @@ CLogCCApp theApp;
 // CLogCCApp 初始化
 
 BOOL CLogCCApp::InitInstance() {
+	HMODULE hModelDll = ::LoadLibrary(_T("Model"));
+	assert(hModelDll);
+	if (hModelDll) {
+		create_model_factory_t creator = reinterpret_cast<create_model_factory_t>(
+			::GetProcAddress(hModelDll, "create_model_factory"));
+		assert(creator);
+		m_pModelFactory = creator();
+	}
+
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。否则，将无法创建窗口。
@@ -158,7 +167,8 @@ BOOL CLogCCApp::InitInstance() {
 int CLogCCApp::ExitInstance() {
 	//TODO: 处理可能已添加的附加资源
 	LogPainterFactory::Release();
-	ModelFactory::Release();
+	delete m_pModelFactory;
+	m_pModelFactory = nullptr;
 
 	AfxOleTerm(FALSE);
 

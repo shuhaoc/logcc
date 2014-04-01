@@ -1,16 +1,13 @@
 ﻿#pragma once
 
 #include <common/singleton_support.h>
-#include "ModelExport.h"
+#include "IModelFactory.h"
 
-class ILogQuery;
-class IPatternService;
-
-class MODEL_EXPORT ModelFactory : public common::singleton_support<ModelFactory> {
+class ModelFactory : public logcc::model::IModelFactory, public common::singleton_support<ModelFactory> {
 public:
-	ILogQuery* CreateLogQuery() const;
+	virtual ILogQuery* CreateLogQuery() const;
 
-	IPatternService* CreatePatternService() const;
+	virtual IPatternService* CreatePatternService() const;
 
 private:
 	COMMON_SINGLETON_SUPPORT_DECLARE(ModelFactory)

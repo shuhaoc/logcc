@@ -2,5 +2,8 @@
 //
 
 #include "stdafx.h"
+#include "ModelFactory.h"
 
-
+logcc::model::IModelFactory* create_model_factory() {
+	return ModelFactory::GetInstance();
+}
