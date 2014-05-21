@@ -58,9 +58,6 @@
     <ClInclude Include="..\..\include\common\utility\wm_task_handler.h">
       <Filter>src\common\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\logcc\ModelFactory.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\ILogQuery.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -90,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\Pattern.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelFactory.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

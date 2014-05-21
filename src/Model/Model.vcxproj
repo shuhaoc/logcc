@@ -98,7 +98,6 @@
     <ClInclude Include="..\..\include\IModelFactory.h" />
     <ClInclude Include="..\..\include\IPatternService.h" />
     <ClInclude Include="..\..\include\IPatternServiceObserver.h" />
-    <ClInclude Include="..\..\include\logcc\ModelFactory.h" />
     <ClInclude Include="..\..\include\LogItem.h" />
     <ClInclude Include="..\..\include\LogQueryResult.h" />
     <ClInclude Include="..\..\include\Model.h" />
@@ -108,6 +107,7 @@
     <ClInclude Include="FilterNode.h" />
     <ClInclude Include="FilterParser.h" />
     <ClInclude Include="LogQueryImpl.h" />
+    <ClInclude Include="ModelFactory.h" />
     <ClInclude Include="PatternServiceImpl.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
