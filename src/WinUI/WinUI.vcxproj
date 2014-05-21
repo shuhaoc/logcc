@@ -136,7 +136,6 @@
     <ClInclude Include="ILogItemPainter.h" />
     <ClInclude Include="LogCC.h" />
     <ClInclude Include="LogCCDoc.h" />
-    <ClInclude Include="LogCtrlController.h" />
     <ClInclude Include="LogCtrlView.h" />
     <ClInclude Include="LogDetailController.h" />
     <ClInclude Include="LogMainView.h" />
@@ -162,7 +161,6 @@
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="LogCC.cpp" />
     <ClCompile Include="LogCCDoc.cpp" />
-    <ClCompile Include="LogCtrlController.cpp" />
     <ClCompile Include="LogCtrlView.cpp" />
     <ClCompile Include="LogMainView.cpp" />
     <ClCompile Include="LogMainController.cpp" />

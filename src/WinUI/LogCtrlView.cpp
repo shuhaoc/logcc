@@ -31,7 +31,13 @@ tstring CLogCtrlView::getCriteria() {
 }
 
 BEGIN_MESSAGE_MAP(CLogCtrlView, CFormView)
+	ON_EN_CHANGE(IDC_CRITERIA, &CLogCtrlView::OnEnChangeCriteria)
 END_MESSAGE_MAP()
 
 
 // CLogCtrlView 消息处理程序
+
+void CLogCtrlView::OnEnChangeCriteria()
+{
+	getModel()->query(getCriteria());
+}

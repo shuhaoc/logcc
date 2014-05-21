@@ -83,9 +83,6 @@
     <ClInclude Include="LogMainView.h">
       <Filter>src\View</Filter>
     </ClInclude>
-    <ClInclude Include="LogCtrlController.h">
-      <Filter>src\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="LogMainController.h">
       <Filter>src\Controller</Filter>
     </ClInclude>
@@ -162,9 +159,6 @@
     </ClCompile>
     <ClCompile Include="LogMainView.cpp">
       <Filter>src\View</Filter>
-    </ClCompile>
-    <ClCompile Include="LogCtrlController.cpp">
-      <Filter>src\Controller</Filter>
     </ClCompile>
     <ClCompile Include="LogMainController.cpp">
       <Filter>src\Controller</Filter>
