@@ -137,7 +137,6 @@
     <ClInclude Include="LogCC.h" />
     <ClInclude Include="LogCCDoc.h" />
     <ClInclude Include="LogCtrlView.h" />
-    <ClInclude Include="LogDetailController.h" />
     <ClInclude Include="LogMainView.h" />
     <ClInclude Include="LogMainController.h" />
     <ClInclude Include="LogPainterFactory.h" />
@@ -152,7 +151,6 @@
     <ClCompile Include="ColorSelect.cpp" />
     <ClCompile Include="ConfigDlg.cpp" />
     <ClCompile Include="HighLightPropPage.cpp" />
-    <ClCompile Include="LogDetailController.cpp" />
     <ClCompile Include="ModulVer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

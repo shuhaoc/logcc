@@ -98,9 +98,6 @@
     <ClInclude Include="..\..\include\ControllerBase.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="LogDetailController.h">
-      <Filter>src\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="LogDetailView.h">
       <Filter>src\View</Filter>
     </ClInclude>
@@ -165,9 +162,6 @@
     </ClCompile>
     <ClCompile Include="ModulVer.cpp">
       <Filter>src\ThirdParty</Filter>
-    </ClCompile>
-    <ClCompile Include="LogDetailController.cpp">
-      <Filter>src\Controller</Filter>
     </ClCompile>
     <ClCompile Include="LogDetailView.cpp">
       <Filter>src\View</Filter>

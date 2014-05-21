@@ -11,7 +11,6 @@
 #include "LogMainView.h"
 #include "LogDetailView.h"
 #include "LogMainController.h"
-#include "LogDetailController.h"
 #include "ControllerRoute.h"
 
 #ifdef _DEBUG
@@ -59,8 +58,7 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pConte
 	ControllerRoute<ILogQuery>::addRoute(mainView, mainController, logccDoc);
 
 	CLogDetailView* detailView = static_cast<CLogDetailView*>(m_wndSplitter.GetPane(2, 0));
-	LogDetailController* detailController = new LogDetailController(this);
-	ControllerRoute<ILogQuery>::addRoute(detailView, detailController, logccDoc);
+	detailView->setModel(logccDoc->getModel());
 #endif
 	return TRUE;
 }
