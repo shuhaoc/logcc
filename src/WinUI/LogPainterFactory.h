@@ -19,13 +19,6 @@ public:
 	 */
 	ILogItemPainter* GetSingleLinePainter() const;
 
-	/**
-	 * 详细视图中文本描画
-	 * @return 描画器
-	 */
-	ILogItemPainter* GetLineDetailPainter() const;
-
 private:
 	ILogItemPainter* singleLinePainter;
-	ILogItemPainter* lineDetailPainter;
 };
