@@ -11,9 +11,6 @@
     <Filter Include="src\View">
       <UniqueIdentifier>{dcc457b5-7ec9-4d4f-86ce-05192c34634d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\View\Painter">
-      <UniqueIdentifier>{40c62f65-4540-4214-bf99-3546130b0aa2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="resouce">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -53,12 +50,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LogPainterFactory.h">
-      <Filter>src\View\Painter</Filter>
-    </ClInclude>
-    <ClInclude Include="ILogItemPainter.h">
-      <Filter>src\View\Painter</Filter>
-    </ClInclude>
     <ClInclude Include="LogCC.h">
       <Filter>src\Framework</Filter>
     </ClInclude>
@@ -121,9 +112,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LogPainterFactory.cpp">
-      <Filter>src\View\Painter</Filter>
-    </ClCompile>
     <ClCompile Include="LogCC.cpp">
       <Filter>src\Framework</Filter>
     </ClCompile>

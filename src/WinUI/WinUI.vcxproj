@@ -129,12 +129,10 @@
     <ClInclude Include="ColorSelect.h" />
     <ClInclude Include="ConfigDlg.h" />
     <ClInclude Include="HighLightPropPage.h" />
-    <ClInclude Include="ILogItemPainter.h" />
     <ClInclude Include="LogCC.h" />
     <ClInclude Include="LogCCDoc.h" />
     <ClInclude Include="LogCtrlView.h" />
     <ClInclude Include="LogMainView.h" />
-    <ClInclude Include="LogPainterFactory.h" />
     <ClInclude Include="LogDetailView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="ModulVer.h" />
@@ -156,7 +154,6 @@
     <ClCompile Include="LogCCDoc.cpp" />
     <ClCompile Include="LogCtrlView.cpp" />
     <ClCompile Include="LogMainView.cpp" />
-    <ClCompile Include="LogPainterFactory.cpp" />
     <ClCompile Include="LogDetailView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
   </ItemGroup>

@@ -12,7 +12,6 @@
 #include "LogCCDoc.h"
 #include "LogMainView.h"
 #include "afxwin.h"
-#include "LogPainterFactory.h"
 #include "Model.h"
 
 #ifdef _DEBUG
@@ -166,7 +165,6 @@ BOOL CLogCCApp::InitInstance() {
 
 int CLogCCApp::ExitInstance() {
 	//TODO: 处理可能已添加的附加资源
-	LogPainterFactory::Release();
 	delete m_pModelFactory;
 	m_pModelFactory = nullptr;
 
