@@ -296,6 +296,13 @@ void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point) {
 	int yScrollPos = GetScrollPosition().y;
 	DEBUG_INFO(yScrollPos);
 	this->selectedLine = (yScrollPos + point.y) / LineHeight;
+
+	if (queryResult && selectedLine < queryResult->getCount()) {
+		LogItem* item = queryResult->getIndex(selectedLine);
+		getModel()->setSelected(item);
+		DEBUG_INFO(_T("选中行：") << selectedLine);
+	}
+
 	__super::OnLButtonUp(nFlags, point);
 }
 

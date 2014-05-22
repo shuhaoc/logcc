@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include "IModelFactory.hpp"
 #include "ILogQuery.h"
 
 
-class CLogCCDoc : public CDocument, public IModelFactory<ILogQuery> {
+class CLogCCDoc : public CDocument {
 protected: // 仅从序列化创建
 	CLogCCDoc();
 	DECLARE_DYNCREATE(CLogCCDoc)

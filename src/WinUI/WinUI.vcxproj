@@ -119,14 +119,10 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\ControllerBase.h" />
-    <ClInclude Include="..\..\include\ControllerRoute.h" />
     <ClInclude Include="..\..\include\IConfigView.h" />
     <ClInclude Include="..\..\include\ICtrlView.h" />
     <ClInclude Include="..\..\include\IDetailView.h" />
     <ClInclude Include="..\..\include\IModelAware.h" />
-    <ClInclude Include="..\..\include\IModelFactory.hpp" />
-    <ClInclude Include="..\..\include\IViewAware.h" />
     <ClInclude Include="..\..\include\IMainView.h" />
     <ClInclude Include="..\..\include\ViewBase.h" />
     <ClInclude Include="ChildFrm.h" />
@@ -138,7 +134,6 @@
     <ClInclude Include="LogCCDoc.h" />
     <ClInclude Include="LogCtrlView.h" />
     <ClInclude Include="LogMainView.h" />
-    <ClInclude Include="LogMainController.h" />
     <ClInclude Include="LogPainterFactory.h" />
     <ClInclude Include="LogDetailView.h" />
     <ClInclude Include="MainFrm.h" />
@@ -161,7 +156,6 @@
     <ClCompile Include="LogCCDoc.cpp" />
     <ClCompile Include="LogCtrlView.cpp" />
     <ClCompile Include="LogMainView.cpp" />
-    <ClCompile Include="LogMainController.cpp" />
     <ClCompile Include="LogPainterFactory.cpp" />
     <ClCompile Include="LogDetailView.cpp" />
     <ClCompile Include="MainFrm.cpp" />

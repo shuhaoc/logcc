@@ -11,9 +11,6 @@
     <Filter Include="src\View">
       <UniqueIdentifier>{dcc457b5-7ec9-4d4f-86ce-05192c34634d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Controller">
-      <UniqueIdentifier>{b220e3de-ac57-44d9-a0e2-93302d92f50f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\View\Painter">
       <UniqueIdentifier>{40c62f65-4540-4214-bf99-3546130b0aa2}</UniqueIdentifier>
     </Filter>
@@ -83,19 +80,10 @@
     <ClInclude Include="LogMainView.h">
       <Filter>src\View</Filter>
     </ClInclude>
-    <ClInclude Include="LogMainController.h">
-      <Filter>src\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="ModulVer.h">
       <Filter>src\ThirdParty</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\IModelAware.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ControllerRoute.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ControllerBase.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="LogDetailView.h">
@@ -109,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\IDetailView.h">
       <Filter>src\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\IViewAware.h">
-      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\ViewBase.h">
       <Filter>include</Filter>
@@ -134,9 +119,6 @@
     <ClInclude Include="HighLightPropPage.h">
       <Filter>src\View</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\IModelFactory.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogPainterFactory.cpp">
@@ -156,9 +138,6 @@
     </ClCompile>
     <ClCompile Include="LogMainView.cpp">
       <Filter>src\View</Filter>
-    </ClCompile>
-    <ClCompile Include="LogMainController.cpp">
-      <Filter>src\Controller</Filter>
     </ClCompile>
     <ClCompile Include="ModulVer.cpp">
       <Filter>src\ThirdParty</Filter>
