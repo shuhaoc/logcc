@@ -4,13 +4,12 @@
 
 #pragma once
 
-#include "ViewBase.h"
+#include "ModelAware.h"
 #include "ILogQuery.h"
 #include "ILogQueryObserver.h"
-#include "IMainView.h"
 #include "ListScrollView.h"
 
-class CLogMainView : public ListScrollView, public ViewBase<ILogQuery, IMainView>, public ILogQueryObserver {
+class CLogMainView : public ListScrollView, public ModelAwareObserver<ILogQuery, ILogQueryObserver> {
 protected: // 仅从序列化创建
 	CLogMainView();
 	DECLARE_DYNCREATE(CLogMainView)
@@ -24,14 +23,12 @@ public:
 // 重写
 protected:
 	virtual void OnInitialUpdate(); // 构造后第一次调用
-	virtual void PostNcDestroy();
 
 // 实现
 public:
 	virtual ~CLogMainView();
 
 protected:
-	virtual void onGeneralDataChanged();
 	virtual void onQueryResultChanged(const tstring& criteria, LogQueryResult* queryResult);
 	virtual void onFileChanged();
 
@@ -39,6 +36,10 @@ protected:
 
 private:
 	void transformQueryResult();
+
+	LogQueryResult* queryResult;
+	tstring curCriteria;
+	unsigned selectedLine;
 
 // 生成的消息映射函数
 protected:

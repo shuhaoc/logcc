@@ -34,18 +34,6 @@ END_MESSAGE_MAP()
 // CLogDetailView 消息处理程序
 
 
-void CLogDetailView::OnInitialUpdate() {
-	CFormView::OnInitialUpdate();
-	getModel()->regist(this);
-}
-
-
-void CLogDetailView::PostNcDestroy() {
-	getModel()->unregister(this);
-
-	CFormView::PostNcDestroy();
-}
-
 void CLogDetailView::onGeneralDataChanged() {
 	LogItem* item = getModel()->getSelected();
 	if (item) {

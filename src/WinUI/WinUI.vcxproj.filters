@@ -74,9 +74,6 @@
     <ClInclude Include="ModulVer.h">
       <Filter>src\ThirdParty</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\IModelAware.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="LogDetailView.h">
       <Filter>src\View</Filter>
     </ClInclude>
@@ -112,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="ListScrollView.h">
       <Filter>src\View\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ModelAware.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,21 +1,20 @@
 ﻿#pragma once
 #include "afxwin.h"
-#include "ViewBase.h"
+#include "ModelAware.h"
 #include "ILogQuery.h"
-#include "ICtrlView.h"
 
 class CLogCCDoc;
 
 // CLogCtrlView 窗体视图
 
-class CLogCtrlView : public CFormView, public ViewBase<ILogQuery, ICtrlView> {
+class CLogCtrlView : public CFormView, public ModelAware<ILogQuery> {
 	DECLARE_DYNCREATE(CLogCtrlView)
 
 protected:
 	CLogCtrlView();           // 动态创建所使用的受保护的构造函数
 	virtual ~CLogCtrlView();
 
-	virtual tstring getCriteria();
+	tstring getCriteria();
 
 public:
 	enum { IDD = IDD_LOGCTRLVIEW };

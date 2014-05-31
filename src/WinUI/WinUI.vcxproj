@@ -122,7 +122,7 @@
     <ClInclude Include="..\..\include\IConfigView.h" />
     <ClInclude Include="..\..\include\ICtrlView.h" />
     <ClInclude Include="..\..\include\IDetailView.h" />
-    <ClInclude Include="..\..\include\IModelAware.h" />
+    <ClInclude Include="..\..\include\ModelAware.h" />
     <ClInclude Include="..\..\include\IMainView.h" />
     <ClInclude Include="..\..\include\ViewBase.h" />
     <ClInclude Include="ChildFrm.h" />

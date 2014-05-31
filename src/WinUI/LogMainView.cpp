@@ -31,7 +31,7 @@ END_MESSAGE_MAP()
 
 // CLogMainView 构造/析构
 
-CLogMainView::CLogMainView() {
+CLogMainView::CLogMainView() : queryResult(nullptr) {
 }
 
 CLogMainView::~CLogMainView() {
@@ -42,17 +42,8 @@ CLogMainView::~CLogMainView() {
 void CLogMainView::OnInitialUpdate() {
 	ListScrollView::OnInitialUpdate();
 
-	getModel()->regist(this);
 	SetTimer(0, 500, NULL);
 	SetFocus();
-}
-
-void CLogMainView::PostNcDestroy() {
-	getModel()->unregister(this);
-	ListScrollView::PostNcDestroy();
-}
-
-void CLogMainView::onGeneralDataChanged() {
 }
 
 void CLogMainView::onQueryResultChanged(const tstring& criteria, LogQueryResult* queryResult) {
