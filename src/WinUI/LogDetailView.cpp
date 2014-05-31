@@ -31,9 +31,6 @@ BEGIN_MESSAGE_MAP(CLogDetailView, CFormView)
 END_MESSAGE_MAP()
 
 
-void CLogDetailView::onSubmit() {
-}
-
 // CLogDetailView 消息处理程序
 
 

@@ -18,7 +18,6 @@ protected:
 public:
 	enum { IDD = IDD_LOGTEXTVIEW };
 
-	virtual void onSubmit();
 	virtual void onGeneralDataChanged();
 
 protected:
