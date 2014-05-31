@@ -43,6 +43,7 @@ void ListScrollView::resetScrollSize() {
 	int y = _totalSize.cy - clientRect.Height();
 	ScrollToPosition(CPoint(0, max(y, 0)));
 #endif
+	Invalidate();
 }
 
 void ListScrollView::scrollTo(int yScrollPos) {
