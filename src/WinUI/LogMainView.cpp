@@ -20,19 +20,12 @@
 #define new DEBUG_NEW
 #endif
 
-static const unsigned LineHeight = 15;
-
 // CLogMainView
 
-IMPLEMENT_DYNCREATE(CLogMainView, CScrollView)
+IMPLEMENT_DYNCREATE(CLogMainView, ListScrollView)
 
-BEGIN_MESSAGE_MAP(CLogMainView, CScrollView)
-	ON_WM_ERASEBKGND()
-	ON_WM_VSCROLL()
+BEGIN_MESSAGE_MAP(CLogMainView, ListScrollView)
 	ON_WM_MOUSEMOVE()
-	ON_WM_MOUSEWHEEL()
-	ON_WM_KEYDOWN()
-	ON_WM_LBUTTONUP()
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
@@ -46,133 +39,20 @@ CLogMainView::~CLogMainView() {
 
 // CLogMainView 绘制
 
-void DrawLogLine(HDC hdc, const RECT& rect, const LogItem& item) {
-	int oldBkMode = ::SetBkMode(hdc, TRANSPARENT);
-	int oldTextColor = ::GetTextColor(hdc);
-
-	// 背景
-	HBRUSH bkgdBrush = NULL;
-	if (item.selected) {
-		bkgdBrush = ::CreateSolidBrush(::GetSysColor(COLOR_HIGHLIGHT));
-		::SetTextColor(hdc, ::GetSysColor(COLOR_HIGHLIGHTTEXT));
-	} else if (item.text.find(_T("ERROR")) != tstring::npos) {
-		bkgdBrush = ::CreateSolidBrush(0x000000FF);
-	} else if (item.text.find(_T("WARN")) != tstring::npos) {
-		bkgdBrush = ::CreateSolidBrush(0x0000FFFF);
-	} else {
-		bkgdBrush = ::CreateSolidBrush(0x00FFFFFF);
-	}
-	HGDIOBJ oldBrush = ::SelectObject(hdc, bkgdBrush);
-	::FillRect(hdc, &rect, bkgdBrush);
-
-	::SelectObject(hdc, oldBrush);
-	::DeleteObject(bkgdBrush);
-
-	// 文本
-	std::basic_ostringstream<TCHAR> oss;
-	oss << item.line << _T(" ") << item.text;
-	tstring line = oss.str();
-
-	RECT textRect = rect;
-	textRect.top += 1;
-	textRect.bottom -= 1;
-	::DrawText(hdc, line.c_str(), line.size(), &textRect,
-		DT_NOCLIP | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX | DT_EXPANDTABS);
-
-	::SetBkMode(hdc, oldBkMode);
-	::SetTextColor(hdc, oldTextColor);
-}
-
-void CLogMainView::OnDraw(CDC* pDC) {
-	CRect clientRect;
-	GetClientRect(clientRect);
-	DEBUG_INFO(_T("客户区区域：") << clientRect.left << ", " << clientRect.top << ", "
-	           << clientRect.right << ", " << clientRect.bottom);
-
-	HDC memDC = ::CreateCompatibleDC(pDC->GetSafeHdc());
-
-	HBITMAP memBmp = ::CreateCompatibleBitmap(pDC->GetSafeHdc(), clientRect.Width(), clientRect.Height());
-	HGDIOBJ oldBmp = ::SelectObject(memDC, memBmp);
-
-	HBRUSH bkgdBrush = reinterpret_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH));
-	::FillRect(memDC, clientRect, bkgdBrush);
-
-	HFONT font = ::CreateFont(LineHeight - 2, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-	                          DEFAULT_QUALITY, FIXED_PITCH, _T("新宋体"));
-	HGDIOBJ oldFont = ::SelectObject(memDC, font);
-
-	DEBUG_INFO(_T("重绘"));
-
-	CPoint scrollPosition = GetScrollPosition();
-	DEBUG_INFO(_T("滚动条位置：") << scrollPosition.x << ", " << scrollPosition.y);
-
-	if (queryResult) {
-		// 顶部可以显示半行
-		int yLogLineStart = scrollPosition.y % LineHeight == 0 ? 0 : (scrollPosition.y % LineHeight) * -1;
-		unsigned beginLine = scrollPosition.y / LineHeight;
-		// +1是为了底部能显示半行
-		unsigned endLine = (scrollPosition.y + clientRect.Height()) / LineHeight + 1;
-		endLine = min(endLine, queryResult->getCount());
-		DEBUG_INFO(_T("行号区间：") << beginLine << ", " << endLine);
-
-		vector<LogItem*> vecLines = queryResult->getRange(beginLine, endLine);
-		for (unsigned i = 0; i < vecLines.size(); i++) {
-			LogItem* item = vecLines[i];
-			CRect rect = clientRect;
-			rect.top = yLogLineStart + i * LineHeight;
-			rect.bottom = rect.top + LineHeight;
-			DrawLogLine(memDC, rect, *item);
-		}
-	}
-
-	::BitBlt(pDC->GetSafeHdc(), scrollPosition.x, scrollPosition.y, clientRect.Width(), clientRect.Height(),
-	         memDC, 0, 0, SRCCOPY);
-
-	::SelectObject(memDC, oldFont);
-	::DeleteObject(font);
-	::SelectObject(memDC, oldBmp);
-	::DeleteObject(memBmp);
-	::DeleteDC(memDC);
-}
-
 void CLogMainView::OnInitialUpdate() {
-	CScrollView::OnInitialUpdate();
+	ListScrollView::OnInitialUpdate();
 
 	getModel()->regist(this);
 	SetTimer(0, 500, NULL);
-
-	resetScrollSize();
 	SetFocus();
 }
 
 void CLogMainView::PostNcDestroy() {
 	getModel()->unregister(this);
-	__super::PostNcDestroy();
-}
-
-void CLogMainView::resetScrollSize() {
-	CRect clientRect;
-	GetClientRect(clientRect);
-	totalSize.cx = 0;
-	// 加1是为了最后一行一定可见
-	totalSize.cy = (queryResult ? queryResult->getCount() + 1 : 0) * LineHeight;
-#define LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
-#ifdef LOGCC_WINUI_CUSTOMIZE_PAGE_SIZE_LINE_SIZE
-	CSize pageSize(clientRect.Width(), clientRect.Height() / LineHeight * LineHeight);
-	CSize lineSize(clientRect.Width(), LineHeight);
-	SetScrollSizes(MM_TEXT, totalSize, pageSize, lineSize);
-#else
-	SetScrollSizes(MM_TEXT, totalSize);
-#endif
-#define LOGCC_WINUI_SCROLL_TO_END_ON_UPDATE
-#ifdef LOGCC_WINUI_SCROLL_TO_END_ON_UPDATE
-	int y = totalSize.cy - clientRect.Height();
-	ScrollToPosition(CPoint(0, max(y, 0)));
-#endif
+	ListScrollView::PostNcDestroy();
 }
 
 void CLogMainView::onGeneralDataChanged() {
-	Invalidate();
 }
 
 void CLogMainView::onQueryResultChanged(const tstring& criteria, LogQueryResult* queryResult) {
@@ -180,194 +60,22 @@ void CLogMainView::onQueryResultChanged(const tstring& criteria, LogQueryResult*
 	if (activeFrame == GetParentFrame()) {
 		this->curCriteria = criteria;
 		this->queryResult = queryResult;
-		resetScrollSize();
-		Invalidate();
+		transformQueryResult();
 	}
 }
 
 void CLogMainView::onFileChanged() {
 	this->queryResult = getModel()->query(this->curCriteria, true);
-	resetScrollSize();
-	Invalidate();
+	transformQueryResult();
 }
 
 // CLogMainView 消息处理程序
-
-BOOL CLogMainView::OnEraseBkgnd(CDC* /*pDC*/) {
-#ifdef LOGCC_WINUI_USE_DEFAULT_ERASE_BACKGROUND
-	return CScrollView::OnEraseBkgnd(pDC);
-#else
-	return TRUE;
-#endif
-}
-
-void CLogMainView::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*/) {
-	// 以下代码源自：http://blog.csdn.net/xiaji2007/article/details/5744111
-	// 并予以修改
-	SCROLLINFO si = { 0 };
-	si.cbSize = sizeof(SCROLLINFO);
-	si.fMask = SIF_ALL;
-	GetScrollInfo(SB_VERT, &si);
-	int lastPos = si.nPos;
-	switch (nSBCode) {
-	case SB_TOP:
-		si.nPos = si.nMin;
-		break;
-	case SB_BOTTOM:
-		si.nPos = si.nMax;
-		break;
-	case SB_LINEUP:
-		si.nPos -= LineHeight;
-		break;
-	case SB_LINEDOWN:
-		si.nPos += LineHeight;
-		break;
-	case SB_PAGEUP:
-		si.nPos -= si.nPage;
-		break;
-	case SB_PAGEDOWN:
-		si.nPos += si.nPage;
-		break;
-	case SB_THUMBTRACK:
-		si.nPos = si.nTrackPos;
-		break;
-	default:
-		break;
-	}
-	si.fMask = SIF_POS;
-	SetScrollInfo(SB_VERT, &si);
-	if (lastPos!=si.nPos) {
-		::ScrollWindow(m_hWnd, 0, lastPos - si.nPos, NULL, NULL);
-	}
-	Invalidate();
-}
 
 void CLogMainView::OnMouseMove(UINT nFlags, CPoint point) {
 	if (GetForegroundWindow() == AfxGetMainWnd()) {
 		SetFocus();
 	}
-	__super::OnMouseMove(nFlags, point);
-}
-
-void CLogMainView::onSubmit() {
-}
-
-BOOL CLogMainView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) {
-	if (zDelta < 0) {
-		// 向下3行
-		scrollLines(3);
-	} else {
-		// 向上3行
-		scrollLines(-3);
-	}
-	return __super::OnMouseWheel(nFlags, zDelta, pt);
-}
-
-
-void CLogMainView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
-	// 以下是切换选中的情况
-	if (nChar == VK_UP) {
-		// 选中上一行
-		LogItem* item = getModel()->getSelected();
-		if (item) {
-			unsigned i = queryResult->findIndex(item);
-			if (i > 0 && i != 0xFFFFFFFF) {
-				i--;
-				getModel()->setSelected(queryResult->getIndex(i));
-
-				// UNDONE: 可视判断应该抽出
-				if (static_cast<int>(i * LineHeight) < GetScrollPosition().y) {
-					scrollLines(-1);
-				}
-			}
-		}
-	} else if (nChar == VK_DOWN) {
-		// 选中下一行
-		LogItem* item = getModel()->getSelected();
-		if (item) {
-			unsigned i = queryResult->findIndex(item);
-			if (i != 0xFFFFFFFF && i < queryResult->getCount() - 1) {
-				i++;
-				getModel()->setSelected(queryResult->getIndex(i));
-
-				// UNDONE: 可视判断应该抽出
-				CRect rect;
-				GetClientRect(rect);
-				if (static_cast<int>((i + 1) * LineHeight) > GetScrollPosition().y + rect.Height()) {
-					scrollLines(1);
-				}
-			}
-		}
-	} else {
-		// 以下是滚动的情况
-		if (::GetKeyState(VK_CONTROL) & 0x80000000) {
-			if (nChar == VK_HOME) {
-				// 跳到第一页
-				scrollTo(0);
-			} else if (nChar == VK_END) {
-				// 跳到最后一页，多出没事
-				scrollTo(queryResult->getCount() * LineHeight);
-			} else if (nChar == VK_UP) {
-				// 向上1行
-				scrollLines(-1);
-			} else if (nChar == VK_DOWN) {
-				// 向下1行
-				scrollLines(1);
-			}
-		}
-		if (nChar == VK_PRIOR) {
-			// 向上1页
-			scrollPages(-1);
-		} else if (nChar == VK_NEXT) {
-			// 向下1页
-			scrollPages(1);
-		}
-	}
-	__super::OnKeyDown(nChar, nRepCnt, nFlags);
-}
-
-
-void CLogMainView::OnLButtonUp(UINT nFlags, CPoint point) {
-	int yScrollPos = GetScrollPosition().y;
-	DEBUG_INFO(yScrollPos);
-	this->selectedLine = (yScrollPos + point.y) / LineHeight;
-
-	if (queryResult && selectedLine < queryResult->getCount()) {
-		LogItem* item = queryResult->getIndex(selectedLine);
-		getModel()->setSelected(item);
-		DEBUG_INFO(_T("选中行：") << selectedLine);
-	}
-
-	__super::OnLButtonUp(nFlags, point);
-}
-
-void CLogMainView::scrollTo(int yScrollPos) {
-	CRect clientRect;
-	GetClientRect(clientRect);
-
-	// NOTICE:	很奇怪的现象，CScrollView在OnInitUpdate之外函数SetScrollSizes，
-	//			如果设置的高度小于ClientRect，虽然没有显示滚动条仍然可以滚动，这里特殊处理一下，禁止滚动
-	if (clientRect.Height() >= totalSize.cy) return;
-
-	ScrollToPosition(CPoint(0, yScrollPos));
-	DEBUG_INFO(_T("滚动位置：") << yScrollPos);
-}
-
-void CLogMainView::scrollDelta(int delta) {
-	int yScrollPos = GetScrollPosition().y;
-	yScrollPos += delta;
-	scrollTo(max(yScrollPos, 0));
-}
-
-void CLogMainView::scrollLines(int count) {
-	scrollDelta(LineHeight * count);
-}
-
-void CLogMainView::scrollPages(int count) {
-	CRect clientRect;
-	GetClientRect(clientRect);
-
-	scrollLines(clientRect.Height() / LineHeight * count);
+	ListScrollView::OnMouseMove(nFlags, point);
 }
 
 void CLogMainView::OnTimer(UINT_PTR nIDEvent)
@@ -375,5 +83,22 @@ void CLogMainView::OnTimer(UINT_PTR nIDEvent)
 	getModel()->query(_T(""));
 	KillTimer(0);
 
-	__super::OnTimer(nIDEvent);
+	ListScrollView::OnTimer(nIDEvent);
+}
+
+void CLogMainView::transformQueryResult() {
+	clear();
+	vector<LogItem*> logItems = queryResult->getRange(0, queryResult->getCount());
+	for_each(logItems.begin(), logItems.end(), [=] (LogItem* li) {
+		common::tstringstream ss;
+		ss << li->line << _T(" ") << li->text;
+
+		insert(ss.str(), reinterpret_cast<void*>(li));
+	});
+	update();
+}
+
+void CLogMainView::onSelectedChanged() {
+	LogItem* li = queryResult->getIndex(getSelectedIndex());
+	getModel()->setSelected(li);
 }

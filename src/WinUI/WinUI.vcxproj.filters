@@ -110,6 +110,9 @@
     <ClInclude Include="HighLightPropPage.h">
       <Filter>src\View</Filter>
     </ClInclude>
+    <ClInclude Include="ListScrollView.h">
+      <Filter>src\View\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogCC.cpp">
@@ -147,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="HighLightPropPage.cpp">
       <Filter>src\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ListScrollView.cpp">
+      <Filter>src\View\Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -45,9 +45,9 @@
 #include <string>
 #include <fstream>
 #include <hash_map>
+#include <algorithm>
 
 using namespace std;
-
 
 #include <common/tstring.h>
 #include <common/utility/debug_info.h>
