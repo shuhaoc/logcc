@@ -86,9 +86,6 @@
     <ClInclude Include="..\..\include\IDetailView.h">
       <Filter>src\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ViewBase.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="ColorSelect.h">
       <Filter>src\View\Control</Filter>
     </ClInclude>

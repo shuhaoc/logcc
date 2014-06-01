@@ -39,7 +39,6 @@ private:
 
 	LogQueryResult* queryResult;
 	tstring curCriteria;
-	unsigned selectedLine;
 
 // 生成的消息映射函数
 protected:

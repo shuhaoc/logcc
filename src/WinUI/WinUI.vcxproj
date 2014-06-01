@@ -124,7 +124,6 @@
     <ClInclude Include="..\..\include\IDetailView.h" />
     <ClInclude Include="..\..\include\ModelAware.h" />
     <ClInclude Include="..\..\include\IMainView.h" />
-    <ClInclude Include="..\..\include\ViewBase.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ColorSelect.h" />
     <ClInclude Include="ConfigDlg.h" />
