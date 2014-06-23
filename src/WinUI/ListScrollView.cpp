@@ -8,7 +8,7 @@
 
 IMPLEMENT_DYNCREATE(ListScrollView, CScrollView)
 
-ListScrollView::ListScrollView() : _lineHeight(15) {
+ListScrollView::ListScrollView() : _lineHeight(15), _selectedIndex(0xFFFFFFFF) {
 
 }
 
@@ -242,7 +242,7 @@ void ListScrollView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 	// 以下是切换选中的情况
 	if (nChar == VK_UP) {
 		// 选中上一行
-		if (_selectedIndex > 0 && _selectedIndex != 0xFFFFFFFF) {
+		if (_selectedIndex != 0xFFFFFFFF && _selectedIndex > 0) {
 			setSelectedIndex(_selectedIndex - 1);
 
 			if (!isItemVisible(_selectedIndex)) {
@@ -264,9 +264,11 @@ void ListScrollView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 			if (nChar == VK_HOME) {
 				// 跳到第一页
 				scrollTo(0);
+				if (_selectedIndex != 0xFFFFFFFF) setSelectedIndex(0);
 			} else if (nChar == VK_END) {
 				// 跳到最后一页，多出没事
 				scrollTo(_itemList.size() * _lineHeight);
+				if (_selectedIndex != 0xFFFFFFFF) setSelectedIndex(_itemList.size() - 1);
 			} else if (nChar == VK_UP) {
 				// 向上1行
 				scrollLines(-1);
